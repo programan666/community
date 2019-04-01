@@ -1,8 +1,8 @@
 function fill_top_nav_page() {
-    loadPage('html/top-nav.html', loadMenu);
+    loadNav('html/top-nav.html', loadMenu);
 }
 
-function loadPage(module_page, call_back) {
+function loadNav(module_page, call_back) {
     $(document).ready(function() {
         var pageContent = $('.page-nav');
         pageContent.empty();
@@ -23,4 +23,4 @@ function loadMenu() {
 		$('#user-dropdown-show').css("display", "none");
 	});
 }
-fill_top_nav_page();
+
