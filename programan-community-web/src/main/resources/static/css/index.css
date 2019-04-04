@@ -17,6 +17,9 @@ text-decoration:none;
 a:active{
 text-decoration:none;
 }
+select {
+	background-color: #FFFFFF;
+}
 
 dd, dt {
 	float: left;
@@ -24,6 +27,10 @@ dd, dt {
 
 dt {
 	margin-right: 4px;
+}
+
+.page-content {
+	min-width: 1396px;
 }
 
 .page-nav {
@@ -396,4 +403,580 @@ dt {
 
 .course-footer h3 {
 	text-align: center;
+}
+
+.login-page {
+	width: 100%;
+	background-color: rgba(26,30,32,1);
+}
+
+.login-header {
+	width: 100%;
+	height: 70px;
+	border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+.login-body {
+	height: 600px;
+}
+
+.login-footer {
+	height: 200px;
+	background-color: rgb(55,61,65);
+}
+
+.login-header a {
+	display: inline-block;
+    width: 180px;
+    height: 100%;
+    line-height: 70px;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1.2em;
+}
+
+.login-body {
+	position: relative;
+}
+
+.login-box {
+	position: absolute;
+    top: 80px;
+    right: 190px;
+    width: 400px;
+    height: 350px;
+    padding: 30px;
+    background: #FFFFFF;
+}
+
+.login-body-left {
+	width: 50%;
+	float: left;
+	padding-left: 150px;
+	margin-top: 130px;
+}
+
+.login-page a{
+	color: #FFFFFF;
+}
+
+.login-body-left a, .login-body-left p {
+	color: #FFFFFF;
+	font-weight: 100;
+}
+
+.login-body-left p {
+	line-height: 30px;
+}
+
+.login-connect {
+	width: 400px;
+	padding: 20px;
+	margin: 20px auto;
+	text-align: center;
+}
+
+.login-connect a {
+	display: inline-block;
+	width: 100px;
+	text-align: center;
+	color: rgba(153,156,158,1);
+	font-size: 1.3em;
+}
+
+.login-box h3{
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-weight: 400;
+	font-size: 1.5em;
+	color: rgb(55,61,65);
+}
+
+.login-box input , .register-box input{
+	margin: 10px 0;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1.0em;
+	width: 100%;
+	border-radius: 0;
+	box-shadow: none!important;
+}
+
+.submit-input {
+	background-color: rgb(32,193,220);
+	border: none;
+	margin-top: 20px;
+	color: #FFFFFF;
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+}
+
+.login-box-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;text-align: center;
+	margin-left: -30px;
+	border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.login-box-footer a {
+	display: inline-block;
+	width: 60px;
+	font-size: 0.9em;
+	color: rgba(153,156,158,1);
+}
+
+.register-page {
+	background-color: rgb(245,245,246);
+}
+
+.register-page .login-header a {
+	color: rgb(55,61,65);
+}
+
+.register-page .login-header {
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+.register-page {
+	width: 100%;
+	height: 600px;
+}
+
+.register-page .container {
+	width: 70%;
+    height: 500px;
+    background-color: #FFFFFF;
+    margin: 90px auto;
+}
+
+.register-box {
+	/*border: 1px #000000 solid;*/
+	width: 400px;
+	height: 450px;
+	margin: 30px auto;
+}
+
+.register-box h2 {
+	text-align: center;
+}
+
+.edit-left {
+	display: inline-block;
+	width: 20%;
+	min-height: 600px;
+	padding: 20px 0 20px 0;
+    background: #fff;
+    max-width: 180px;
+}
+
+.edit-right {
+	width: 80%;
+	vertical-align: top;
+	border-left: 1px solid #e9e9e9;
+	display: inline-block;
+	padding: 10px;
+	min-height: 600px;
+}
+
+.edit-page {
+	width: 100%;
+	padding: 30px 0;
+	background-color: rgba(241,243,244,0.3);
+}
+
+.edit-page .container {
+	margin: 0 auto 30px auto;
+	box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+	background-color: #FFFFFF;
+	padding: 40px 0;
+}
+
+.edit-left a {
+	display: block;
+	width: 100%;
+	height: 40px;
+	padding-right: 20px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 1.2em;
+	color: #9b9b9b;
+}
+
+.edit-left a:hover {
+	color: #FFFFFF;
+	background-color: rgb(199,34,45);
+	box-shadow: 0px 0px 2px 0px rgba(199,34,45,0.3);
+}
+
+.article-title {
+	border-radius: 0;
+	margin: 10px 0;
+	box-shadow: none!important;
+	border: none!important;
+	background-color: rgba(212,210,212,0.3)!important;
+	line-height: 30px;
+	font-size: 1.1em;
+}
+
+.w-e-text-container {
+	min-height: 500px;
+}
+
+.article-parameter {
+	margin: 20px auto;
+}
+
+.article-parameter label , .article-finder label{
+	margin: 0 15px;
+}
+
+.article-parameter select , .article-finder select{
+	min-width: 120px;
+	height: 30px;
+}
+
+.edit-right .submit-input {
+	width: 130px;
+    height: 45px;
+    font-size: 1.3em;
+}
+
+.edit-right .submit-input:hover {
+	background-color: rgba(32,193,220,0.8);
+}
+
+.write-blog {
+	color: rgba(23,158,149,1)!important;
+}
+
+.write-blog:hover{
+	color: rgba(25,230,216,1)!important;
+}
+
+.article-finder {
+	width: 100%;
+	height: 60px;
+	padding: 13px 0;
+	background-color: rgb(242,245,247);
+	font-size: 1.0em!important;
+}
+
+.article-finder .form-control {
+	width: 200px;
+	display: inline;
+	font-size: 1.0em!important;
+}
+
+.article-finder .submit-input {
+	margin: 0px 20px;
+	width: 100px;
+    height: 35px;
+    font-size: 1.0em!important;
+}
+
+.article-single {
+	width: 100%;
+	height: 80px;
+	font-size: 1.2em;
+}
+
+.article-list{
+	margin-top: 50px;
+}
+
+.article-single .title {
+	display: block;
+	font-size: 1.3em;
+	margin: 20px 0;
+	color: #666666;
+}
+
+.article-single .title:hover{
+	color: rgb(183,9,16);
+}
+
+.article-single-data {
+	border-bottom: 1px dotted #ddd;
+	padding: 10px 0 15px 0;
+}
+
+.article-single-data span {
+	margin-right: 20px;
+}
+
+.article-single-data .operation{
+	width: 90px;
+	float: right;
+}
+
+.operation a {
+	display: inline-block;
+	width: 40px;
+	text-align: center;
+	margin-left: -5px;
+}
+
+.article-left {
+	width: 25%;
+	float: left;
+}
+
+.article-right {
+	width: 70%;
+	margin-left: 3px;
+	float: left;
+}
+
+.auth-info {
+	width: 100%;
+	min-width: 300px;
+	height: 300px;
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+}
+
+.article {
+	padding: 30px 90px;
+}
+
+.auth-info-top, .auth-info-middle, .auth-info-bottom{
+	padding: 15px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.auth-info-top a {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.auth-info-top img{
+	width: 50px;
+	height: 50px;
+}
+
+.auth-info-top span {
+	display: inline-block;
+	margin: 0 10px;
+	height: 50px;
+	vertical-align: middle;
+	line-height: 50px;
+	font-size: 1.4em;
+	font-weight: 500;
+}
+
+.auth-info-top .submit-input {
+	width: 70px;
+	height: 35px;
+	border-radius: 5px;
+	font-weight: 200;
+	margin: 0;
+	font-size: 0.8em;
+	border: 1px solid #1E9FFF;
+	background-color: #FFFFFF;
+	color: #1E9FFF;
+}
+
+.auth-info-top .submit-input:hover {
+	background-color: rgba(106,206,238,0.4);
+}
+
+.auth-info-middle {
+	text-align: center;
+}
+
+.auth-info-middle dl {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+}
+
+.auth-info-middle dd, .auth-info-middle dt {
+	width: 100%;
+	line-height: 25px;
+	margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.article-right .title {
+	padding-left: 20px;
+	height: 120px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.article-right .title h2 {
+	line-height: 40px;
+	padding-left: 60px;
+}
+
+.title .artitle-type {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	border: 1px solid #40AFFE;
+	line-height: 40px;
+	text-align: center;
+	font-size: 1.3em;
+	float: left;
+}
+
+.article-right .title span {
+	margin: 0 10px;
+	font-size: 1.2em;
+}
+
+.user-info-update h2{
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.user-info-update .update-body {
+	width: 300px;
+	margin: 20px auto;
+}
+
+.update-body input {
+	margin: 10px auto;
+}
+
+.float-left{
+	float: left;
+}
+
+.float-right{
+	float: right;
+}
+
+.user-info-img {
+	display: block;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+}
+
+#userInfoDiv .user-img-f {
+	width: 100px;
+	height: 150px;
+	overflow: hidden;
+}
+
+#userInfoDiv .user-img-f a {
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 1.1em;
+	line-height: 40px;
+}
+
+.user-info-top {
+	width: 80%;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.user-info-bottom {
+	width: 80%;
+}
+
+.line-div {
+	width: 100%;
+}
+
+.user-info-top .line-div span{
+	margin-right: 20px;
+}
+
+.info-body {
+	font-size: 1.2em;
+}
+
+.line-div p,.line-div span{
+	display: inline-block;
+}
+
+.info-body .line-div {
+	height: 30px;
+	line-height: 30px;
+	margin: 10px 0;
+}
+
+.info-body .float-left {
+	margin-left: 20px;
+}
+
+.user-info-bottom li {
+	margin: 10px 0;
+	line-height: 30px;
+}
+.follow-box {
+	width: 100%;
+	height: 100px;
+	line-height: 80px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.follow-box img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.follow-box span {
+	margin-right: 20px;
+}
+
+.follow-box .follow {
+	width: 100px;
+    height: 35px;
+    color: rgba(0,0,0,0.6);
+    border-radius: 5px;
+}
+
+.follow-box .follow:hover{
+	background-color: rgba(106,206,238,0.4);
+	border: 1px solid rgba(106,206,238,1);
+}
+
+.modal-dialog {
+	width: 550px;
+	max-width: none;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.data-update {
+	width: 300px;
+}
+
+.line-input label {
+	float: left;
+	line-height: 40px;
+}
+
+.line-input input {
+	width: 200px;
+    float: left;
+    height: 37px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.line-input {
+	margin: 10px 0;
+    height: 40px;
+    font-size: 1.2em;
+}
+
+.line-input select {
+	height: 35px;
+    min-width: 80px;
 }

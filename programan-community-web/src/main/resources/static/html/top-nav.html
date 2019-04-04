@@ -30,7 +30,14 @@
 					  <button type="submit"></button>
 					</form>
 				</div>
+				<li class="nav-item">
+					<a class="nav-link" href="./login.html" onfocus="this.blur();">登录</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./register.html" onfocus="this.blur();">注册</a>
+				</li>
 				<li class="nav-item dropdown" id="user-dropdown">
+					
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">
 						Programan 
 						<span class="caret"></span>
@@ -40,14 +47,18 @@
 					</a>
 					
 					<div class="dropdown-menu" aria-labelledby="download" id="user-dropdown-show">
-						<a class="dropdown-item" href="#"><i class="fa fa-pencil fa-fw"></i>&nbsp; 我的博客</a>
+						<a class="dropdown-item" href="#" onclick="fill_article_manage_page()"><i class="fa fa-folder fa-fw"></i>&nbsp; 我的博客</a>
 						<a class="dropdown-item" href="#"><i class="fa fa-arrow-circle-down fa-fw"></i>&nbsp; 我的下载</a>
 						<a class="dropdown-item" href="#"><i class="fa fa-lemon-o fa-fw"></i>&nbsp; 我的P豆</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><i class="fa fa-user-o fa-fw"></i>&nbsp; 个人中心</a>
-						<a class="dropdown-item" href="#"><i class="fa fa-gear fa-fw"></i>&nbsp; 账号设置</a>
+						<a class="dropdown-item" href="#" onclick="fill_user_info_page()"><i class="fa fa-user-o fa-fw"></i>&nbsp; 个人中心</a>
+						<a class="dropdown-item" href="#" onclick="fill_user_base_info_page()"><i class="fa fa-gear fa-fw"></i>&nbsp; 账号设置</a>
 						<a class="dropdown-item" href="#"><i class="fa fa-unlink fa-fw"></i>&nbsp; 退出</a>
 					</div>
+					
+				</li>
+				<li class="nav-item">
+					<a class="nav-link write-blog" href="#" onfocus="this.blur();" onclick="fill_edit_blog_page()"><i class="fa fa-pencil fa-fw"></i>写博客</a>
 				</li>
 			</ul>
 

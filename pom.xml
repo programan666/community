@@ -5,13 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.programan</groupId>
-    <artifactId>community-community</artifactId>
+    <artifactId>programan-community</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <name>programan-community</name>
     <modules>
         <module>programan-community-web</module>
         <module>programan-parent</module>
     </modules>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.programan.cm.web.StartMainApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
