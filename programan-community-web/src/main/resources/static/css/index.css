@@ -17,6 +17,9 @@ text-decoration:none;
 a:active{
 text-decoration:none;
 }
+.dropdown-menu {
+	top: 35px!important;
+}
 select {
 	background-color: #FFFFFF;
 }
@@ -502,6 +505,16 @@ dt {
 	box-shadow: none!important;
 }
 
+.login-box span{
+	height: 40px;
+	line-height: 40px;	
+}
+
+.login-box .remember-me {
+	width: 15px;
+	margin: 0;
+}
+
 .submit-input {
 	background-color: rgb(32,193,220);
 	border: none;
@@ -979,4 +992,70 @@ dt {
 .line-input select {
 	height: 35px;
     min-width: 80px;
+}
+
+.modal-header h4 {
+	margin: 10px 0;
+}
+
+.modal-body {
+	padding: 35px;
+}
+
+.manager-page {
+	width: 100%;
+	min-width: 1200px;
+	min-height: 700px;
+}
+
+.manager-left{
+	float: left;
+	width: 15%;
+	min-height: 700px;
+	border-right: 1px solid rgba(0,0,0,0.5);
+}
+
+.manager-left .manager-info {
+	width: 100%;
+	height: 100px;
+}
+
+.manager-left a {
+	display: block;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: 500;
+	color: #0B0D18;
+	background-color: rgba(231,234,237);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.manager-left a:hover{
+	background-color: rgba(219,81,71,1);
+	color: #FFFFFF;
+}
+
+.manager-right{
+	width: 85%;
+	float: left;
+}
+
+.manager-right h3{
+	text-align: center;
+	color: #555555;
+}
+
+.manager-data-body {
+	width: 96%;
+	margin: 10px auto;
+	padding: 12px;
+	min-height: 400px;
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+}
+
+.manager-data-body .action{
+	
 }
