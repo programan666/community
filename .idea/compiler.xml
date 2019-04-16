@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="programan-common" />
         <module name="programan-community-db" />
+        <module name="programan-community-repository" />
         <module name="programan-community-web" />
-        <module name="programan-repository" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

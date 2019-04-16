@@ -14,7 +14,7 @@
         <module>programan-parent</module>
         <module>programan-community-db</module>
         <module>programan-common</module>
-        <module>programan-repository</module>
+        <module>programan-community-repository</module>
     </modules>
 
     <build>

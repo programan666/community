@@ -66,6 +66,7 @@ function updateUserInfo(index) {
 
 $('#showUpdateUserInfoBtn').click(function() {
 	$('.datepicker').datepicker({
-		language: 'zh-CN'
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd'
 	});
 })

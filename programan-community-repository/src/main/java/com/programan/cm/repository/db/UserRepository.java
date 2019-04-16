@@ -7,8 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
+import org.springframework.data.jpa.datatables.repository.DataTablesRepositoryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserRepository {
@@ -31,6 +34,27 @@ public class UserRepository {
     public void insertUser(User user) {
         user.setPwd(passwordEncoder.encode(user.getPwd().trim()));
         userDao.save(user);
+    }
+
+    public void saveUser(User user) {
+        userDao.save(user);
+    }
+
+    @Transactional
+    public DataTablesOutput<User> findUser(DataTablesInput input) {
+        return userDao.findAll(input);
+    }
+
+    public void deleteUser(String id) {
+        userDao.deleteById(Long.parseLong(id));
+    }
+
+    public User selectById(String id) {
+        return userDao.selectById(Long.parseLong(id));
+    }
+
+    public User selectById(Long id) {
+        return userDao.selectById(id);
     }
 
 }

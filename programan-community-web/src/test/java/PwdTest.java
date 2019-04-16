@@ -34,4 +34,9 @@ public class PwdTest {
         String encodedPassword = passwordEncoder.encode("acm666666".trim());
         System.out.println(encodedPassword);
     }
+
+    @Test
+    public void linshiTest1(){
+        System.out.println(Long.parseLong("0"));
+    }
 }

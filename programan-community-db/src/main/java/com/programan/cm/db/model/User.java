@@ -56,6 +56,6 @@ public class User {
     private String headImgUrl;
 
     @Column(name="p_num")
-    private int PNum;
+    private Long pnum;
 
 }

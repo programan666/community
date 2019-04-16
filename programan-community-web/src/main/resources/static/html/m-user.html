@@ -6,37 +6,14 @@
             <a href="#">IT技术社区</a>
         </li>
         <li>
-            <a href="#">管理系统</a>
+            <a href="#">后台管理系统</a>
         </li>
         <li class="active">用户管理</li>
     </ul>
 </div>
 <!-- /Page Breadcrumb -->
 <!-- Page Header -->
-<div class="page-header position-relative">
-    <div class="header-title">
-        <h1>
-            数据
-            <!--<small>
-                <i class="fa fa-angle-right"></i>
-                jquery plugin for data management
-            </small>-->
-        </h1>
-    </div>
-    <!--Header Buttons-->
-    <div class="header-buttons">
-        <a class="sidebar-toggler" href="#">
-            <i class="fa fa-arrows-h"></i>
-        </a>
-        <a class="refresh" id="refresh-toggler" href="">
-            <i class="glyphicon glyphicon-refresh"></i>
-        </a>
-        <a class="fullscreen" id="fullscreen-toggler" href="#">
-            <i class="glyphicon glyphicon-fullscreen"></i>
-        </a>
-    </div>
-    <!--Header Buttons End-->
-</div>
+
 <!-- /Page Header -->
 <!-- Page Body -->
 <div class="page-body">
@@ -60,12 +37,13 @@
                 </div>
                 <div class="widget-body">
                     <div class="table-toolbar">
-                        <a id="editabledatatable_new" href="javascript:void(0);" class="btn btn-default">
+                        <a id="addUserBtn" href="javascript:void(0);" class="btn btn-default">
                             添加
                         </a>
+                        <button id="purgeUserBtn" class="btn btn-danger"><i class="fa fa-times"></i> 删除</button>
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" href="javascript:void(0);">Tools</a>
-                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>
+                            <!--<a class="btn btn-default" href="javascript:void(0);">Tools</a>
+                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>-->
                             <ul class="dropdown-menu dropdown-default">
                                 <li>
                                     <a href="javascript:void(0);">Action</a>
@@ -86,14 +64,19 @@
                     <table class="table table-striped table-hover table-bordered" id="userdatatable">
                         <thead>
                             <tr role="row">
+                            		<th>
+                                    <div class="checker">
+                                        <label>
+                                            <input type="checkbox" name="allChecked" class="group-checkable" data-set="#flip .checkboxes">
+                                            <span class="text"></span>
+                                        </label>
+                                    </div>
+                                </th>
                                 <th>
                                     编号
                                 </th>
                                 <th>
                                     用户名
-                                </th>
-                                <th>
-                                    密码
                                 </th>
                                 <th>
                                     昵称

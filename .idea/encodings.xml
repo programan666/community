@@ -2,7 +2,10 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/programan-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/programan-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/programan-community-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/programan-community-db" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/programan-community-repository" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/programan-community-web" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/programan-parent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/programan-repository" charset="UTF-8" />

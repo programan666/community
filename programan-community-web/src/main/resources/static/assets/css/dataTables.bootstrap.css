@@ -45,7 +45,7 @@ div.dataTables_filter label {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0px;
+    right: 0px;
     width: 30px;
     max-width: 30px;
     overflow: hidden;

@@ -36,5 +36,32 @@ public class UserManager {
         return userRepository.selectByUserName(userName);
     }
 
+    public User selectById(String id) {
+        return userRepository.selectById(id);
+    }
+
+    @Transactional
+    public DataTablesOutput<User> findUser(DataTablesInput input) {
+        DataTablesOutput<User> dataTablesOutput = userRepository.findUser(input);
+        return dataTablesOutput;
+    }
+
+    public void deleteUser(String id){
+        userRepository.deleteUser(id);
+    }
+
+//    public void insertUser(User user) {
+//        userRepository.insertUser(user);
+//    }
+
+    public void saveUser(User user){
+        if(userRepository.selectById(user.getId()) != null) {
+            //修改
+            userRepository.saveUser(user);
+        } else {
+            //增加
+            userRepository.insertUser(user);
+        }
+    }
 
 }

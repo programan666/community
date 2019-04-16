@@ -1,4 +1,4 @@
-var callurl = "http://127.0.0.1:9999";
+
 
 function fill_top_nav_page() {
     loadNav('html/top-nav.html', loadMenu);
