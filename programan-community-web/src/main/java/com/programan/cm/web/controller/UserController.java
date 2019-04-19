@@ -8,6 +8,7 @@ import com.programan.cm.db.model.User;
 //import com.programan.cm.repository.manager.UserManager;
 import com.programan.cm.web.manager.IndustryManager;
 import com.programan.cm.web.manager.UserManager;
+import com.programan.cm.web.manager.UserRoleManager;
 import com.programan.cm.web.security.CmUserDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,18 +53,12 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String username, String password) {
-        UserDetails userDetails = cmUserDetailService.loadUserByUsername(username);
-        if(userDetails == null){
-            return "redirect:/login.html";
-        }
-        if(userDetails.getPassword().equals(password)) {
-            return "redirect:/index.html";
-        } else {
-            return "redirect:/login.html";
-        }
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String login(String username, String password) {
+//        UserDetails userDetails = cmUserDetailService.loadUserByUsername(username);
+//        cmUserDetailService.loadUserByUsername(username);
+//        return "";
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/list")

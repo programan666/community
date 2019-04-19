@@ -1,5 +1,5 @@
 function fill_blog_page() {
-    loadPage('html/blog.html', loadBlog);
+    loadPage('/html/blog.html', loadBlog);
 }
 
 function loadPage(module_page, call_back) {

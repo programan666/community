@@ -2,7 +2,10 @@ package com.programan.cm.web.manager;
 
 import com.programan.cm.db.dao.UserDao;
 import com.programan.cm.db.model.User;
+import com.programan.cm.db.model.UserRole;
+import com.programan.cm.repository.db.RoleRepository;
 import com.programan.cm.repository.db.UserRepository;
+import com.programan.cm.repository.db.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +23,18 @@ public class UserManager {
 
     private UserRepository userRepository;
 
-    private UserDao userDao;
+    private UserRoleRepository userRoleRepository;
+
+    private RoleRepository roleRepository;
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setUserRoleRepository(UserRoleRepository userRoleRepository) {
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Autowired
@@ -60,7 +70,9 @@ public class UserManager {
             userRepository.saveUser(user);
         } else {
             //增加
-            userRepository.insertUser(user);
+            User flushUser = userRepository.insertUser(user);
+            UserRole userRole = new UserRole(0L, flushUser, roleRepository.selectByName("USER"));
+            userRoleRepository.saveUserRole(userRole);
         }
     }
 

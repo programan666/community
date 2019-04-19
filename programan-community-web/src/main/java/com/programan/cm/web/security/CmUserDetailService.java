@@ -48,10 +48,10 @@ public class CmUserDetailService implements UserDetailsService {
             return null;
         }
         log.info("{}",user);
-        List<UserRole> userRole = userRoleDao.selectByUserId(user.getId());
+        List<UserRole> userRole = userRoleDao.selectByUserId(user);
         log.info("{}",userRole);
         List<GrantedAuthority> authorities = new ArrayList<>();
-        userRole.forEach(userRole1 -> authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_"+roleDao.selectNameById(userRole1.getId()))));
+        userRole.forEach(userRole1 -> authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_"+roleDao.selectNameById(userRole1.getRole().getId()))));
         log.info("{}",authorities);
         return new org.springframework.security.core.userdetails.User(user.getUserName(),user.getPwd(),authorities);
     }

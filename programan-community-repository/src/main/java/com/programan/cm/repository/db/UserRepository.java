@@ -1,6 +1,7 @@
 package com.programan.cm.repository.db;
 
 import com.programan.cm.db.dao.UserDao;
+import com.programan.cm.db.model.Role;
 import com.programan.cm.db.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,9 @@ public class UserRepository {
         return userDao.selectByUserName(userName);
     }
 
-    public void insertUser(User user) {
+    public User insertUser(User user) {
         user.setPwd(passwordEncoder.encode(user.getPwd().trim()));
-        userDao.save(user);
+        return userDao.save(user);
     }
 
     public void saveUser(User user) {

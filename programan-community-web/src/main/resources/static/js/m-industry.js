@@ -46,7 +46,7 @@ function loadIndustryList() {
 					"name": "name", // 指定的列
 					"data": "name",
 					"ordering": false, // 禁用排序
-					"searchable": false,
+//					"searchable": false,
 					"width": "25%"
 				}, {
 					"name": "id",
@@ -149,7 +149,6 @@ function deleteIndustry(delid) {
  */
 function open_industry_detail_page(id) {
     loadTabMenu('html/m-industry-detail.html', function() {
-    		loadIndustrySelect();
         if (id) {
             getIndustryDetail(id);
         }

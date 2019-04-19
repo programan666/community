@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //1.启用内存用户存储
 //        auth.inMemoryAuthentication()
-//                .withUser("xfy").password(passwordEncoder().encode("1234")).roles("ADMIN").and()
+//                .withUser("wangqianfeng").password(passwordEncoder().encode("acm666666")).roles("USER");
 //                .withUser("tom").password(passwordEncoder().encode("1234")).roles("USER");
         //2.基于数据库表进行验证
 //        auth.jdbcAuthentication().dataSource(dataSource)
@@ -44,22 +44,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //HTTP请求安全处理
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login.html").loginProcessingUrl("/user/login")
+        http.formLogin().loginPage("/login.html").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/user/login").defaultSuccessUrl("/page/index").permitAll()
             .and()
 //            .logout().logoutUrl("/index.html")
 //            .and()
             .authorizeRequests()
-            .antMatchers("/login.html","/user/**","/bootstrap/**","/css/**","/html/**","/img/**",
-                    "/js/**","/layer/**").permitAll()
+            .antMatchers("/gold.html", "/bootstrap/**","/css/**","/html/**","/img/**",
+                    "/js/**","/layer/**","/page/**").permitAll()
 //            .antMatchers("/**").authenticated()
-//            .antMatchers("/**").hasRole("ADMIN")
+//            .antMatchers("/manager.html").hasRole("ADMIN")
+//            .antMatchers("/user/**").hasRole("USER")
 //            .regexMatchers("/admin1/.*").access("hasRole('ADMIN') or hasRole('ADMIN1')")
 //            .anyRequest().authenticated()
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
             .and()
 //            .requiresChannel().antMatchers("/add").requiresSecure()//https://127.0.0.1:8443/add
 //            .and()
-            .rememberMe().tokenValiditySeconds(2419200).tokenRepository(persistentTokenRepository()).alwaysRemember(true)
+            .rememberMe().rememberMeParameter("remeber").tokenValiditySeconds(2419200).tokenRepository(persistentTokenRepository()).alwaysRemember(true)
             .and()
             .csrf().disable();
 

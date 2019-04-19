@@ -13,7 +13,13 @@ import java.util.List;
 public interface RoleDao extends DataTablesRepository<Role, Long> {
 
     @Query(value = "select r.name from Role r where id = ?1")
-    String selectNameById(Long userId);
+    String selectNameById(Long id);
+
+    @Query(value = "select r from Role r where name = ?1")
+    Role selectByName(String name);
+
+    @Query(value = "select r from Role r where id = ?1")
+    Role selectById(Long id);
 
     @Query(value = "select r from Role r")
     List<Role> selectAll();

@@ -2,7 +2,7 @@ package com.programan.cm.db.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Maps;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+//import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ public class BaseJPAConfig {
         return builder
                 .dataSource(baseDataSource)
                 .packages("com.programan.cm.db.model")
-                .properties(hibernateProperties.determineHibernateProperties(Maps.newHashMap(), new HibernateSettings()))
+//                .properties(hibernateProperties.determineHibernateProperties(Maps.newHashMap(), new HibernateSettings()))
                 .build();
     }
 
@@ -56,6 +56,6 @@ public class BaseJPAConfig {
         return new JpaTransactionManager(entityManagerFactory(builder).getObject());
     }
 
-    @Resource
-    private HibernateProperties hibernateProperties;
+//    @Resource
+//    private HibernateProperties hibernateProperties;
 }

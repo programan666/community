@@ -98,7 +98,7 @@ function loadUserList() {
 					"name": "userName", // 指定的列
 					"data": "userName",
 					"ordering": false, // 禁用排序
-					"searchable": false,
+//					"searchable": false,
 					"width": "10%"
 				}, {
 					"name": "roleName", // 指定的列
