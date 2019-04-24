@@ -1,0 +1,85 @@
+<div id="user-add-page">
+    <div class="page-breadcrumbs">
+	    <ul class="breadcrumb">
+	        <li>
+	            <i class="fa fa-home"></i>
+	            <a href="#">IT技术社区</a>
+	        </li>
+	        <li>
+	            <a href="#">管理系统</a>
+	        </li>
+	        <li class="active">文章管理</li>
+	    </ul>
+	</div>
+    
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget flat radius-bordered">
+                    <div class="widget-header bg-danger">
+                        <span class="widget-caption">文章表单</span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                        	
+                        		<div class="form-group">
+                                <label class="control-label col-sm-1" for="articleId">ID: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="articleId" id="articleId" placeholder="article ID" value="0" readonly>
+                                </div>
+                                <label class="control-label col-sm-1" for="articleTitle">题目: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="题目">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="readNum">阅读数量: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="readNum" id="readNum" placeholder="阅读数量" value="0">
+                                </div>
+                                <label class="control-label col-sm-1" for="createTime">创建时间: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="createTime" id="createTime" placeholder="创建时间" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="topic">话题: </label>
+                                <div class=" col-sm-5">
+                                    <select class="form-control" name="topic" id="topic">
+										
+									</select>
+                                </div>
+                                <label class="control-label col-sm-1" for="createType">创建类型: </label>
+                                <div class=" col-sm-5">
+                                    <select class="form-control" name="createType" id="createType">
+										
+									</select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="articleAuth">作者: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="articleAuth" id="articleAuth" placeholder="作者" value="0" readonly>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <div id="editor">
+								   
+								</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-sm-10  col-lg-offset-2">
+                                    <button id="updateArticleBtn" class="btn btn-danger">保存</button>
+                                    <button id="cancelArticleBtnSubmit" class="btn btn-danger">取消</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
