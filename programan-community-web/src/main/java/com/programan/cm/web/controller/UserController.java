@@ -85,9 +85,18 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public JSONResult<User> getUserDetail(@PathVariable String id) {
+    public JSONResult<User> getUserDetailById(@PathVariable String id) {
         logger.info("/user/detail");
         User user = userManager.selectById(id);
+        logger.info("finished /user/detail");
+        return JSONResult.success(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/usdetail/{username}", method = RequestMethod.GET)
+    public JSONResult<User> getUserDetailByUserName(@PathVariable String username) {
+        logger.info("/user/detail");
+        User user = userManager.selectByUserName(username);
         logger.info("finished /user/detail");
         return JSONResult.success(user);
     }
@@ -120,6 +129,36 @@ public class UserController {
             logger.info("finished /user/list");
         } catch (Exception e) {
             logger.info("Insert user error:", e);
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", null);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public JSONResult updateUser(@RequestParam("userName") String userName,
+                                 @RequestParam("roleName") String roleName,
+                                 @RequestParam("realName") String realName,
+                                 @RequestParam("sex") String sex,
+                                 @RequestParam("birthday") String sbirthday,
+                                 @RequestParam("area") String area,
+                                 @RequestParam("industryId") String industryId,
+                                 @RequestParam("jobName") String jobName,
+                                 @RequestParam("introduction") String introduction) {
+        logger.info("/user/update");
+
+        try {
+            Industry industry = industryManager.selectById(industryId);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date birthday = sdf.parse(sbirthday);
+            User oldUser = userManager.selectByUserName(userName);
+            User user = new User(oldUser.getId(),userName, oldUser.getPwd(), roleName, realName, sex,
+                    new java.sql.Date(birthday.getTime()), area, industry, jobName, introduction,
+                    oldUser.getHeadImgUrl(), oldUser.getPnum());
+            userManager.saveUser(user);
+            logger.info("finished /user/update");
+        } catch (Exception e) {
+            logger.info("Update user error:", e);
             return JSONResult.failed("error", e.getMessage(), null);
         }
         return JSONResult.success("ok", "success", null);

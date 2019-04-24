@@ -1,4 +1,3 @@
-var callurl = "http://127.0.0.1:9999";
 
 function loadTabMenu(module_page, call_back1) {
 	$(document).ready(function() {

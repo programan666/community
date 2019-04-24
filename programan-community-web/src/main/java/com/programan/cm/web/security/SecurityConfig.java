@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //HTTP请求安全处理
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login.html").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/user/login").defaultSuccessUrl("/page/index").permitAll()
+        http.formLogin().loginPage("/login.html").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/user/login").defaultSuccessUrl("/index").permitAll()
             .and()
 //            .logout().logoutUrl("/index.html")
 //            .and()

@@ -32,13 +32,18 @@ Purchase: http://wrapbootstrap.com
     <link href="/assets/css/typicons.min.css" rel="stylesheet" />
     <link href="/assets/css/animate.min.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
-
+	<link rel="stylesheet" type="text/css" href="/css/index.css"/>
     <!--Page Related styles-->
     <link href="/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script src="/assets/js/skins.min.js"></script>
     <script src="/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+    	.page-content {
+	    min-width: 0px!important;
+	}
+    </style>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -109,22 +114,43 @@ Purchase: http://wrapbootstrap.com
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_industry_list_page()">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-graduation-cap"></i>
                             <span class="menu-text"> 行业管理 </span>
                         </a>
                     </li>
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_role_list_page()">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-key"></i>
                             <span class="menu-text"> 权限管理 </span>
                         </a>
                     </li>
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_user_role_list_page()">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-lock"></i>
                             <span class="menu-text"> 用户权限管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_topic_list_page()">
+                            <i class="fa fa-comments"></i>
+                            <span class="menu-text"> 话题管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_create_type_list_page()">
+                            <i class="fa fa-magic"></i>
+                            <span class="menu-text"> 文章创建类型管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_article_list_page()">
+                            <i class="fa fa-book"></i>
+                            <span class="menu-text"> 文章管理 </span>
                         </a>
                     </li>
                     
@@ -147,10 +173,15 @@ Purchase: http://wrapbootstrap.com
     <script src="/assets/js/datatable/dataTables.bootstrap.min.js"></script>
     <script src="/assets/js/datatable/datatables-init.js"></script>
     <script src="/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/wangEditor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/callUrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-industry.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-role.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-user-role.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-topic.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-createType.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-article.js" type="text/javascript" charset="utf-8"></script>
     <script>
     </script>
 </body>

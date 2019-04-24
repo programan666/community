@@ -1,7 +1,7 @@
 
 
 function fill_top_nav_page() {
-    loadNav('/html/top-nav.html', loadMenu);
+    loadNav('/page/top-nav', loadMenu);
 }
 
 function loadNav(module_page, call_back) {

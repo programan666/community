@@ -1,24 +1,18 @@
-<input type="text" placeholder="输入文章标题" class="form-control article-title"> 
+<input type="hidden" name="articleId" id="articleId" value="0" readonly=""/>
+<input type="text" placeholder="输入文章标题" class="form-control article-title" id="articleTitle"> 
 <div id="editor">
    
 </div>
 <div class="article-parameter">
 		<label>
 			<span>文章类型：</span>
-			<select name="articleType">
-				<option value="1" selected>原创</option>
-				<option value="1">转载</option>
-				<option value="1">翻译</option>
+			<select name="createType" id="createType">
 			</select>
 		</label>
 		<label>
 			<span>博客分类：</span>
-			<select name="blogType">
-				<option value="1" selected>人工智能</option>
-				<option value="1">大数据</option>
-				<option value="1">互联网</option>
-				<option value="1">游戏开发</option>
+			<select name="topic" id="topic">
 			</select>
 		</label>
 </div>
-<input type="button" class="submit-input" value="发布博客"/>
+<input id="saveArticleBtn" type="button" class="submit-input" value="发布博客"/>

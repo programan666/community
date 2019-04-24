@@ -1,11 +1,11 @@
 <div class="edit-page">
 	<div class="container">
 		<div class="edit-left">
-			<a href="#/user/profile" onfocus="this.blur();" onclick="updateUserInfo(0)">个人资料</a>
-			<a href="#/user/follow" onfocus="this.blur();" onclick="updateUserInfo(1)">我的关注</a>
-			<a href="#/user/funs" onfocus="this.blur();" onclick="updateUserInfo(2)">我的粉丝</a>
+			<a href="#/user/info" onfocus="this.blur();">个人资料</a>
+			<a href="#/user/follow" onfocus="this.blur();">我的关注</a>
+			<a href="#/user/funs" onfocus="this.blur();">我的粉丝</a>
 			<hr />
-			<a href="#" onfocus="this.blur();" onclick="fill_article_manage_page()">我的博客</a>
+			<a href="#/article/manage" onfocus="this.blur();">我的博客</a>
 			<a href="#" onfocus="this.blur();">我的下载</a>
 			<a href="#" onfocus="this.blur();">我的论坛</a>
 		</div>
@@ -19,30 +19,30 @@
 					</div>
 					<div class="float-left user-info-top">
 						<div class="line-div">
-							<p>ID: 1843792</p>
+							<p id="user-info-id"></p>
 							<a class="float-right" href="#" onfocus="this.blur();" onclick="fill_article_manage_page();">个人主页></a>
 						</div>
 						<div class="line-div">
 							<span>关注 2</span>
 							<span>粉丝 3</span>
 							<span style="font-weight: 500; color: rgba(0,0,0,0.2);">|</span>
-							<span>P豆 76</span>
+							<span id="user-info-pnum"></span>
 							<span><a href="#" data-toggle="modal" data-target="#updatePScore">充值</a></span>
 						</div>
 					</div>
 					<div class="float-left user-info-bottom">
 						<div class="line-div">
-							<span>昵称：染红岁月</span>
+							<span id="user-info-rolename"></span>
 							<a class="float-right" href="#" id="showUpdateUserInfoBtn" onfocus="this.blur();" data-toggle="modal" data-target="#updateUserInfo">修改资料></a>
 						</div>
 						<ul>
-							<li>实名：王乾峰</li>
-							<li>性别：男</li>
-							<li>生日：1993-07-23</li>
-							<li>地区：中国 辽宁省 大连市</li>
-							<li>行业：计算机软件</li>
-							<li>职位：软件工程师</li>
-							<li>简介：希望能和大家相互学习</li>
+							<li id="user-info-realname"></li>
+							<li id="user-info-sex"></li>
+							<li id="user-info-birthday"></li>
+							<li id="user-info-area"></li>
+							<li id="user-info-industry"></li>
+							<li id="user-info-job"></li>
+							<li id="user-info-introduction"></li>
 						</ul>
 					</div>
 				</div>
@@ -94,17 +94,6 @@
 	</div>
 </div>
 
-<!--模态层-->
-<div class="modal fade" id="updateUserHeadImg" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    	<div class="modal-dialog">
-        	<div class="modal-content">
-            	<div class="modal-body">
-            		这是我的模态层的内容
-            </div>
-        </div>
-    </div> 
-</div>
-
 <div class="modal fade" id="updateUserInfo" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
         	<div class="modal-content">
@@ -116,53 +105,50 @@
             		<div class="data-update">
             			<div class="line-input">
 	                		<label>昵称：</label>
-	                		<input type="text" placeholder="" class="form-control"> 
+	                		<input type="text" placeholder="" class="form-control" id="roleName"> 
 	                	</div>
 	                	<div class="line-input">
 	                		<label>实名：</label>
-	                		<input type="text" placeholder="" class="form-control"> 
+	                		<input type="text" placeholder="" class="form-control" id="realName"> 
 	                	</div>
 	                	<div class="line-input">
 	                		<label>职位：</label>
-	                		<input type="text" placeholder="" class="form-control"> 
+	                		<input type="text" placeholder="" class="form-control" id="jobName"> 
 	                	</div>
 	                	<div class="line-input">
 	                		<label>性别：</label>
-	                		<select name="blogType">
+	                		<select name="sex" id="sex">
 							<option value="男">男</option>
 							<option value="女">女</option>
 						</select>
 	                	</div>
 	                	<div class="line-input">
 	                		<label>生日：</label>
-	                		<input data-provide="datepicker">
+	                		<input data-provide="datepicker" id="birthday">
 	                	</div>
 	                		<div class="line-input">
 	                		<label>行业：</label>
-	                		<select name="blogType">
-							<option value="1">计算机软件</option>
-							<option value="2">嵌入式</option>
-							<option value="4">网络游戏</option>
-							<option value="5">软件外包</option>
+	                		<select name="industry" id="industry">
+							
 						</select>
 	                	</div>
 	                	<div class="line-input">
 	                		<label>地区：</label>
-	                		<input type="text" placeholder="例如 中国河南省新乡市" class="form-control"> 
+	                		<input type="text" placeholder="例如 中国河南省新乡市" class="form-control" id="area"> 
 	                	</div>
 	                
 	                
             		</div>
         			<div class="line-input">
                 		<label>简介：</label>
-                		<textarea rows="3" cols="50">
+                		<textarea rows="3" cols="50" id="introduction">
 						
 					</textarea>
                 	</div>
             </div>
             <div class="modal-footer">
             		<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">修改</button>
+                <button type="button" class="btn btn-primary" onclick="saveUpdateUserInfo()" data-dismiss="modal">修改</button>
             </div>
         </div>
     </div> 
@@ -175,6 +161,25 @@
         	<div class="modal-content">
             	<div class="modal-body">
             		这是我的模态层的内容
+            </div>
+        </div>
+    </div> 
+</div>
+
+<!--模态层-->
+<div class="modal fade" id="updateUserHeadImg" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">修改头像</h4>
+            </div>
+            	<div class="modal-body">
+            		<div class="head-img">
+            			<img src="" id="imgs">
+            		</div>
+	            文件：<input onchange="get_img(this)" type="file" name="fileUpload" id="fileUpload"/>
+	            <input type="button" value="上传" onclick="uploadFile()"/>
             </div>
         </div>
     </div> 
