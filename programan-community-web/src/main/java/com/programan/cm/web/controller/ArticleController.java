@@ -3,6 +3,7 @@ package com.programan.cm.web.controller;
 
 import com.programan.cm.common.utils.JSONResult;
 import com.programan.cm.db.model.Article;
+import com.programan.cm.db.model.ArticleLike;
 import com.programan.cm.db.model.CreateType;
 import com.programan.cm.db.model.Topic;
 import com.programan.cm.web.manager.ArticleManager;
@@ -71,6 +72,19 @@ public class ArticleController {
     @RequestMapping(value = "/list")
     public JSONResult<List<Article>> getArticleList(){
         List<Article> articleList = articleManager.selectAll();
+        return JSONResult.success(articleList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/listByTopic/{topicId}/{fromIndex}/{pageNum}", method = RequestMethod.GET)
+    public JSONResult<List<Article>> getArticleList(@PathVariable String topicId,
+                                                    @PathVariable String fromIndex,
+                                                    @PathVariable String pageNum){
+        List<Article> articleList = articleManager.selectByTopicPage(topicManager.selectById(topicId),
+                Integer.parseInt(fromIndex), Integer.parseInt(pageNum));
+        if(articleList.size() == 0) {
+            return JSONResult.failed("error", null, null);
+        }
         return JSONResult.success(articleList);
     }
 

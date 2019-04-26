@@ -46,17 +46,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login.html").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/user/login").defaultSuccessUrl("/index").permitAll()
             .and()
-//            .logout().logoutUrl("/index.html")
-//            .and()
+            .logout().logoutUrl("/user/logout").logoutSuccessUrl("/index.html")
+            .and()
             .authorizeRequests()
             .antMatchers("/gold.html", "/bootstrap/**","/css/**","/html/**","/img/**",
-                    "/js/**","/layer/**","/page/**").permitAll()
-//            .antMatchers("/**").authenticated()
+                    "/js/**","/layer/**","/page/**","/index/**","/index").permitAll()
+            .antMatchers("/articleComment/**", "/articleLike/**", "/userFollow/**", "/userrole/**").authenticated()
 //            .antMatchers("/manager.html").hasRole("ADMIN")
 //            .antMatchers("/user/**").hasRole("USER")
 //            .regexMatchers("/admin1/.*").access("hasRole('ADMIN') or hasRole('ADMIN1')")
 //            .anyRequest().authenticated()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
             .and()
 //            .requiresChannel().antMatchers("/add").requiresSecure()//https://127.0.0.1:8443/add
 //            .and()

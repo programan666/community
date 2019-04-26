@@ -2,14 +2,10 @@ package com.programan.cm.web.controller;
 
 
 import com.mysql.cj.xdevapi.Collection;
-import com.programan.cm.db.model.Article;
-import com.programan.cm.db.model.CreateType;
-import com.programan.cm.db.model.Topic;
-import com.programan.cm.db.model.User;
-import com.programan.cm.web.manager.ArticleManager;
-import com.programan.cm.web.manager.CreateTypeManager;
-import com.programan.cm.web.manager.TopicManager;
-import com.programan.cm.web.manager.UserManager;
+import com.programan.cm.db.model.*;
+import com.programan.cm.web.manager.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +24,8 @@ import java.util.List;
 @RequestMapping("/")
 public class PageController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private ArticleManager articleManager;
 
     private UserManager userManager;
@@ -35,6 +33,27 @@ public class PageController {
     private CreateTypeManager createTypeManager;
 
     private TopicManager topicManager;
+
+    private UserFollowManager userFollowManager;
+
+    private ArticleLikeManager articleLikeManager;
+
+    private ArticleCommentManager articleCommentManager;
+
+    @Autowired
+    public void setArticleCommentManager(ArticleCommentManager articleCommentManager) {
+        this.articleCommentManager = articleCommentManager;
+    }
+
+    @Autowired
+    public void setArticleLikeManager(ArticleLikeManager articleLikeManager) {
+        this.articleLikeManager = articleLikeManager;
+    }
+
+    @Autowired
+    public void setUserFollowManager(UserFollowManager userFollowManager) {
+        this.userFollowManager = userFollowManager;
+    }
 
     @Autowired
     public void setTopicManager(TopicManager topicManager) {
@@ -60,17 +79,21 @@ public class PageController {
 
     @RequestMapping(value = "/index")
     public String goToIndex() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-        List<GrantedAuthority> list = new ArrayList<>();
-        userDetails.getAuthorities().forEach(userDetails1 -> list.add(userDetails1));
-        String role = list.get(0).getAuthority();
-        switch (role){
-            case "ROLE_USER":
-                return "/index";
-            case "ROLE_ADMIN":
-                return "/manager";
-            default:
-                return "/index";
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+            List<GrantedAuthority> list = new ArrayList<>();
+            userDetails.getAuthorities().forEach(userDetails1 -> list.add(userDetails1));
+            String role = list.get(0).getAuthority();
+            switch (role){
+                case "ROLE_USER":
+                    return "/index";
+                case "ROLE_ADMIN":
+                    return "/manager";
+                default:
+                    return "/index";
+            }
+        } catch (Exception e) {
+            return "/index";
         }
 
     }
@@ -115,11 +138,54 @@ public class PageController {
 
     @RequestMapping(value = "/page/article")
     public String getArticle(@RequestParam("articleId") String articleId, Model model) {
-        Article article = articleManager.selectById(articleId);
+
+        User loginUser = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            loginUser = userManager.selectByUserName(userDetails.getUsername());
+        } catch (Exception e) {
+            logger.info("当前用户没有登陆");
+        }
+        Article article = articleManager.selectById(articleId, true);
         User user = article.getUser();
+        UserFollow userFollow = userFollowManager.selectByBoth(user, loginUser);
+        ArticleLike articleLike = articleLikeManager.selectByBoth(article, loginUser);
+        List<Article> articleList = articleManager.selectAllByUser(user);
+        int likeNum = articleLikeManager.selectCountByArticle(article);
+        int totalFansNum = userFollowManager.selectCountByFocus(user);
+        int totalLikeNum = 0;
+        int totalCommentNum = 0;
+        String edit = "no";
+        for(Article article1 : articleList) {
+            totalLikeNum += articleLikeManager.selectCountByArticle(article1);
+            totalCommentNum += articleCommentManager.selectCountByArticle(article1);
+        }
+        String alreadyFans = "no";
+        String alreadyLike = "no";
+        if(userFollow != null) {
+            alreadyFans = "yes";
+        }
+        if(articleLike != null) {
+            alreadyLike = "yes";
+        }
+        if(loginUser!=null && loginUser.getId() == user.getId()) {
+            edit = "yes";
+        }
+        model.addAttribute("like", alreadyLike);
+        model.addAttribute("follow", alreadyFans);
         model.addAttribute("article", article);
         model.addAttribute("user", user);
+        model.addAttribute("likeNum", likeNum);
+        model.addAttribute("totalFansNum", totalFansNum);
+        model.addAttribute("totalLikeNum", totalLikeNum);
+        model.addAttribute("totalCommentNum", totalCommentNum);
+        model.addAttribute("edit", edit);
         return "/html/article";
+    }
+
+    @RequestMapping(value = "/page/blog")
+    public String getBlog() {
+        return "/html/blog";
     }
 
 

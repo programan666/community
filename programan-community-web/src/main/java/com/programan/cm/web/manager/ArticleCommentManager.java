@@ -30,8 +30,16 @@ public class ArticleCommentManager {
         return dataTablesOutput;
     }
 
+    public void saveArticleComment(ArticleComment articleComment) {
+        articleCommentRepository.saveArticleComment(articleComment);
+    }
+
     public List<ArticleComment> selectByArticle(Article article) {
         return articleCommentRepository.selectByArticle(article);
+    }
+
+    public Integer selectCountByArticle(Article article) {
+        return articleCommentRepository.selectCountByArticle(article);
     }
 
     public void deleteArticleComment(String id) {

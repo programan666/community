@@ -1,3 +1,18 @@
+function formatDateTime (date) {
+     var time = new Date(Date.parse(date));
+     time.setTime(time.setHours(time.getHours() + 8));
+     var Y = time.getFullYear() + '-';
+     var  M = this.addZero(time.getMonth() + 1) + '-';
+     var D = this.addZero(time.getDate()) + ' ';
+     var h = this.addZero(time.getHours()) + ':';
+     var m = this.addZero(time.getMinutes()) + ':';
+     var  s = this.addZero(time.getSeconds());
+     return Y + M + D + h + m + s;
+}
+
+function  addZero(num) {
+    return num < 10 ? '0' + num : num;
+} 
 
 function loadTabMenu(module_page, call_back1) {
 	$(document).ready(function() {

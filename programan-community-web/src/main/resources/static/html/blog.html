@@ -1,10 +1,11 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <main class="clearfix">
 
 	<!--sidebar-->
 	<aside id="sidebar">
 
-		<div class="inside">
-			<a class="left-nav" href="index.html" onfocus="this.blur();">前端</a>
+		<div class="inside" id="blogMenu">
+			<!--<a class="left-nav" href="index.html" onfocus="this.blur();">前端</a>
 			<a class="left-nav" href="#" onfocus="this.blur();">架构</a>
 			<a class="left-nav" href="#" onfocus="this.blur();">数据库</a>
 			<a class="left-nav" href="#" onfocus="this.blur();">人工智能</a>
@@ -12,7 +13,7 @@
 			<a class="left-nav" href="#" onfocus="this.blur();">安全</a>
 			<a class="left-nav" href="#" onfocus="this.blur();">云计算/大数据</a>
 			<a class="left-nav" href="#" onfocus="this.blur();">游戏开发</a>
-			<a class="left-nav" href="#" onfocus="this.blur();">编程语言</a>
+			<a class="left-nav" href="#" onfocus="this.blur();">编程语言</a>-->
 			
 		</div>
 
@@ -66,8 +67,8 @@
             </a>
         </div>
         
-        <ul class="article-main">
-        		<li>
+        <ul class="article-main" id="article-main">
+        		<!--<li>
         			<div class="article-box">
         				<div class="article-box-head">
         					<h2>
@@ -171,8 +172,12 @@
 	        				</div>
 	        			</dl>
         			</div>
-        		</li>
+        		</li>-->
         </ul>
+		
+		<div class="article-main" id="loading-ani" style="height: 100px;position: relative;">
+			<div id="loading-article" class="loading-indicator" style="z-index: 5001;display: none;"></div>
+		</div>
 		
 	</div>
 	<!--end main content-->
@@ -227,3 +232,4 @@
 	</div>
 	
 </main>
+</html>

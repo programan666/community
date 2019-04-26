@@ -217,6 +217,7 @@ aside {
 	float: none;
 	position: fixed;
 	top: 60px;
+	width: 140px;
 	z-index: 6;
 	left: auto;
 }
@@ -418,4 +419,16 @@ body {
 #main {
 	width: 100%;
 	margin: 0 auto;
+}
+
+.loading-indicator {
+    height: 80px;
+    width: 80px;
+    background: url('/assets/img/loading.gif') no-repeat center center;
+}
+
+.loading-indicator-overlay {
+    background-color: #FFFFFF;
+    opacity: 0.6;
+    filter: alpha(opacity = 60);
 }

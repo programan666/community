@@ -15,4 +15,7 @@ public interface ArticleCommentDao extends DataTablesRepository<ArticleComment, 
     @Query(value = "select ac from ArticleComment ac where ac.article = ?1")
     List<ArticleComment> selectByArticle(Article article);
 
+    @Query(value = "select count(ac) from ArticleComment ac where ac.article = ?1")
+    Integer selectCountByArticle(Article article);
+
 }

@@ -26,9 +26,17 @@ public class ArticleCommentRepository {
         return articleCommentDao.selectByArticle(article);
     }
 
+    public Integer selectCountByArticle(Article article) {
+        return articleCommentDao.selectCountByArticle(article);
+    }
+
     @Transactional
     public DataTablesOutput<ArticleComment> findArticleComment(DataTablesInput input) {
         return articleCommentDao.findAll(input);
+    }
+
+    public void saveArticleComment(ArticleComment articleComment) {
+        articleCommentDao.save(articleComment);
     }
 
     public void deleteArticleComment(String id){

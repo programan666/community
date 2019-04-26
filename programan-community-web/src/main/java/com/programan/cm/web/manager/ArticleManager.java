@@ -25,12 +25,18 @@ public class ArticleManager {
     }
 
     public Article selectById(String id) {
+        return articleRepository.selectById(id);
+    }
+
+    public Article selectById(String id, boolean read) {
         Article article = articleRepository.selectById(id);
         if(article == null) {
             return null;
         }
-        article.setReadNum(article.getReadNum() + 1);
-        articleRepository.saveArticle(article);
+        if(read) {
+            article.setReadNum(article.getReadNum() + 1);
+            articleRepository.saveArticle(article);
+        }
         return article;
     }
 
@@ -42,6 +48,10 @@ public class ArticleManager {
 
     public List<Article> selectAll() {
         return articleRepository.selectAll();
+    }
+
+    public List<Article> selectByTopicPage(Topic topic, int fromIndex, int num) {
+        return articleRepository.selectByTopicPage(topic, fromIndex, num);
     }
 
     public void saveArticle(Article article){

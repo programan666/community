@@ -71,6 +71,8 @@ dt {
     font-weight: 400;
     text-align: center;
     color: inherit;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
 .left-nav:hover {
@@ -89,12 +91,12 @@ dt {
 .article-main li {
 	width: 100%;
 	padding: 18px 23px;
-	background-color: rgba(241, 243, 244, 0.5);
-	border-bottom: 1px solid #FFFFFF;
+	background-color: #FFFFFF;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .article-main li:hover{
-	background-color: rgba(241, 243, 244, 0.3);
+	background-color: rgba(0,0,0,0.1);
 }
 
 .article-box {
@@ -106,6 +108,7 @@ dt {
 	margin-bottom: 4px;
 	font-size: 14px;
 	line-height: 24px;
+	min-height: 20px;
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -171,6 +174,7 @@ dt {
 	width: 100%;
 	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 	padding: 10px;
+	background-color: #FFFFFF;
 	margin-top: 5px;
 }
 
@@ -788,7 +792,7 @@ dt {
 	font-weight: 500;
 }
 
-.auth-info-top .submit-input {
+.auth-info-top .submit-input , .article-like-btn, .article-unlike-btn{
 	width: 70px;
 	height: 35px;
 	border-radius: 5px;
@@ -800,7 +804,22 @@ dt {
 	color: #1E9FFF;
 }
 
-.auth-info-top .submit-input:hover {
+.article-like-btn {
+	display: block;
+	line-height: 35px;
+    text-align: center;
+    font-size: 1.2em!important;
+}
+
+.article-unlike-btn {
+	display: block;
+	line-height: 35px;
+    text-align: center;
+    font-size: 1.2em!important;
+	background-color: rgba(106,206,238,0.3);
+}
+
+.auth-info-top .submit-input:hover, .article-like-btn:hover, .article-unlike-btn:hover{
 	background-color: rgba(106,206,238,0.4);
 }
 
@@ -1135,4 +1154,41 @@ dt {
 
 .article-comment .submit-input :hover{
 	background-color: rgba(55,203,223,0.7);
+}
+
+.article-comment-box{
+	padding: 10px 0;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.article-comment-box img {
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
+}
+
+.article-comment-box .top{
+	min-height: 45px;
+}
+
+.article-comment-box .bot{
+	height: 15px;
+}
+
+.article-box-body * {
+	font-size: 12px!important;
+    background: none!important;
+    font-weight: 300!important;
+    display: inline!important;
+    padding: 0 0!important;
+    margin: 0 0!important;
+    line-height: 20px!important;
+    height: 20px!important;
+    color: #000000!important;
+    border: none!important;
+}
+
+.loading-indicator {
+	position: static!important;
+	margin: 0 auto!important;
 }

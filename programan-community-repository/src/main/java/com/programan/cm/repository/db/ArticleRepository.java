@@ -54,6 +54,10 @@ public class ArticleRepository {
         return articleDao.selectAllByUser(user);
     }
 
+    public List<Article> selectByTopicPage(Topic topic, int fromIndex, int num) {
+        return articleDao.selectByTopicPage(topic == null ? null : topic.getId(), fromIndex, num);
+    }
+
     public List<Article> selectAll(String createTypeId, String topicId, String title, String userId) {
         return articleDao.selectAll(createTypeId.equals("0") ? null : Long.parseLong(createTypeId),
                 topicId.equals("0") ? null : Long.parseLong(createTypeId), title == null ? "" : title, userId);
