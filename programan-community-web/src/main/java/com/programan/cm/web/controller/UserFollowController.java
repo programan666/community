@@ -2,6 +2,7 @@ package com.programan.cm.web.controller;
 
 import com.programan.cm.common.utils.JSONResult;
 import com.programan.cm.db.model.Role;
+import com.programan.cm.db.model.User;
 import com.programan.cm.db.model.UserFollow;
 import com.programan.cm.web.manager.RoleManager;
 import com.programan.cm.web.manager.UserFollowManager;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/userFollow")
@@ -49,16 +52,43 @@ public class UserFollowController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/listByFocus/{userId}")
-    public JSONResult<List<UserFollow>> getUserFollowListByFocus(@PathVariable String userId){
-        List<UserFollow> userFollowList = userFollowManager.selectByFocus(userManager.selectById(userId));
-        return JSONResult.success(userFollowList);
+    @RequestMapping(value = "/getUserFollowCount")
+    public JSONResult<Map<String, Integer>> getUserFollowCount(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userManager.selectByUserName(userDetails.getUsername());
+        int focusNum = userFollowManager.selectCountByFans(user);
+        int fansNum = userFollowManager.selectCountByFocus(user);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("focusNum", focusNum);
+        result.put("fansNum", fansNum);
+        return JSONResult.success(result);
     }
 
     @ResponseBody
     @RequestMapping(value = "/listByFans/{userId}")
     public JSONResult<List<UserFollow>> getUserFollowListByFans(@PathVariable String userId){
-        List<UserFollow> userFollowList = userFollowManager.selectByFans(userManager.selectById(userId));
+        List<UserFollow> userFollowList;
+        if(userId.equals("0")) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userManager.selectByUserName(userDetails.getUsername());
+            userFollowList = userFollowManager.selectByFans(user);
+        } else {
+            userFollowList = userFollowManager.selectByFans(userManager.selectById(userId));
+        }
+        return JSONResult.success(userFollowList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/listByFocus/{userId}")
+    public JSONResult<List<UserFollow>> getUserFollowListByFocus(@PathVariable String userId){
+        List<UserFollow> userFollowList;
+        if(userId.equals("0")) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userManager.selectByUserName(userDetails.getUsername());
+            userFollowList = userFollowManager.selectByFocus(user);
+        } else {
+            userFollowList = userFollowManager.selectByFocus(userManager.selectById(userId));
+        }
         return JSONResult.success(userFollowList);
     }
 

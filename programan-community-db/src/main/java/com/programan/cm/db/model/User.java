@@ -39,6 +39,9 @@ public class User {
     @Column(name="birthday")
     private Date birthday;
 
+    @Column(name="phone")
+    private String phone;
+
     @Column(name="area")
     private String area;
 

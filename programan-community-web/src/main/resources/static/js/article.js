@@ -108,7 +108,7 @@ function loadComment() {
             		var html = '';
             		html += '<div class="article-comment-box">';
             		html += '<div class="top">';
-            		html += '<a href="#"><img src="/img/test/xiaohuangren.png"/></a>';
+            		html += '<a href="#"><img src="' + articleComment.user.headImgUrl + '"/></a>';
             		html += '<a href="#">' + articleComment.user.roleName + ':</a>';
             		html += '<span>' + articleComment.info + '</span>';
             		html += '</div>';
@@ -122,7 +122,7 @@ function loadComment() {
     });
 }
 
-function followUser(focusIdi){
+function followUser(focusIdi, reload){
 	var followData = {
 		id: '0',
 		focusId: focusIdi
@@ -135,11 +135,15 @@ function followUser(focusIdi){
         dataType: 'json',
         success: function(data) {
            if (handleAjaxResult(data, "关注成功")) {
-           		$('#followBtn').val('取消关注');
-           		$('#followBtn').attr("onclick","unFollowUser(" + focusIdi + ");");
-           		$('#unFollowBtn').val('取消关注');
-           		$('#unFollowBtn').attr("onclick","unFollowUser(" + focusIdi + ");");
-           		$('#totalFansNum').html(Number($('#totalFansNum').html()) + 1);
+           		if(reload == 1) {
+	        			loadMyFans();
+	        		} else {
+	        			$('#followBtn').val('取消关注');
+	           		$('#followBtn').attr("onclick","unFollowUser(" + focusIdi + ",0);");
+	           		$('#unFollowBtn').val('取消关注');
+	           		$('#unFollowBtn').attr("onclick","unFollowUser(" + focusIdi + ",0);");
+	           		$('#totalFansNum').html(Number($('#totalFansNum').html()) + 1);
+	        		}
            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -151,7 +155,7 @@ function followUser(focusIdi){
     });
 }
 
-function unFollowUser(focusIdi) {
+function unFollowUser(focusIdi, reload) {
 	$.ajax({
         type: "post",
         url: callurl + "/userFollow/deleteByBoth/"+focusIdi,
@@ -160,17 +164,22 @@ function unFollowUser(focusIdi) {
         contentType: 'application/json; charset=UTF-8',
         success: function(data) {
            if (handleAjaxResult(data, "取消关注成功")) {
-           		$('#followBtn').val('关注');
-           		$('#followBtn').attr("onclick","followUser(" + focusIdi + ");");
-           		$('#unFollowBtn').val('关注');
-           		$('#unFollowBtn').attr("onclick","followUser(" + focusIdi + ");");
-           		$('#totalFansNum').html(Number($('#totalFansNum').html()) - 1);
+	           	if(reload == 1) {
+			    		loadMyFollow();
+			    } else {
+			    		$('#followBtn').val('关注');
+	           		$('#followBtn').attr("onclick","followUser(" + focusIdi + ",0);");
+	           		$('#unFollowBtn').val('关注');
+	           		$('#unFollowBtn').attr("onclick","followUser(" + focusIdi + ",0);");
+	           		$('#totalFansNum').html(Number($('#totalFansNum').html()) - 1);
+			    }
            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             layer.msg("失败");
         }
     });
+    
 }
 
 function likeThisArticle(articleIdi){

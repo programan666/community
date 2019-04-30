@@ -21,6 +21,9 @@ public interface ArticleDao extends DataTablesRepository<Article, Long> {
     @Query(value = "select a from Article a")
     List<Article> selectAll();
 
+    @Query(value = "select a from Article a where a.title like concat('%', ?1, '%')")
+    List<Article> selectAllByTitle(String title);
+
     @Query(value = "select a from Article a where a.user = ?1")
     List<Article> selectAllByUser(User user);
 

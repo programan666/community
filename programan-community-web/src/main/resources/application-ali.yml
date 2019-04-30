@@ -1,6 +1,6 @@
 programan:
     workspace:
-        path: /Users/apple/Workspace/community_workspace
+        path: /data/applications/community/static
 
 spring:
     datasource:

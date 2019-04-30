@@ -2,201 +2,22 @@
 	<div class="download-header">
 		<form class="form-horizontal" role="form" id="downloadForm">
 			<div class="dropdown">
-				<button type="button" class="btn btn-default dropdown-toggle" id="dropdownMenu" data-toggle="dropdown">
-	            		资源类型
-	                <span class="caret"></span>
-	            </button>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#">文档类</a>
-					</li>
-					<li>
-						<a href="#">工具类</a>
-					</li>
-					<li>
-						<a href="#">代码类</a>
-					</li>
-					<li>
-						<a href="#">其他</a>
-					</li>
-				</ul>
+	            <span>资源类型：</span>
+				<select class="form-control" name="fileType" id="fileType" style="width: 100px;display: inline;">
+										
+				</select>
+			
 			</div>
-			<div class="dropdown">
-				<button type="button" class="btn btn-default dropdown-toggle" id="dropdownMenu" data-toggle="dropdown">
-	            		分类
-	                <span class="caret"></span>
-	            </button>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#">人工智能</a>
-					</li>
-					<li>
-						<a href="#">音视频</a>
-					</li>
-					<li>
-						<a href="#">云计算</a>
-					</li>
-					<li>
-						<a href="#">数据库</a>
-					</li>
-				</ul>
-			</div>
-        		<input type="text" placeholder="输入关键字" class="form-control">    
-        		<input type="submit" value="搜索" class="btn btn-info">
+        		<input type="text" placeholder="输入关键字" class="form-control" id="downloadTitle">    
+        		<a href="#" class="btn btn-info" onclick="selectFileDownload()">搜索</a>
         </form>
 	</div>
 	<div class="download-body">
 		<div class="tab-group">
 		    <section id="downloadTotal" title="全部">
-		    		<dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
-		    		<dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
-		    		<dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
+		    		
 		    </section>
-		    <section id="downloadByNew" title="最新">
-		      <dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
-		    		<dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
-		    </section>
-		    <section id="downloadByPop" title="最热">
-		      <dl>
-		    			<dt>
-		    				<a href="#">
-		    					<img src="img/test/zip.png"/>
-		    				</a>
-		    			</dt>
-		    			<dd>
-		    				<a href="#">利用深度学习进行糖尿病视网膜病变检测（Diabetic Retinopathy Detection）</a>
-		    				<div class="download-msg">
-		    					<label>
-			    					<span>上传者：</span>
-			    					<em>programan</em>
-			    				</label>
-			    				<label>
-			    					<span>上传时间：</span>
-			    					<em>2019-01-04</em>
-			    				</label>
-			    				<label style="float: right;">
-			    					<span>积分/P豆：</span>
-			    					<em class="download-p">5</em>
-			    				</label>
-		    				</div>
-		    			</dd>
-		    		</dl>
-		    </section>
+		    
 		  </div>
 	</div>
 </div>

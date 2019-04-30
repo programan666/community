@@ -1,0 +1,110 @@
+<div id="user-add-page">
+    <div class="page-breadcrumbs">
+	    <ul class="breadcrumb">
+	        <li>
+	            <i class="fa fa-home"></i>
+	            <a href="#">IT技术社区</a>
+	        </li>
+	        <li>
+	            <a href="#">管理系统</a>
+	        </li>
+	        <li class="active">课程管理</li>
+	    </ul>
+	</div>
+    
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget flat radius-bordered">
+                    <div class="widget-header bg-danger">
+                        <span class="widget-caption">课程表单</span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                        	
+                        		<div class="form-group">
+                                <label class="control-label col-sm-1" for="id">ID: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="id" id="id" placeholder="user ID" value="0" readonly>
+                                </div>
+                                <label class="control-label col-sm-1" for="courseTitle">课程名称: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="courseTitle" id="courseTitle" placeholder="课程名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="teacherName">讲师名称: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="teacherName" id="teacherName" placeholder="讲师名称">
+                                </div>
+                                <label class="control-label col-sm-1" for="teacherJob">讲师职业: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="teacherJob" id="teacherJob" placeholder="讲师职业">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="coursePrice">课程费用: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="coursePrice" id="coursePrice" placeholder="课程费用">
+                                </div>
+                                <label class="control-label col-sm-1" for="courseImgUrl">课程配图链接: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="courseImgUrl" id="courseImgUrl" placeholder="课程配图链接">
+                                    <a class="upload-btn" href="#" onfocus="this.blur();" data-toggle="modal" data-target="#uploadFile">
+	                                		<i class="fa fa-plus-circle"></i>
+	                                </a>
+                                </div>
+                               
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="courseVideoUrl">视频链接: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="courseVideoUrl" id="courseVideoUrl" placeholder="视频链接" value="">
+                                </div>
+                                <label class="control-label col-sm-1" for="courseVideoUrl">所属话题: </label>
+                                <div class=" col-sm-5">
+                                    <select id="topic" name="topic" class="form-control categoryList">
+                                    		
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="introduction">课程简介: </label>
+                                <div class=" col-lg-10">
+	                                <textarea class="form-control" id="introduction" name="introduction" rows="3" placeholder="课程简介"></textarea>
+	                            </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-sm-10  col-lg-offset-2">
+                                    <button id="saveCourseBtnSubmit" class="btn btn-danger">保存</button>
+                                    <button id="cancelCourseBtnSubmit" class="btn btn-danger">取消</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态层-->
+<div class="modal fade" id="uploadFile" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">上传文件</h4>
+            </div>
+            	<div class="modal-body">
+            		<div class="head-img">
+            			<img src="" id="imgs">
+            		</div>
+	            文件：<input onchange="get_img(this)" type="file" name="fileUpload" id="fileUpload"/>
+	            <input class="model-btn" type="button" value="上传" onclick="mUpdateImg('courseImgUrl', 'courseImgs')" style="margin-top: 10px;"/>
+            </div>
+        </div>
+    </div> 
+</div>

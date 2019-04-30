@@ -5,7 +5,7 @@
 			<div class="auth-info-top">
 				<span>
 					<a href="#" onfocus="this.blur();">
-						<img src="img/test/xiaohuangren.png"/>
+						<img th:src="${user.headImgUrl}"/>
 					</a>
 				</span>
 				<input type="hidden" name="authId" id="authId" th:value="${user.id}" />

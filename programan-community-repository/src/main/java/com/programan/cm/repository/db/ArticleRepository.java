@@ -33,6 +33,10 @@ public class ArticleRepository {
         return articleDao.selectById(id);
     }
 
+    public List<Article> selectAllByTitle(String title) {
+        return articleDao.selectAllByTitle(title);
+    }
+
     @Transactional
     public DataTablesOutput<Article> findArticle(DataTablesInput input) {
         return articleDao.findAll(input);

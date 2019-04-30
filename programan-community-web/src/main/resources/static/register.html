@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="UTF-8">
 		<title>注册</title>
@@ -18,13 +18,17 @@
 				<div class="container">
 					<div class="register-box">
 						<h2>欢迎注册</h2>
-						<form class="form-horizontal" role="form">
-			        		<input type="text" placeholder="输入用户名" class="form-control"> 
-			        		<input type="text" placeholder="输入密码" class="form-control"> 
-			        		<input type="text" placeholder="再次输入密码" class="form-control"> 
-			        		<input type="text" placeholder="输入手机号" class="form-control"> 
-			        		<input type="button" class="submit-input" name="" id="" value="注册" />
-			        </form>
+						<form class="form-horizontal" role="form" action="/register" method="post">
+			        		<input type="text" placeholder="输入用户名" name="username" id="username" class="form-control"> 
+			        		<input type="password" placeholder="输入密码" name="pwd" id="pwd" class="form-control">
+			        		<input type="password" placeholder="再次输入密码" name="pwd1" id="pwd1" class="form-control">
+			        		<input type="text" placeholder="请输入手机号" name="phone" id="phone" class="form-control">
+                        <select class="form-control" name="industry" id="industry" placeholder="请选择您从事的行业">
+                            <!--<option>所属分类</option>-->
+                            <option th:each="list:${industry}" th:value="${list.id}" th:text="${list.name }"></option>
+                        </select>
+			        		<input type="submit" class="submit-input" name="" id="" value="注册" />
+			            </form>
 					</div>
 				</div>
 			</div>

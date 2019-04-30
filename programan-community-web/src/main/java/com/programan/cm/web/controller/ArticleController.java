@@ -76,6 +76,13 @@ public class ArticleController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/listByTitle")
+    public JSONResult<List<Article>> getArticleListByTitle(@RequestParam("titleKey") String titleKey){
+        List<Article> articleList = articleManager.selectAllByTitle(titleKey);
+        return JSONResult.success(articleList);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/listByTopic/{topicId}/{fromIndex}/{pageNum}", method = RequestMethod.GET)
     public JSONResult<List<Article>> getArticleList(@PathVariable String topicId,
                                                     @PathVariable String fromIndex,
@@ -192,7 +199,7 @@ public class ArticleController {
         model.addAttribute("topicId", Long.parseLong(topicId));
         model.addAttribute("articleTitle", articleTitle);
         logger.info("finished /article/select");
-        return "/html/articleManage";
+        return "html/articleManage";
     }
 
 }

@@ -77,7 +77,7 @@ Purchase: http://wrapbootstrap.com
             <div class="navbar-container">
                 <!-- Navbar Barnd -->
                 <div class="navbar-header pull-left">
-                    <a href="#" class="navbar-brand">
+                    <a href="/user/logout" class="navbar-brand">
                         <small>
                             <img src="assets/img/logo.png" alt="" />
                         </small>
@@ -156,22 +156,57 @@ Purchase: http://wrapbootstrap.com
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_article_comment_list_page()">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-hand-paper-o"></i>
                             <span class="menu-text"> 评论管理 </span>
                         </a>
                     </li>
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_user_follow_list_page()">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-heart"></i>
                             <span class="menu-text"> 关注管理 </span>
                         </a>
                     </li>
                     
                     <li>
                         <a href="javascript:void(0)" onclick="open_article_like_list_page()">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-thumbs-up"></i>
                             <span class="menu-text"> 文章点赞管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_course_list_page()">
+                            <i class="fa fa-youtube-play"></i>
+                            <span class="menu-text"> 课程管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_user_course_list_page()">
+                            <i class="fa fa-cart-plus"></i>
+                            <span class="menu-text"> 课程购买管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_file_type_list_page()">
+                            <i class="fa fa-cubes"></i>
+                            <span class="menu-text"> 资源类型管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_file_download_list_page()">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                            <span class="menu-text"> 资源下载管理 </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0)" onclick="open_advertisement_list_page()">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                            <span class="menu-text"> 广告管理 </span>
                         </a>
                     </li>
                     
@@ -206,6 +241,21 @@ Purchase: http://wrapbootstrap.com
     <script src="/js/m-articleComment.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-userFollow.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-articleLike.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-course.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-userCourse.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-fileType.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-fileDownload.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-advertisement.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+		function get_img(f) {
+			var rd = new FileReader(); //创建文件读取对象
+			var files = f.files[0]; //获取file组件中的文件
+			rd.readAsDataURL(files); //文件读取装换为base64类型
+			rd.onloadend = function(e) {
+				document.getElementById("imgs").src = this.result;
+			}
+		}	
+    </script>
     
 </body>
 </html>

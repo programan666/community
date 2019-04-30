@@ -1,0 +1,85 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="article">
+	<div class="article-left">
+		<div class="auth-info">
+			<div class="auth-info-top">
+				<span>
+					<a href="#" onfocus="this.blur();">
+						<img src="img/test/xiaohuangren.png"/>
+					</a>
+				</span>
+				<input type="hidden" name="authId" id="authId" th:value="${user.id}" />
+				<span th:text="${user.roleName}">
+
+				</span>
+				<span>
+					<input type="button" th:if="${follow eq 'yes'}" class="submit-input" id="unFollowBtn" value="取消关注" th:onclick="'unFollowUser(' + ${user.id} + ')'"/>
+					<input type="button" th:if="${follow eq 'no'}" class="submit-input" id="followBtn" value="关注" th:onclick="'followUser(' + ${user.id} + ')'"/>
+				</span>
+			</div>
+			<div class="auth-info-middle">
+				<dl>
+					<dt>粉丝</dt>
+					<dd id="totalFansNum" th:text="${totalFansNum}"></dd>
+				</dl>
+				<dl>
+					<dt>喜欢</dt>
+					<dd id="totalLikeNum" th:text="${totalLikeNum}"></dd>
+				</dl>
+				<dl>
+					<dt>评论</dt>
+					<dd id="totalCommentNum" th:text="${totalCommentNum}"></dd>
+				</dl>
+			</div>
+			<div class="auth-info-bottom"></div>
+		</div>
+	</div>
+	<div class="article-right">
+		<div class="title">
+			<input type="hidden" name="articleId" id="articleId" th:value="${article.id}" />
+			<div class="artitle-type" id="articleCreateType" th:text="${article.createType.name}">
+
+			</div>
+			<h2 id="artitleTitle" th:text="${article.title}">
+
+			</h2>
+			<div>
+				<span id="articleCreateTime" th:text="${article.createTime}">
+
+				</span>
+				<span id="articleAuth" th:text="${user.roleName}">
+
+				</span>
+				<span style="margin: 0">阅读数：</span>
+				<span id="articleReadNum" th:text="${article.readNum}" style="margin-left: 0">
+
+				</span>
+				<span class="float-right">
+					<a href="#/edit/blog" th:if="${edit eq 'yes'}" th:onclick="'reditArticle(' + ${article.id} + ')'">编辑</a>
+				</span>
+			</div>
+		</div>
+		<div class="article-body" id="articleBody" th:utext="${article.body}"></div>
+		<div class="article-comment">
+			<a href="javascritp:void(0)" th:if="${like eq 'no'}" id="article-like-btn" class="article-like-btn" th:onclick="'likeThisArticle(' + ${article.id} + ')'"><i id="thumds" class="fa fa-thumbs-up"></i><span id="likeNum" th:text="${likeNum}"></span></a>
+			<a href="javascritp:void(0)" th:if="${like eq 'yes'}" id="article-like-btn" class="article-unlike-btn" th:onclick="'unLikeThisArticle(' + ${article.id} + ')'"><i id="thumds" class="fa fa-thumbs-o-up"></i><span id="likeNum" th:text="${likeNum}"></span></a>
+		</div>
+		<div class="article-comment">
+			<textarea name="articleComment" id="articleComment" class="article-comment-text" placeholder="想对作者说点什么呢"></textarea>
+			<input type="button" class="submit-input" value="发表评论" id="savaArticleCommentBtn">
+		</div>
+		<div class="article-comment" id="article-comment">
+			<!--<div class="article-comment-box">
+				<div class="top">
+					<a href="#"><img src="/img/test/xiaohuangren.png"/></a>
+					<a href="#">programan:</a>
+					<span>楼主，我想请教一下，我用进程池pool类做测试，Array数据不能做到共享是什么原因？这个Array和Value只支持Process类吗？</span>
+				</div>
+				<div class="bot">
+					2019-04-28 12:03:09
+				</div>
+			</div>-->
+		</div>
+	</div>
+</div>
+</html>

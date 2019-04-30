@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -39,6 +40,13 @@ public class PageController {
     private ArticleLikeManager articleLikeManager;
 
     private ArticleCommentManager articleCommentManager;
+
+    private IndustryManager industryManager;
+
+    @Autowired
+    public void setIndustryManager(IndustryManager industryManager) {
+        this.industryManager = industryManager;
+    }
 
     @Autowired
     public void setArticleCommentManager(ArticleCommentManager articleCommentManager) {
@@ -75,7 +83,12 @@ public class PageController {
         this.articleManager = articleManager;
     }
 
-
+    @RequestMapping(value = "/register")
+    public String getRegister(Model model) {
+        List<Industry> industryList = industryManager.selectAll();
+        model.addAttribute("industry", industryList);
+        return "register";
+    }
 
     @RequestMapping(value = "/index")
     public String goToIndex() {
@@ -86,41 +99,49 @@ public class PageController {
             String role = list.get(0).getAuthority();
             switch (role){
                 case "ROLE_USER":
-                    return "/index";
+                    return "index";
                 case "ROLE_ADMIN":
-                    return "/manager";
+                    return "manager";
                 default:
-                    return "/index";
+                    return "index";
             }
         } catch (Exception e) {
-            return "/index";
+            return "index";
         }
 
     }
 
     @RequestMapping(value = "/page/top-nav")
-    public String getTopNav() {
-        return "/html/top-nav";
+    public String getTopNav(Model model) {
+        User user = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+        } catch (Exception e) {
+            logger.info("当前用户未登录");
+        }
+        model.addAttribute("user", user);
+        return "html/top-nav";
     }
 
     @RequestMapping(value = "/page/edit")
     public String getEdit() {
-        return "/html/edit";
+        return "html/edit";
     }
 
     @RequestMapping(value = "/page/userBaseEdit")
     public String getUserBaseEdit() {
-        return "/html/userBaseEdit";
+        return "html/userBaseEdit";
     }
 
     @RequestMapping(value = "/page/userInfoEdit")
     public String getUserInfoEditt() {
-        return "/html/userInfoEdit";
+        return "html/userInfoEdit";
     }
 
     @RequestMapping(value = "/page/editBlog")
     public String getEditBlog() {
-        return "/html/editBlog";
+        return "html/editBlog";
     }
 
     @RequestMapping(value = "/page/articleManage")
@@ -133,7 +154,7 @@ public class PageController {
         model.addAttribute("articleList", articleList);
         model.addAttribute("createTypeList", createTypeList);
         model.addAttribute("topicList", topicList);
-        return "/html/articleManage";
+        return "html/articleManage";
     }
 
     @RequestMapping(value = "/page/article")
@@ -180,13 +201,40 @@ public class PageController {
         model.addAttribute("totalLikeNum", totalLikeNum);
         model.addAttribute("totalCommentNum", totalCommentNum);
         model.addAttribute("edit", edit);
-        return "/html/article";
+        return "html/article";
     }
 
     @RequestMapping(value = "/page/blog")
     public String getBlog() {
-        return "/html/blog";
+        return "html/blog";
     }
+
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String getRegister(@RequestParam("username") String username,
+                              @RequestParam("pwd") String pwd,
+                              @RequestParam("phone") String phone,
+                              @RequestParam("industry") String industryId,
+                              Model model) {
+        logger.info("/user/register");
+        User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
+        userManager.saveUser(user);
+        model.addAttribute("username", username);
+        model.addAttribute("pwd", pwd);
+        logger.info("finished /user/register");
+        return "login";
+    }
+
+    @RequestMapping(value = "/login.html")
+    public String getLogin() {
+        return "login";
+    }
+
+    @RequestMapping(value = "/forgetPwdPage", method = RequestMethod.GET)
+    public String getForgetPwd() {
+        return "forgetPassword";
+    }
+
 
 
 }

@@ -40,6 +40,10 @@ public class ArticleManager {
         return article;
     }
 
+    public List<Article> selectAllByTitle(String title) {
+        return articleRepository.selectAllByTitle(title);
+    }
+
     @Transactional
     public DataTablesOutput<Article> findArticle(DataTablesInput input) {
         DataTablesOutput<Article> dataTablesOutput = articleRepository.findArticle(input);

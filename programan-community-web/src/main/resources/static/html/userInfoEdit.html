@@ -7,27 +7,27 @@
 			<hr />
 			<a href="#/article/manage" onfocus="this.blur();">我的博客</a>
 			<a href="#" onfocus="this.blur();">我的下载</a>
-			<a href="#" onfocus="this.blur();">我的论坛</a>
+			<a href="#" onfocus="this.blur();">我的课程</a>
 		</div>
 		<div class="edit-right">
 			<div id="userInfoDiv" class="user-info-update" style="display: none;">
 				<h2>个人资料</h2>
 				<div class="info-body">
 					<div class="float-left user-img-f">
-						<img src="img/test/xiaohuangren.png" class="user-info-img"/>
+						<img src="" class="user-info-img" id="userHeaderImg"/>
 						<a href="#" onfocus="this.blur();" data-toggle="modal" data-target="#updateUserHeadImg">修改头像</a>
 					</div>
 					<div class="float-left user-info-top">
 						<div class="line-div">
 							<p id="user-info-id"></p>
-							<a class="float-right" href="#" onfocus="this.blur();" onclick="fill_article_manage_page();">个人主页></a>
+							<!--<a class="float-right" href="#" onfocus="this.blur();" onclick="fill_article_manage_page();">个人主页></a>-->
 						</div>
 						<div class="line-div">
-							<span>关注 2</span>
-							<span>粉丝 3</span>
+							<span id="my-focus-count"></span>
+							<span id="my-fans-count"></span>
 							<span style="font-weight: 500; color: rgba(0,0,0,0.2);">|</span>
 							<span id="user-info-pnum"></span>
-							<span><a href="#" data-toggle="modal" data-target="#updatePScore">充值</a></span>
+							<span><a href="#" data-toggle="modal" data-target="#updatePNumModel">充值</a></span>
 						</div>
 					</div>
 					<div class="float-left user-info-bottom">
@@ -49,45 +49,14 @@
 			</div>
 			<div id="userFollowDiv" class="user-info-update" style="display: none;">
 				<h2>我的关注</h2>
-				<div class="info-body">
-					<div class="follow-box">
-						<span>
-							<img src="img/test/xiaohuangren.png"/>
-						</span>
-						<span>
-							Programan
-						</span>
-						<span class="float-right">
-							<input type="button" class="follow" value="取消关注"/>
-						</span>
-					</div>
-					<div class="follow-box">
-						<span>
-							<img src="img/test/xiaohuangren.png"/>
-						</span>
-						<span>
-							Programan
-						</span>
-						<span class="float-right">
-							<input type="button" class="follow" value="取消关注"/>
-						</span>
-					</div>
+				<div class="info-body" id="my-follow">
+					
 				</div>
 			</div>
 			<div id="userFansDiv" class="user-info-update" style="display: none;">
 				<h2>我的粉丝</h2>
-				<div class="info-body">
-					<div class="follow-box">
-						<span>
-							<img src="img/test/xiaohuangren.png"/>
-						</span>
-						<span>
-							Programan
-						</span>
-						<span class="float-right">
-							<input type="button" class="follow" value="取消关注"/>
-						</span>
-					</div>
+				<div class="info-body" id="my-fans">
+					
 				</div>
 			</div>
 		</div>
@@ -123,10 +92,14 @@
 						</select>
 	                	</div>
 	                	<div class="line-input">
-	                		<label>生日：</label>
-	                		<input data-provide="datepicker" id="birthday">
+	                		<label>电话：</label>
+	                		<input type="text" placeholder="" class="form-control" id="phone">
 	                	</div>
-	                		<div class="line-input">
+						<div class="line-input">
+							<label>生日：</label>
+							<input data-provide="datepicker" id="birthday">
+						</div>
+						<div class="line-input">
 	                		<label>行业：</label>
 	                		<select name="industry" id="industry">
 							
@@ -156,11 +129,23 @@
 
 
 <!--模态层-->
-<div class="modal fade" id="updatePScore" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    	<div class="modal-dialog">
+<div class="modal fade" id="updatePNumModel" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog" style="margin-top: 100px;">
         	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">充值P豆</h4>
+            </div>
             	<div class="modal-body">
-            		这是我的模态层的内容
+            		<div class="form-group">
+                    		请输入充值数目:
+                        <input type="text" class="form-control" name="updatePNum" id="updatePNum" placeholder="请输入充值数目" value="0">
+                </div>
+                <div class="form-group" style="text-align: center;">
+                		<img src="/img/test/zhifu.png" class="zhifu-img"/>
+                		<p style="text-align: center;">10P豆/1元  请自觉支付</p>
+                		<input type="button" value="充值" onclick="updatePNum()" style="width: 100px;height: 30px;"/>
+                	</div>
             </div>
         </div>
     </div> 
@@ -179,7 +164,11 @@
             			<img src="" id="imgs">
             		</div>
 	            文件：<input onchange="get_img(this)" type="file" name="fileUpload" id="fileUpload"/>
-	            <input type="button" value="上传" onclick="uploadFile()"/>
+	            <input class="model-btn" type="button" value="上传" onclick="updateUserHeadImg()"/>
+	            <div id="uploadHeadImgResult">
+	            		<input type="text" id="uploadHeadImgResultUrl" readonly style="border: none;width: 100%;margin: 10px 0;"/>
+	            		<input type="button" class="model-btn" name="updateUserHeadImgBtn" id="updateUserHeadImgBtn" value="修改" style="display: none;" onclick="updateHeaderImg()"/>
+	            </div>
             </div>
         </div>
     </div> 

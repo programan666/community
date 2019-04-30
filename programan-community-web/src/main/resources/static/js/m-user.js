@@ -314,6 +314,7 @@ function getUserDetail(id) {
             $('#realName').val(content.realName);
             $('#sex').val(content.sex);
             $('#birthday').val(content.birthday);
+            $('#phone').val(content.phone);
             $('#area').val(content.area);
             $('#industry').val(content.industry.id);
             $('#jobName').val(content.jobName);
@@ -354,6 +355,7 @@ function saveUser() {
         realName: $('#realName').val(),
         sex: $('#sex').val(),
         birthday: $('#birthday').val(),
+		phone: $('#phone').val(),
         area: $('#area').val(),
         industryId: $('#industry').val(),
         jobName: $('#jobName').val(),
@@ -378,4 +380,29 @@ function saveUser() {
         }
     });
 
+}
+
+function mUpdateImg(showInputId, filePath) {
+	var formData = new FormData();
+	formData.append("file", $("#fileUpload")[0].files[0]);
+	formData.append("path", filePath);
+	$.ajax({
+		url: callurl + '/file/upload',
+		data: formData,
+		type: 'POST',
+		cache: false,
+		dataType: "json",
+		mimeType: "multipart/form-data",
+		processData: false,
+		contentType: false,
+		success: function(data) {
+			if(handleAjaxResult(data, "上传成功")) {
+				$('#' + showInputId).val(data.context);
+			}
+			$('#uploadFile').modal('hide');
+		},
+		error: function() {
+			console.log("上传出现异常");
+		},
+	});
 }

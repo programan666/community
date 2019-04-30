@@ -7,6 +7,7 @@ import com.programan.cm.db.model.Industry;
 import com.programan.cm.db.model.User;
 //import com.programan.cm.repository.manager.UserManager;
 import com.programan.cm.web.manager.IndustryManager;
+import com.programan.cm.web.manager.UserFollowManager;
 import com.programan.cm.web.manager.UserManager;
 import com.programan.cm.web.manager.UserRoleManager;
 import com.programan.cm.web.security.CmUserDetailService;
@@ -15,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +35,20 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     private UserManager userManager;
 
     private IndustryManager industryManager;
 
     private CmUserDetailService cmUserDetailService;
+
+    private UserFollowManager userFollowManager;
+
+    @Autowired
+    public void setUserFollowManager(UserFollowManager userFollowManager) {
+        this.userFollowManager = userFollowManager;
+    }
 
     @Autowired
     public void setIndustryManager(IndustryManager industryManager) {
@@ -93,6 +105,23 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/updatePNum/{pNum}", method = RequestMethod.GET)
+    public JSONResult updatePNum(@PathVariable String pNum) {
+        User user = null;
+        try {
+            logger.info("/updatePNum");
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+            user.setPnum(user.getPnum() + Long.parseLong(pNum));
+            userManager.saveUser(user);
+            logger.info("finished /updatePNum");
+        } catch (NumberFormatException e) {
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", null);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/usdetail/{username}", method = RequestMethod.GET)
     public JSONResult<User> getUserDetailByUserName(@PathVariable String username) {
         logger.info("/user/detail");
@@ -110,6 +139,7 @@ public class UserController {
                                          @RequestParam("realName") String realName,
                                          @RequestParam("sex") String sex,
                                          @RequestParam("birthday") String sbirthday,
+                                         @RequestParam("phone") String phone,
                                          @RequestParam("area") String area,
                                          @RequestParam("industryId") String industryId,
                                          @RequestParam("jobName") String jobName,
@@ -123,8 +153,8 @@ public class UserController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date birthday = sdf.parse(sbirthday);
             User user = new User(Long.parseLong(id),userName, pwd, roleName, realName, sex,
-                    new java.sql.Date(birthday.getTime()), area, industry, jobName, introduction,
-                    headImgUrl, Long.parseLong(pNum));
+                    new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
+                    headImgUrl.equals("") ? "/imgs/xiaohuangren.png" : headImgUrl, Long.parseLong(pNum));
             userManager.saveUser(user);
             logger.info("finished /user/list");
         } catch (Exception e) {
@@ -141,6 +171,7 @@ public class UserController {
                                  @RequestParam("realName") String realName,
                                  @RequestParam("sex") String sex,
                                  @RequestParam("birthday") String sbirthday,
+                                 @RequestParam("phone") String phone,
                                  @RequestParam("area") String area,
                                  @RequestParam("industryId") String industryId,
                                  @RequestParam("jobName") String jobName,
@@ -153,13 +184,99 @@ public class UserController {
             Date birthday = sdf.parse(sbirthday);
             User oldUser = userManager.selectByUserName(userName);
             User user = new User(oldUser.getId(),userName, oldUser.getPwd(), roleName, realName, sex,
-                    new java.sql.Date(birthday.getTime()), area, industry, jobName, introduction,
+                    new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
                     oldUser.getHeadImgUrl(), oldUser.getPnum());
             userManager.saveUser(user);
             logger.info("finished /user/update");
         } catch (Exception e) {
             logger.info("Update user error:", e);
             return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", null);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updateHeaderImg", method = RequestMethod.POST)
+    public JSONResult updateUser(@RequestParam("headImgUrl") String headImgUrl) {
+        logger.info("/user/update");
+        User user = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+            user.setHeadImgUrl(headImgUrl);
+            userManager.saveUser(user);
+            logger.info("finished /user/update");
+        } catch (Exception e) {
+            logger.info("Update user error:", e);
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", user.getHeadImgUrl());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+    public JSONResult updateUserPwd(@RequestParam("newPwd") String newPwd,
+                                    @RequestParam("phoneNumber") String phoneNumber) {
+        logger.info("/user/update");
+        User user = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+            if(phoneNumber.equals(user.getPhone())) {
+                user.setPwd(passwordEncoder.encode(newPwd.trim()));
+                userManager.saveUser(user);
+            } else {
+                return JSONResult.failed("error", "手机号码不正确", null);
+            }
+            logger.info("finished /user/update");
+        } catch (Exception e) {
+            logger.info("Update user error:", e);
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", user.getHeadImgUrl());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updatePhoneNumber", method = RequestMethod.POST)
+    public JSONResult updateUserPhoneNumber(@RequestParam("oldPhoneNumber") String oldPhoneNumber,
+                                    @RequestParam("newPhoneNumber") String newPhoneNumber) {
+        logger.info("/user/update");
+        User user = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+            if(oldPhoneNumber.equals(user.getPhone())) {
+                user.setPhone(newPhoneNumber);
+                userManager.saveUser(user);
+            } else {
+                return JSONResult.failed("error", "原手机号码不正确", null);
+            }
+            logger.info("finished /user/update");
+        } catch (Exception e) {
+            logger.info("Update user error:", e);
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", user.getHeadImgUrl());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/forgetPwd", method = RequestMethod.POST)
+    public JSONResult forgetPwd(@RequestParam("username") String username,
+                                @RequestParam("newPwd") String newPwd,
+                                @RequestParam("phoneNumber") String phoneNumber) {
+        logger.info("/user/update");
+        try {
+            User user = userManager.selectByUserName(username);
+            if(user.getPhone().equals(phoneNumber)) {
+                user.setPwd(passwordEncoder.encode(newPwd.trim()));
+                userManager.saveUser(user);
+            } else {
+                return JSONResult.failed("error", "手机号码不正确", null);
+            }
+            logger.info("finished /user/update");
+        } catch (Exception e) {
+            logger.info("Update user error:", e);
+            return JSONResult.failed("error", "用户不存在", null);
         }
         return JSONResult.success("ok", "success", null);
     }

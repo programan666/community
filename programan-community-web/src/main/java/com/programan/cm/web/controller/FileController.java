@@ -26,7 +26,8 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public JSONResult upload(@RequestParam("file") MultipartFile file){
+    public JSONResult upload(@RequestParam("file") MultipartFile file,
+                             @RequestParam("path") String path){
 
         //获取文件名
         String fileName = file.getOriginalFilename();
@@ -38,13 +39,14 @@ public class FileController {
         String filePath = config.getPath();
         try {
             //将图片保存到static文件夹里
-            file.transferTo(new File(filePath + "/" + fileName));
-            return JSONResult.success("ok", "success", null);
+            String savePath = "/" + path + "/" + fileName;
+            file.transferTo(new File(filePath + savePath));
+
+            return JSONResult.success("ok", "success", savePath);
         } catch (Exception e) {
             e.printStackTrace();
             return JSONResult.failed("error", e.getMessage(), null);
         }
-
     }
 
 }

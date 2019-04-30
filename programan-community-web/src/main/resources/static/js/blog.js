@@ -27,7 +27,8 @@ function loadBlog() {
 		footerThreshold: 100
 	});
 	$('#bootstrap-touch-slider').bsTouchSlider();
-	loadAdvertisement();
+//	loadAdvertisement();
+	getAdvertisement();
 	loadBlogData();
 	
 	var totalHeight = $(document).height();//整个文档高度
@@ -53,38 +54,45 @@ function loadBlog() {
 	
 }
 
-function loadAdvertisement() {
+function loadAdvertisement(adData) {
 	'use strict';
-
 	var slider = $('#slider'),
 	sliderList = $('<ul></ul>'),
 	bulletList = $('<ul></ul'),
-	sliderJSON = [
-	{
-		"imagePath": "img/test/1.jpg",
-		"order": "2",
-		"url": "#",
-		"slideText": "Appreciate It!"
-	},
-	{
-		"imagePath": "img/test/2.jpg",
-		"order": "3",
-		"url": "#",
-		"slideText": "I really do!"
-	}, 
-	{
-		"imagePath": "img/test/3.jpg",
-		"order": "1",
-		"url": "#",
-		"slideText": "Thank you, Egor!"
-	},
-	{
-		"imagePath": "img/test/4.jpg",
-		"order": "4",
-		"url": "#",
-		"slideText": "eks dee"
-	}
-];
+	
+	sliderJSON = adData;
+//	sliderJSON = [
+//	{
+//		"imagePath": "img/test/1.jpg",
+//		"order": "2",
+//		"url": "#",
+//		"slideText": "Appreciate It!"
+//	},
+//	{
+//		"imagePath": "img/test/2.jpg",
+//		"order": "3",
+//		"url": "#",
+//		"slideText": "I really do!"
+//	}, 
+//	{
+//		"imagePath": "img/test/3.jpg",
+//		"order": "1",
+//		"url": "#",
+//		"slideText": "Thank you, Egor!"
+//	},
+//	{
+//		"imagePath": "img/test/4.jpg",
+//		"order": "4",
+//		"url": "#",
+//		"slideText": "eks dee"
+//	},
+//	{
+//		"imagePath": "img/test/2.jpg",
+//		"order": "5",
+//		"url": "#",
+//		"slideText": "eks dee"
+//	}
+//];
 	//сортируем массив по order
 	sliderJSON.sort(function(a, b) {
 		return a.order - b.order;
@@ -182,6 +190,23 @@ function loadAdvertisement() {
 	};
 }
 
+function getAdvertisement() {
+	$.ajax({
+        type: "get",
+        url: callurl + "/advertisement/list",
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+            var content = data.context;
+            loadAdvertisement(content);
+        },
+        error: function(){
+        		return null;
+        }
+   });
+}
+
 function loadBlogData(){
 	loadBlogMenu(1);
 	loadArticles(topic);
@@ -222,7 +247,7 @@ function loadArticles(topicId, increment) {
         success: function(data) {
         		if(data.status == 'error') {
         			$('#loading-article').css('display', 'none');
-        			layer.msg('已经是最底部啦');
+//      			layer.msg('已经是最底部啦');
         			return;
         		}
         		fromIndex = fromIndex + pageNum;
@@ -243,7 +268,7 @@ function loadArticles(topicId, increment) {
 	            html += '<dl class="article-box-foot">';
 	            html += '<dt>';
 	            html += '<a href="#">';
-	            html += '<img src="img/test/xiaohuangren.png"/>';
+	            html += '<img src="' + article.user.headImgUrl + '"/>';
 	            html += '</a>';
 	            html += '</dt>';
 	            html += '<dd>';
@@ -280,4 +305,12 @@ $.History.bind('/index/blog',function(state){
 
 $.History.bind('/articleTopic',function(state){
 	fill_blog_page();
+});
+
+$.History.bind('/index/course',function(state){
+	fill_course_page();
+});
+
+$.History.bind('/index/download',function(state){
+	fill_download_page();
 });

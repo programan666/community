@@ -26,12 +26,12 @@
 		<a class="title" href="#" onfocus="this.blur();" th:onclick="'fill_article_page(' + ${alist.id} + ')'" th:text="${alist.title}"></a>
 		<div class="article-single-data">
 			<span th:text="${alist.createType.name}"></span>
-			<span th:text="${alist.createTime}">2019年04月02日 13:30:38</span>
+			<span th:text="${alist.createTime}"></span>
 			<span>
 				<i class="fa fa-leanpub fa-fw"></i>
 				<span th:text="${alist.readNum}"></span>
 			</span>
-			<span><i class="fa fa-commenting-o fa-fw"></i>2</span>
+			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
 			<div class="operation">
 				<a href="#/edit/blog" th:onclick="'reditArticle(' + ${alist.id} + ')'" style="border-right: 1px solid #B2B2B2;">编辑</a>
 				<a href="#" th:onclick="'fill_article_page(' + ${alist.id} + ')'" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>
@@ -39,57 +39,6 @@
 			</div>
 		</div>
 	</div>
-	<!--<div class="article-single">-->
-		<!--<a class="title" href="#" onfocus="this.blur();" onclick="fill_article_page()">LINUX LAMP环境搭建论坛升级为LNMP</a>-->
-		<!--<div class="article-single-data">-->
-			<!--<span>转载</span>-->
-			<!--<span>2019年04月02日 13:30:38</span>-->
-			<!--<span><i class="fa fa-leanpub fa-fw"></i>2</span>-->
-			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
-			<!--<div class="operation">-->
-				<!--<a href="#" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>-->
-				<!--<a href="#" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="article-single">-->
-		<!--<a class="title" href="#" onfocus="this.blur();" onclick="fill_article_page()">LINUX LAMP环境搭建论坛升级为LNMP</a>-->
-		<!--<div class="article-single-data">-->
-			<!--<span>转载</span>-->
-			<!--<span>2019年04月02日 13:30:38</span>-->
-			<!--<span><i class="fa fa-leanpub fa-fw"></i>2</span>-->
-			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
-			<!--<div class="operation">-->
-				<!--<a href="#" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>-->
-				<!--<a href="#" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="article-single">-->
-		<!--<a class="title" href="#" onfocus="this.blur();" onclick="fill_article_page()">LINUX LAMP环境搭建论坛升级为LNMP</a>-->
-		<!--<div class="article-single-data">-->
-			<!--<span>转载</span>-->
-			<!--<span>2019年04月02日 13:30:38</span>-->
-			<!--<span><i class="fa fa-leanpub fa-fw"></i>2</span>-->
-			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
-			<!--<div class="operation">-->
-				<!--<a href="#" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>-->
-				<!--<a href="#" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="article-single">-->
-		<!--<a class="title" href="#" onfocus="this.blur();" onclick="fill_article_page()">LINUX LAMP环境搭建论坛升级为LNMP</a>-->
-		<!--<div class="article-single-data">-->
-			<!--<span>转载</span>-->
-			<!--<span>2019年04月02日 13:30:38</span>-->
-			<!--<span><i class="fa fa-leanpub fa-fw"></i>2</span>-->
-			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
-			<!--<div class="operation">-->
-				<!--<a href="#" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>-->
-				<!--<a href="#" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
+	
 </div>
 </html>

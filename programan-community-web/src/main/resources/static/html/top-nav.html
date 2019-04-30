@@ -14,44 +14,45 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#/index/blog" onfocus="this.blur();">博客</a>
 				</li>
-				<li class="nav-item">
+				<!--<li class="nav-item">
 					<a class="nav-link" href="#" onfocus="this.blur();" onclick="fill_blog_page();">论坛</a>
+				</li>-->
+				<li class="nav-item">
+					<a class="nav-link" href="#/index/download" onfocus="this.blur();">下载</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#" onfocus="this.blur();" onclick="fill_download_page()">下载</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#" onfocus="this.blur();" onclick="fill_course_page()">课程</a>
+					<a class="nav-link" href="#/index/course" onfocus="this.blur();">课程</a>
 				</li>
 			</ul>
 
 			<ul class="nav navbar-nav ml-auto">
 				<div class="search d3">
 					<form>
-					  <input type="text" placeholder="搜索从这里开始...">
-					  <button type="submit"></button>
+					  <input type="text" placeholder="搜索博客..." id="selectIndexArticleInput">
+					  <button type="button" onclick="selectArticleByTitle()"></button>
 					</form>
 				</div>
 				<li class="nav-item" sec:authorize="!isAuthenticated()">
 					<a class="nav-link" href="./login.html" onfocus="this.blur();">登录</a>
 				</li>
 				<li class="nav-item" sec:authorize="!isAuthenticated()">
-					<a class="nav-link" href="./register.html" onfocus="this.blur();">注册</a>
+					<a class="nav-link" href="/register" onfocus="this.blur();">注册</a>
 				</li>
 				<li class="nav-item dropdown" id="user-dropdown" sec:authorize="isAuthenticated()">
 					
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">
-						<span class="reg" sec:authentication="name" id="susername"></span> 
+						<span class="reg" sec:authentication="name" id="susername" style="display: none"></span>
+						<span th:text="${user.roleName}"></span>
 						<span class="caret"></span>
 						<div class="user-img">
-							<img src="/img/test/xiaohuangren.png"/>
+							<img th:src="${user.headImgUrl}"/>
 						</div>
 					</a>
 					
 					<div class="dropdown-menu" aria-labelledby="download" id="user-dropdown-show">
 						<a class="dropdown-item" href="#" onclick="fill_article_manage_page()"><i class="fa fa-folder fa-fw"></i>&nbsp; 我的博客</a>
 						<a class="dropdown-item" href="#"><i class="fa fa-arrow-circle-down fa-fw"></i>&nbsp; 我的下载</a>
-						<a class="dropdown-item" href="#"><i class="fa fa-lemon-o fa-fw"></i>&nbsp; 我的P豆</a>
+						<a class="dropdown-item" href="#"><i class="fa fa-lemon-o fa-fw"></i>&nbsp; 我的课程</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#/user/info"><i class="fa fa-user-o fa-fw"></i>&nbsp; 个人中心</a>
 						<a class="dropdown-item" href="#" onclick="fill_user_base_info_page()"><i class="fa fa-gear fa-fw"></i>&nbsp; 账号设置</a>

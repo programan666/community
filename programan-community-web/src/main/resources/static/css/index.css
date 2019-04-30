@@ -277,6 +277,8 @@ dt {
 	margin: 0 auto;
 	padding: 15px;
 	margin-top: 20px;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    background-color: #FFFFFF;
 }
 
 .download-body dl {
@@ -327,6 +329,7 @@ dt {
 	width: 100%;
 	padding: 0 20px 20px 20px;
 	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+	background-color: #FFFFFF;
 }
 
 .course-list h3 {
@@ -355,6 +358,7 @@ dt {
 	float: left;
     margin-left: 2%;
     margin-top: 2%;
+    background-color: #FFFFFF;
 	box-shadow: 0 0 4px rgba(0,0,0,.2);
 }
 
@@ -1191,4 +1195,38 @@ dt {
 .loading-indicator {
 	position: static!important;
 	margin: 0 auto!important;
+}
+
+.register-box .form-horizontal select{
+	width: 100%;
+	margin: 10px 0;
+    height: 40px;
+    display: inline;
+}
+
+.zhifu-img {
+	width: 200px;
+	height: 200px;
+	display: block;
+	margin: 10px auto;
+}
+
+.model-btn {
+	width: 100px;
+    height: 34px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: #3385ff;
+    border-bottom: 1px solid #2d78f4;
+    margin: 0 auto;
+}
+
+.modal-dialog {
+	margin-top: 100px;
+}
+
+.upload-btn{
+	font-size: 1.5em;
+    line-height: 34px;
+    margin-left: 10px;
 }
