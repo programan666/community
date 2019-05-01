@@ -26,8 +26,7 @@ function loadBlog() {
 		sidebarTopMargin: 60,
 		footerThreshold: 100
 	});
-	$('#bootstrap-touch-slider').bsTouchSlider();
-//	loadAdvertisement();
+	
 	getAdvertisement();
 	loadBlogData();
 	loadRecommended();
@@ -55,9 +54,9 @@ function loadBlog() {
 	
 }
 
-function loadAdvertisement(adData) {
+function loadAdvertisement(elementId, adData, changeTime) {
 	'use strict';
-	var slider = $('#slider'),
+	var slider = $('#' + elementId),
 	sliderList = $('<ul></ul>'),
 	bulletList = $('<ul></ul'),
 	
@@ -68,30 +67,6 @@ function loadAdvertisement(adData) {
 //		"order": "2",
 //		"url": "#",
 //		"slideText": "Appreciate It!"
-//	},
-//	{
-//		"imagePath": "img/test/2.jpg",
-//		"order": "3",
-//		"url": "#",
-//		"slideText": "I really do!"
-//	}, 
-//	{
-//		"imagePath": "img/test/3.jpg",
-//		"order": "1",
-//		"url": "#",
-//		"slideText": "Thank you, Egor!"
-//	},
-//	{
-//		"imagePath": "img/test/4.jpg",
-//		"order": "4",
-//		"url": "#",
-//		"slideText": "eks dee"
-//	},
-//	{
-//		"imagePath": "img/test/2.jpg",
-//		"order": "5",
-//		"url": "#",
-//		"slideText": "eks dee"
 //	}
 //];
 	//сортируем массив по order
@@ -99,20 +74,17 @@ function loadAdvertisement(adData) {
 		return a.order - b.order;
 	});
 
-	//создаем слайды из json'a
 	$.each(sliderJSON, function(index, element) {
 		sliderList.append("<li><a href='"+ element.url +"'><img src='" + element.imagePath + "' alt=''></a>" +
 			"<div class='content'>"+ element.slideText +"</div></li>");
 		bulletList.append("<li id='bullet_"+ (index + 1) +"'></li>");
 	});
 
-	//добавляем классы к листам и добавляем их в DOM
 	sliderList.addClass('sliderList');
 	bulletList.addClass('bulletList');
 	slider.append(sliderList);
 	slider.append(bulletList);
 
-	//Делаем первый буллет активным
 	bulletList.find("li:first-child").addClass('bulletActive');
 
 	var firstSlide = sliderList.find("li:first-child"),
@@ -124,22 +96,18 @@ function loadAdvertisement(adData) {
 	slideIndex = 0,
 	intervalID;
 
-	//Добавляем первый и последний слайды в начало и конец массива (для плавной анимации)
 	lastSlide.clone().prependTo(sliderList);
 	firstSlide.clone().appendTo(sliderList);
 
-	//Рассчитываем ширину листа
 	sliderList.css({"width": (100 * sliderCount) + "%"});
 	sliderList.css({"margin-left": "-100%"});
 
-	//Рассчитываем позицию слайдов
 	sliderList.find("li").each(function(index) {
 		var leftPercent = (sliderWidth * index) + "%";
 		$(this).css({"left": leftPercent});
 		$(this).css({"width": sliderWidth + "%"});
 	});
 
-	//А вот и обработчики подъехали
 	buttonPrev.on('click', function() {
 		slide(slideIndex - 1);
 	});
@@ -151,14 +119,12 @@ function loadAdvertisement(adData) {
 		slide(id);
 	});
 
-	//Запускаем таймер и обрабатываем его остановку
 	startTimer();
 	slider.on('mouseenter mouseleave', function(e){ 
     	var onMouEnt = (e.type === 'mouseenter') ?  
         clearInterval(intervalID) : startTimer();               
 	});
 
-	//Управляет анимацией, землей, небом и даже Аллахом
 	function slide(newSlideIndex) {
 
 		var marginLeft = (newSlideIndex * (-100) - 100) + "%";
@@ -184,9 +150,8 @@ function loadAdvertisement(adData) {
 		});
 	};
 
-	//Нажимает на кнопку раз в 5 секунд
 	function startTimer() {
-		intervalID = setInterval(function() { buttonNext.click(); }, 5000);
+		intervalID = setInterval(function() { buttonNext.click(); }, changeTime);
 		return intervalID;
 	};
 }
@@ -194,18 +159,70 @@ function loadAdvertisement(adData) {
 function getAdvertisement() {
 	$.ajax({
         type: "get",
-        url: callurl + "/advertisement/list",
+        url: callurl + "/advertisement/listByLocation/blog-right",
         async: true,
         dataType: 'json',
         contentType: 'application/json; charset=UTF-8',
         success: function(data) {
             var content = data.context;
-            loadAdvertisement(content);
+            loadAdvertisement('slider', content, 5000);
         },
         error: function(){
         		return null;
         }
    });
+   
+   $.ajax({
+        type: "get",
+        url: callurl + "/advertisement2/listByLocation/blog-middle",
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+            var content = data.context;
+            loadAdvertisement2('bootstrap-touch-slider', content);
+        },
+        error: function(){
+        		return null;
+        }
+   });
+}
+
+function loadAdvertisement2(elementId, adData) {
+	var hcss = ['zoomInRight', 'flipInX', 'zoomInLeft'];
+	var pcss = ['fadeInLeft', 'lightSpeedIn', 'fadeInRight'];
+	var liele = $('#' + elementId + ' .carousel-indicators');
+	var bodyele = $('#' + elementId + ' .carousel-inner');
+	liele.html('');
+	bodyele.html('');
+	$.each(adData, function(index, advertisement2) {
+//		alert(index);
+//		alert(advertisement2.imgUrl);
+		if(index == 0) {
+			var html = '';
+			html += '<div class="item active">';
+			html += '<img src="' + advertisement2.imgUrl + '"  class="slide-image"/>';
+			html += '<div class="bs-slider-overlay"></div>';
+			html += '<div class="slide-text slide_style_center">';
+			html += '<h3 data-animation="animated ' + hcss[index%hcss.length] + '">' + advertisement2.textH + '</h3>';
+			html += '<p data-animation="animated ' + pcss[index%pcss.length] +'">' + advertisement2.textP + '</p>';
+			html += '</div></div>';
+			liele.append('<li data-target="#bootstrap-touch-slider" data-slide-to="' + index +'" class="active"></li>');
+			bodyele.append(html);
+		} else {
+			var html = '';
+			html += '<div class="item">';
+			html += '<img src="' + advertisement2.imgUrl + '"  class="slide-image"/>';
+			html += '<div class="bs-slider-overlay"></div>';
+			html += '<div class="slide-text slide_style_center">';
+			html += '<h3 data-animation="animated ' + hcss[index%hcss.length] + '">' + advertisement2.textH + '</h3>';
+			html += '<p data-animation="animated ' + pcss[index%pcss.length] +'">' + advertisement2.textP + '</p>';
+			html += '</div></div>';
+			liele.append('<li data-target="#bootstrap-touch-slider" data-slide-to="' + index +'"></li>');
+			bodyele.append(html);
+		}
+	});
+	$('#' + elementId).bsTouchSlider();
 }
 
 function loadBlogData(){

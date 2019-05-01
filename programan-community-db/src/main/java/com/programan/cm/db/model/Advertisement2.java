@@ -13,28 +13,25 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "advertisement_1")
-public class Advertisement {
+@Table(name = "advertisement_2")
+public class Advertisement2 {
 
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name = "img_url")
+    private String imgUrl;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "text_h")
+    private String textH;
 
-    @Column(name = "slide_text")
-    private String slideText;
+    @Column(name = "text_p")
+    private String textP;
 
     @Column(name = "create_date")
     private Date createDate;
-
-    @Column(name = "orders")
-    private Integer order;
 
     @Column(name = "location")
     private String location;

@@ -2,6 +2,8 @@ package com.programan.cm.web.controller;
 
 import com.programan.cm.common.Config;
 import com.programan.cm.common.utils.JSONResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private Config config;
 
     @Autowired
@@ -29,6 +33,7 @@ public class FileController {
     public JSONResult upload(@RequestParam("file") MultipartFile file,
                              @RequestParam("path") String path){
 
+        logger.info("/file/upload" + file.getSize());
         //获取文件名
         String fileName = file.getOriginalFilename();
         //获取文件后缀名

@@ -48,4 +48,8 @@ public class AdvertisementRepository {
         advertisementDao.deleteById(Long.parseLong(id));
     }
 
+    public List<Advertisement> selectByLocation(String location) {
+        return advertisementDao.selectByLocation(location);
+    }
+
 }

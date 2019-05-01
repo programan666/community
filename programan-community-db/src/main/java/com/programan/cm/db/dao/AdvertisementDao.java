@@ -18,4 +18,7 @@ public interface AdvertisementDao extends DataTablesRepository<Advertisement, Lo
     @Query(value = "select c from Advertisement c")
     List<Advertisement> selectAll();
 
+    @Query(value = "select c from Advertisement c where c.location = ?1")
+    List<Advertisement> selectByLocation(String location);
+
 }

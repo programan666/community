@@ -52,4 +52,8 @@ public class AdvertisementManager {
         advertisementRepository.deleteAdvertisement(id);
     }
 
+    public List<Advertisement> selectByLocation(String location) {
+        return advertisementRepository.selectByLocation(location);
+    }
+
 }

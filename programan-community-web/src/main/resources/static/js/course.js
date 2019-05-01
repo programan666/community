@@ -16,16 +16,34 @@ function loadPage(module_page, call_back) {
 }
 
 function loadCourse() {
-	$('.slider1').bscSlider({
-		duration: 3000,
-		effect: 1,
-		navigation: true,
-		effect_speed: 750,
-		easing: 'easeOutQuad',
-		height: 400
-	});
+//	$('.slider1').bscSlider({
+//		duration: 3000,
+//		effect: 1,
+//		navigation: true,
+//		effect_speed: 750,
+//		easing: 'easeOutQuad',
+//		height: 400
+//	});
 	loadCourseTopic();
 	loadCourseByTopic(0);
+	loadCourseAdvertisement();
+}
+
+function loadCourseAdvertisement(){
+	$.ajax({
+        type: "get",
+        url: callurl + "/advertisement/listByLocation/course-top",
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+            var content = data.context;
+            loadAdvertisement('slider-course-top', content, 5000);
+        },
+        error: function(){
+        		return null;
+        }
+   });
 }
 
 function loadCourseTopic(){

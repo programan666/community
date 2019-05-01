@@ -188,7 +188,7 @@ function open_file_download_detail_page(id) {
         /**
          * 取消保存
          */
-        $("#cancelFiledownloadBtnSubmit").on('click', function () {
+        $("#cancelFileDownloadBtnSubmit").on('click', function () {
             open_file_download_list_page();
         });
     })

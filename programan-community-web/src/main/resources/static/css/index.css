@@ -1238,3 +1238,34 @@ dt {
     line-height: 34px;
     margin-left: 10px;
 }
+
+.right-box .conn-box {
+	width: 280px;
+	/*height: 130px;*/
+	margin: 0 auto;
+}
+
+.img-box {
+	display: inline-block;
+	width: 49%;
+	/*height: 100%;*/
+}
+
+.img-box img {
+	width: 100%;
+	height: auto;
+	padding: 10px;
+}
+
+.img-box p{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 1.3em;
+	margin: 0;
+}
+
+.tel-box{
+	text-align: center;
+	height: 30px;
+}

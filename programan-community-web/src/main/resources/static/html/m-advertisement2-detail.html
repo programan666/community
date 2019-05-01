@@ -27,22 +27,22 @@
                                 <div class=" col-sm-5">
                                     <input type="text" class="form-control" name="id" id="id" placeholder="user ID" value="0" readonly>
                                 </div>
-                                <label class="control-label col-sm-1" for="imagePath">图片路径: </label>
+                                <label class="control-label col-sm-1" for="imgUrl">图片路径: </label>
                                 <div class=" col-sm-5">
-                                    <input type="text" class="form-control" name="imagePath" id="imagePath" placeholder="图片路径">
+                                    <input type="text" class="form-control" name="imgUrl" id="imgUrl" placeholder="图片路径">
                                     <a class="upload-btn" href="#" onfocus="this.blur();" data-toggle="modal" data-target="#uploadAdImg">
 	                                		<i class="fa fa-plus-circle"></i>
 	                                </a>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-1" for="adurl">点击url: </label>
+                                <label class="control-label col-sm-1" for="textH">上文字: </label>
                                 <div class=" col-sm-5">
-	                                <input type="text" class="form-control" name="adurl" id="adurl" placeholder="点击url">
+	                                <input type="text" class="form-control" name="textH" id="textH" placeholder="上文字">
 	                            </div>
-	                            <label class="control-label col-sm-1" for="slideText">内容: </label>
+	                            <label class="control-label col-sm-1" for="textP">下文字 </label>
                                 <div class=" col-sm-5">
-	                                <input type="text" class="form-control" name="slideText" id="slideText" placeholder="内容">
+	                                <input type="text" class="form-control" name="textP" id="textP" placeholder="下文字">
 	                            </div>
                             </div>
                             <div class="form-group">
@@ -50,13 +50,7 @@
                                 <div class=" col-sm-5">
 	                                <input type="text" class="form-control" name="createDate" id="createDate" placeholder="创建日期">
 	                            </div>
-	                            <label class="control-label col-sm-1" for="orders">播放顺序: </label>
-                                <div class=" col-sm-5">
-	                                <input type="text" class="form-control" name="orders" id="orders" placeholder="播放顺序">
-	                            </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-1" for="location">位置: </label>
+	                            <label class="control-label col-sm-1" for="location">位置: </label>
                                 <div class=" col-sm-5">
 	                                <input type="text" class="form-control" name="location" id="location" placeholder="位置">
 	                            </div>
@@ -64,8 +58,8 @@
                             
                             <div class="form-group">
                                 <div class="col-sm-10  col-lg-offset-2">
-                                    <button id="saveAdvertisementBtnSubmit" class="btn btn-danger">保存</button>
-                                    <button id="cancelAdvertisementBtnSubmit" class="btn btn-danger">取消</button>
+                                    <button id="saveAdvertisement2BtnSubmit" class="btn btn-danger">保存</button>
+                                    <button id="cancelAdvertisement2BtnSubmit" class="btn btn-danger">取消</button>
                                 </div>
                             </div>
                             
@@ -91,7 +85,7 @@
             		</div>
 	            文件：<input onchange="get_img(this)" type="file" name="fileUpload6" id="fileUpload6"/>
 	            <div class="progress-bar" id="progress-bar" style="float: none;"></div>
-	            <input class="model-btn" type="button" value="上传" onclick="mUploadFile('imagePath', 'ddvertisement', 'uploadAdImg', 'fileUpload6')" style="margin-top: 10px;"/>
+	            <input class="model-btn" type="button" value="上传" onclick="mUploadFile('imgUrl', 'ddvertisement', 'uploadAdImg', 'fileUpload6')" style="margin-top: 10px;"/>
             </div>
         </div>
     </div> 

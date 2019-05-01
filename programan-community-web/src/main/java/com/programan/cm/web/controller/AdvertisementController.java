@@ -48,6 +48,13 @@ public class AdvertisementController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/listByLocation/{location}")
+    public JSONResult<List<Advertisement>> getAdvertisementListByLocation(@PathVariable String location){
+        List<Advertisement> advertisementList = advertisementManager.selectByLocation(location);
+        return JSONResult.success(advertisementList);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public JSONResult<Advertisement> getAdvertisementDetail(@PathVariable String id) {
         logger.info("/advertisement/detail");
@@ -62,12 +69,13 @@ public class AdvertisementController {
                                           @RequestParam("imagePath") String imagePath,
                                           @RequestParam("url") String url,
                                           @RequestParam("slideText") String slideText,
-                                          @RequestParam("orders") String order) {
+                                          @RequestParam("orders") String order,
+                                          @RequestParam("location") String location) {
         logger.info("/advertisement/save");
 
         try {
             Advertisement advertisement = new Advertisement(Long.parseLong(id), imagePath, url, slideText,
-                    new Date(System.currentTimeMillis()), Integer.parseInt(order));
+                    new Date(System.currentTimeMillis()), Integer.parseInt(order), location);
             advertisementManager.saveAdvertisement(advertisement);
             logger.info("finished /advertisement/save");
         } catch (Exception e) {
