@@ -47,7 +47,7 @@ function loadFileDownloadList() {
 					"data": "title",
 					"ordering": false, // 禁用排序
 //					"searchable": false,
-					"width": "15%"
+					"width": "20%"
 				}, {
 					"name": "fileType.name", // 指定的列
 					"data": "fileType.name",
@@ -67,7 +67,7 @@ function loadFileDownloadList() {
 					"name": "price", // 指定的列
 					"data": "price",
 					"ordering": false, // 禁用排序
-					"width": "5%"
+					"width": "10%"
 				},  {
 					"name": "downloadNum", // 指定的列
 					"data": "downloadNum",
@@ -77,7 +77,7 @@ function loadFileDownloadList() {
 					"name": "id",
 					"data": "id",
 					"ordering": false, // 禁用排序
-					"width": "20%",
+					"width": "10%",
 					"render": function(data, type, full, meta) { //render改变该列样式,4个参数，其中参数数量是可变的。
 						return '<button name="fileDownloadDetail" class="btn btn-danger btn-sm btn-row" data-id=' + data + '>编 辑</button>';
 					}

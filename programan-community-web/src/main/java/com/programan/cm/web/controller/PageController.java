@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,13 @@ public class PageController {
     private ArticleCommentManager articleCommentManager;
 
     private IndustryManager industryManager;
+
+    private CourseManager courseManager;
+
+    @Autowired
+    public void setCourseManager (CourseManager courseManager) {
+        this.courseManager = courseManager;
+    }
 
     @Autowired
     public void setIndustryManager(IndustryManager industryManager) {
@@ -233,6 +241,19 @@ public class PageController {
     @RequestMapping(value = "/forgetPwdPage", method = RequestMethod.GET)
     public String getForgetPwd() {
         return "forgetPassword";
+    }
+
+    @RequestMapping(value = "/getVideo/{courseId}", method = RequestMethod.GET)
+    public String video(@PathVariable String courseId, Model model) {
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+            User user = userManager.selectByUserName(userDetails.getUsername());
+            Course course = courseManager.selectById(courseId);
+            model.addAttribute("courseUrl", course.getVideoUrl());
+        } catch (Exception e) {
+            model.addAttribute("courseUrl", "");
+        }
+        return "html/video";
     }
 
 

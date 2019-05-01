@@ -60,6 +60,9 @@
                                 <label class="control-label col-sm-1" for="courseVideoUrl">视频链接: </label>
                                 <div class=" col-sm-5">
                                     <input type="text" class="form-control" name="courseVideoUrl" id="courseVideoUrl" placeholder="视频链接" value="">
+                                    <a class="upload-btn" href="#" onfocus="this.blur();" data-toggle="modal" data-target="#uploadVideo">
+	                                		<i class="fa fa-plus-circle"></i>
+	                                </a>
                                 </div>
                                 <label class="control-label col-sm-1" for="courseVideoUrl">所属话题: </label>
                                 <div class=" col-sm-5">
@@ -103,7 +106,26 @@
             			<img src="" id="imgs">
             		</div>
 	            文件：<input onchange="get_img(this)" type="file" name="fileUpload" id="fileUpload"/>
-	            <input class="model-btn" type="button" value="上传" onclick="mUpdateImg('courseImgUrl', 'courseImgs')" style="margin-top: 10px;"/>
+	            <input class="model-btn" type="button" value="上传" onclick="mUploadFile('courseImgUrl', 'courseImgs', 'uploadFile', 'fileUpload')" style="margin-top: 10px;"/>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<div class="modal fade" id="uploadVideo" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">上传文件</h4>
+            </div>
+            	<div class="modal-body">
+            		<div class="head-img">
+            			<img src="" id="imgs" style="display: none;">
+            		</div>
+	            文件：<input onchange="get_img(this)" type="file" name="fileUpload2" id="fileUpload2"/>
+	            <div class="progress-bar" id="progress-bar" style="float: none;"></div>
+	            <input class="model-btn" type="button" value="上传" onclick="mUploadFile('courseVideoUrl', 'video', 'uploadVideo', 'fileUpload2')" style="margin-top: 10px;"/>
             </div>
         </div>
     </div> 

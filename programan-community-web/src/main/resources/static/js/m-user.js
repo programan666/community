@@ -381,10 +381,36 @@ function saveUser() {
     });
 
 }
+//
+//function mUpdateImg(showInputId, filePath) {
+//	var formData = new FormData();
+//	formData.append("file", $("#fileUpload")[0].files[0]);
+//	formData.append("path", filePath);
+//	$.ajax({
+//		url: callurl + '/file/upload',
+//		data: formData,
+//		type: 'POST',
+//		cache: false,
+//		dataType: "json",
+//		mimeType: "multipart/form-data",
+//		processData: false,
+//		contentType: false,
+//		success: function(data) {
+//			if(handleAjaxResult(data, "上传成功")) {
+//				$('#' + showInputId).val(data.context);
+//			}
+//			$('#uploadFile').modal('hide');
+//		},
+//		error: function() {
+//			console.log("上传出现异常");
+//		},
+//	});
+//}
 
-function mUpdateImg(showInputId, filePath) {
+//参数说明：showInputId:返回的url显示的控件id， filePath：上传路径  modelId:上传完需要关闭的model的id  inputFile: 输入文件id
+function mUploadFile(showInputId, filePath, modelId, inputFile) {
 	var formData = new FormData();
-	formData.append("file", $("#fileUpload")[0].files[0]);
+	formData.append("file", $("#" + inputFile)[0].files[0]);
 	formData.append("path", filePath);
 	$.ajax({
 		url: callurl + '/file/upload',
@@ -399,10 +425,23 @@ function mUpdateImg(showInputId, filePath) {
 			if(handleAjaxResult(data, "上传成功")) {
 				$('#' + showInputId).val(data.context);
 			}
-			$('#uploadFile').modal('hide');
+			$('#' + modelId).modal('hide');
 		},
 		error: function() {
 			console.log("上传出现异常");
 		},
+		xhr: function () {
+            myXhr = $.ajaxSettings.xhr();
+            if (myXhr.upload) {
+                //绑定progress事件的回调函数  
+                myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+            }
+            return myXhr; //xhr对象返回给jQuery使用
+        }
 	});
+}
+
+function progressHandlingFunction(event) {
+    var loaded = Math.floor(100 * (event.loaded / event.total)); //已经上传的百分比
+    $("#progress-bar").html(loaded + "%").css("width", loaded + "%");
 }

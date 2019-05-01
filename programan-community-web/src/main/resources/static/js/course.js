@@ -94,9 +94,10 @@ function learnCourse(courseId) {
         success: function(data) {
             var status = data.status;
 			if(status === '0' || status === 'ok' || status === 0) {
-				alert('可以开始学习啦');
+				window.open('/getVideo/' + courseId);
 			} else if(data.context == "noUser") {
-				window.open('/login.html');
+				$('#login-btn').click();
+				layer.msg("请先登录");
 			} else {
 				buyCourse(courseId);
 			}

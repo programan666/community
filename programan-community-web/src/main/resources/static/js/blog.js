@@ -30,6 +30,7 @@ function loadBlog() {
 //	loadAdvertisement();
 	getAdvertisement();
 	loadBlogData();
+	loadRecommended();
 	
 	var totalHeight = $(document).height();//整个文档高度
     var seeHeight = $(window).height();//浏览器可视窗口高度
@@ -296,7 +297,31 @@ function loadArticles(topicId, increment) {
         }
        
   });
-  
+}
+
+function loadRecommended() {
+	$.ajax({
+        type: "get",
+        url: callurl + "/recommended/list",
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+            var content = data.context;
+            $('#recommended-box').html("");
+            $.each(content, function(index, recommended) {
+            		var html = '';
+            		html += '<li><a href="#" onfocus="this.blur();" onclick="fill_article_page(' + recommended.article.id + ')" class="right-box-img">';
+            		html += '<img src="' + recommended.imgUrl + '"/>';
+            		html += '</a><a href="#" onfocus="this.blur();" onclick="fill_article_page(' + recommended.article.id + ')" class="right-box-word">';
+            		html += recommended.article.title;
+            		html += '</a></li>';
+            		html += '';
+            		html += '';
+            		$('#recommended-box').append(html);
+            });
+        }
+    });
 }
 
 $.History.bind('/index/blog',function(state){

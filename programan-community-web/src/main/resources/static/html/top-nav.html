@@ -33,10 +33,13 @@
 					</form>
 				</div>
 				<li class="nav-item" sec:authorize="!isAuthenticated()">
-					<a class="nav-link" href="./login.html" onfocus="this.blur();">登录</a>
+					<a class="nav-link" href="/login.html" onfocus="this.blur();">登录</a>
 				</li>
 				<li class="nav-item" sec:authorize="!isAuthenticated()">
 					<a class="nav-link" href="/register" onfocus="this.blur();">注册</a>
+				</li>
+				<li class="nav-item" sec:authorize="!isAuthenticated()">
+					<a class="nav-link" href="/login.html" target="_blank" onfocus="this.blur();" style="color: #2f3238;"><span id="login-btn">.</span></a>
 				</li>
 				<li class="nav-item dropdown" id="user-dropdown" sec:authorize="isAuthenticated()">
 					
@@ -51,9 +54,9 @@
 					
 					<div class="dropdown-menu" aria-labelledby="download" id="user-dropdown-show">
 						<a class="dropdown-item" href="#" onclick="fill_article_manage_page()"><i class="fa fa-folder fa-fw"></i>&nbsp; 我的博客</a>
-						<a class="dropdown-item" href="#"><i class="fa fa-arrow-circle-down fa-fw"></i>&nbsp; 我的下载</a>
-						<a class="dropdown-item" href="#"><i class="fa fa-lemon-o fa-fw"></i>&nbsp; 我的课程</a>
-						<div class="dropdown-divider"></div>
+						<!--<a class="dropdown-item" href="#"><i class="fa fa-arrow-circle-down fa-fw"></i>&nbsp; 我的下载</a>-->
+						<!--<a class="dropdown-item" href="#/user/course"><i class="fa fa-cart-plus fa-fw"></i>&nbsp; 我的课程</a>-->
+						<!--<div class="dropdown-divider"></div>-->
 						<a class="dropdown-item" href="#/user/info"><i class="fa fa-user-o fa-fw"></i>&nbsp; 个人中心</a>
 						<a class="dropdown-item" href="#" onclick="fill_user_base_info_page()"><i class="fa fa-gear fa-fw"></i>&nbsp; 账号设置</a>
 						<a class="dropdown-item" href="/user/logout"><i class="fa fa-unlink fa-fw"></i>&nbsp; 退出</a>

@@ -62,6 +62,9 @@
                                 <label class="control-label col-sm-1" for="downloadUrl">下载url: </label>
                                 <div class=" col-sm-5">
                                     <input type="text" class="form-control" name="downloadUrl" id="downloadUrl" placeholder="下载url" value="">
+                                    <a class="upload-btn" href="#" onfocus="this.blur();" data-toggle="modal" data-target="#uploadFileDownload">
+	                                		<i class="fa fa-plus-circle"></i>
+	                                </a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -83,4 +86,23 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="uploadFileDownload" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">上传文件</h4>
+            </div>
+            	<div class="modal-body">
+            		<div class="head-img">
+            			<img src="" id="imgs" style="display: none;">
+            		</div>
+	            文件：<input onchange="get_img(this)" type="file" name="fileUpload1" id="fileUpload1"/>
+	            <div class="progress-bar" id="progress-bar" style="float: none;"></div>
+	            <input class="model-btn" type="button" value="上传" onclick="mUploadFile('downloadUrl', 'fileDownload', 'uploadFileDownload', 'fileUpload1')" style="margin-top: 10px;"/>
+            </div>
+        </div>
+    </div> 
 </div>

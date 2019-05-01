@@ -15,13 +15,14 @@ function loadPage(module_page, call_back) {
 function fill_article_page(id) {
     var pageContent = $('.page-content');
     pageContent.empty();
-    pageContent.load('page/article', {articleId:id}, function(responseTxt,statusTxt,xhr) {
+    $('#loading-article-page').css('display', 'block'); 
+	pageContent.load('page/article', {articleId:id}, function(responseTxt,statusTxt,xhr) {
 		$('#savaArticleCommentBtn').click(function(){
 	    		savaArticleComment();
 	    });
 	    loadComment();
-    });
-    
+	    $('#loading-article-page').css('display', 'none'); 
+   });
 }
 
 function del_article(delid) {
@@ -87,7 +88,7 @@ function savaArticleComment(){
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
         		if(XMLHttpRequest.status == 200) {
-        			window.open('/login.html');
+        			$('#login-btn').click();
         		}
             layer.msg("失败");
         }
@@ -148,9 +149,9 @@ function followUser(focusIdi, reload){
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
         		if(XMLHttpRequest.status == 200) {
-        			window.open('/login.html');
+        			$('#login-btn').click();
         		}
-            layer.msg("失败");
+            layer.msg("请先登录");
         }
     });
 }
@@ -205,9 +206,9 @@ function likeThisArticle(articleIdi){
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
         		if(XMLHttpRequest.status == 200) {
-        			window.open('/login.html');
+        			$('#login-btn').click();
         		}
-            layer.msg("失败");
+            layer.msg("请先登录");
         }
     });
 }

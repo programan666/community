@@ -34,7 +34,7 @@ function loadFileDownload(){
             $.each(content, function(index, fileDownload) {
             		var html = '';
             		html += '<dl><dt><a href="#"><img src="' + fileDownload.fileType.imgUrl + '"/></a></dt><dd>';
-            		html += '<a href="#">' + fileDownload.title + '</a>';
+            		html += '<a href="javascript:void(0)"  onfocus="this.blur();" onclick="downloadFile('+ fileDownload.id +')">' + fileDownload.title + '</a>';
             		html += '<div class="download-msg"><label><span>上传者：</span>';
             		html += '<em>' + fileDownload.user.roleName + '</em>';
             		html += '</label><label><span>上传时间：</span>';
@@ -84,7 +84,7 @@ function selectFileDownload() {
             $.each(content, function(index, fileDownload) {
             		var html = '';
             		html += '<dl><dt><a href="#"><img src="' + fileDownload.fileType.imgUrl + '"/></a></dt><dd>';
-            		html += '<a href="#">' + fileDownload.title + '</a>';
+            		html += '<a href="javascript:void(0)"  onfocus="this.blur();" onclick="downloadFile('+ fileDownload.id +')">' + fileDownload.title + '</a>';
             		html += '<div class="download-msg"><label><span>上传者：</span>';
             		html += '<em>' + fileDownload.user.roleName + '</em>';
             		html += '</label><label><span>上传时间：</span>';
@@ -96,4 +96,48 @@ function selectFileDownload() {
             });
         }
   });
+}
+
+function downloadFile(id) {
+	if(!$('#susername').html()){
+		layer.msg("请先登录");
+		$('#login-btn').click();
+	} else {
+		$.ajax({
+	        type: "get",
+	        url: callurl + "/fileDownload/detail/" + id,
+	        async: true,
+			dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	        success: function(data) {
+	           var content = data.context;
+	           if(confirm('下载该资源会扣除 ' + content.price +' P豆，确定要下载？')) {
+					$('#downloadFile').modal('show');
+					$('#downloadFilePrice').val(content.price)
+					$('#downloadFileUrl').attr('href', content.url);
+				}
+	        },
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+	            layer.msg("请求错误");
+	        }
+	    });
+		
+	}
+}
+
+function updatePNum() {
+	$.ajax({
+        type: "post",
+        url: callurl + "/user/updatePNum",
+        async: true,
+        data: {pNum: $('#downloadFilePrice').val()},
+        dataType: 'json',
+        success: function(data) {
+           if (data.status == 'ok') {
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("请求错误");
+        }
+    });
 }

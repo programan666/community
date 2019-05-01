@@ -8,7 +8,7 @@
 	        <li>
 	            <a href="#">管理系统</a>
 	        </li>
-	        <li class="active">资源类型管理</li>
+	        <li class="active">今日推荐管理</li>
 	    </ul>
 	</div>
     
@@ -17,33 +17,35 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget flat radius-bordered">
                     <div class="widget-header bg-danger">
-                        <span class="widget-caption">资源类型表单</span>
+                        <span class="widget-caption">今日推荐表单</span>
                     </div>
                     <div class="widget-body">
                         <div class="form-horizontal">
+                        	
                         		<div class="form-group">
                                 <label class="control-label col-sm-1" for="id">ID: </label>
                                 <div class=" col-sm-5">
                                     <input type="text" class="form-control" name="id" id="id" placeholder="user ID" value="0" readonly>
                                 </div>
-                                <label class="control-label col-sm-1" for="fileTypeName">类型名称: </label>
+                                <label class="control-label col-sm-1" for="imgUrl">图片URL: </label>
                                 <div class=" col-sm-5">
-                                    <input type="text" class="form-control" name="fileTypeName" id="fileTypeName" placeholder="类型名称">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-1" for="imgUrl">imgUrl: </label>
-                                <div class=" col-sm-5">
-                                    <input type="text" class="form-control" name="imgUrl" id="imgUrl" placeholder="imgUrl" value="">
+                                    <input type="text" class="form-control" name="imgUrl" id="imgUrl" placeholder="图片URL">
                                     <a class="upload-btn" href="#" onfocus="this.blur();" data-toggle="modal" data-target="#uploadFile">
 	                                		<i class="fa fa-plus-circle"></i>
 	                                </a>
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-sm-1" for="articleId">文章ID: </label>
+                                <div class=" col-sm-5">
+                                    <input type="text" class="form-control" name="articleId" id="articleId" placeholder="文章ID">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
                                 <div class="col-sm-10  col-lg-offset-2">
-                                    <button id="saveFileTypeBtnSubmit" class="btn btn-danger">保存</button>
-                                    <button id="cancelFileTypeBtnSubmit" class="btn btn-danger">取消</button>
+                                    <button id="saveRecommendedBtnSubmit" class="btn btn-danger">保存</button>
+                                    <button id="cancelRecommendedBtnSubmit" class="btn btn-danger">取消</button>
                                 </div>
                             </div>
                             

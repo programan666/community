@@ -270,6 +270,8 @@ footer {
 	width: 100%;
 	min-height: 100%;
 	border: none;
+	width: 400px;
+    height: 250px;
 }
 
 .bulletList {

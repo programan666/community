@@ -71,7 +71,7 @@ function updateUserBaseInfo(index) {
 
 //控制userupdate的界面，修改不同信息
 function updateUserInfo(index) {
-	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv'];
+	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv', 'userCourseDiv'];
 	$.each(all_update_page, function(index, page) {
 		$('#' + page).css('display', 'none');
 	});
@@ -137,12 +137,24 @@ function clickUserInfo() {
 
 $.History.bind('/user/follow', function(state) {
 	updateUserInfo(1);
-	loadMyFollow();
+	setTimeout(function() {
+		loadMyFollow();
+	},500)
+	
 });
 
 $.History.bind('/user/funs', function(state) {
 	updateUserInfo(2);
-	loadMyFans();
+	setTimeout(function() {
+		loadMyFans();
+	},500)
+});
+
+$.History.bind('/user/course', function(state) {
+	updateUserInfo(3);
+	setTimeout(function() {
+		loadMyCourse();
+	},500)
 });
 
 $.History.bind('/article/manage', function(state) {
@@ -394,6 +406,37 @@ function loadMyFans() {
 	});
 }
 
+function loadMyCourse() {
+	$.ajax({
+		type: "get",
+		url: callurl + "/userCourse/listByUser/",
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-course').html('');
+			$.each(content, function(index, userCourse) {
+				var html = '';
+            		html += '<div class="course-box">';
+            		html += '<div class="course-img">';
+            		html += '<a href="javascript:void(0);" onclick="learnCourse(' + userCourse.course.id + ')"><img src="' + userCourse.course.imgUrl +'" alt="" /></a>';
+            		html += '</div>';
+            		html += '<div class="course-info">';
+            		html += '<a href="javascript:void(0);" onclick="learnCourse(' + userCourse.course.id + ')" onfocus="this.blur();">' + userCourse.course.title + '</a>';
+            		html += '<p>' + userCourse.course.teacherName + '·' + userCourse.course.teacherJob + '</p>';
+            		html += '<div class="skill">';
+            		html += userCourse.course.introduction;
+            		html += '</div></div>';
+            		html += '<div class="course-footer">';
+            		html += '<h3>' + userCourse.course.price + 'P豆</h3>';
+            		html += '</div></div>';
+				$('#my-course').append(html);
+			});
+		}
+	});
+}
+
 function updatePNum() {
 	$.ajax({
 		type: "get",
@@ -548,7 +591,7 @@ function forgetPwd() {
 		success: function(data) {
 			if(handleAjaxResult(data, "密码重置成功")) {
 				setTimeout(function(){
-					window.open('/login.html');
+					$('#login-btn').click();
 				},1000);
 			}
 		},

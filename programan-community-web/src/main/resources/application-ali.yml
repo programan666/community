@@ -16,3 +16,9 @@ spring:
         database: mysql
     thymeleaf:
         prefix: classpath:/static/
+    servlet:
+          multipart:
+              enabled: true
+              max-file-size: 400MB
+              max-request-size: 400MB
+              fileSizeThreshold: 10MB

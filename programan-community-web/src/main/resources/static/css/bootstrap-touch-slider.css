@@ -80,6 +80,7 @@
     cursor: pointer;
     overflow: hidden;
     line-height: 43px;
+    text-align: center;
     text-shadow: none;
     position: absolute;
     font-weight: normal;

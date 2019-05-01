@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 public interface ArticleDao extends DataTablesRepository<Article, Long> {
 
-
     @Query(value = "select a from Article a where id = ?1")
     Article selectById(Long id);
 
@@ -33,7 +32,7 @@ public interface ArticleDao extends DataTablesRepository<Article, Long> {
     @Query(value = "select a from Article a where a.topic = ?1")
     List<Article> selectByTopic(Topic topic);
 
-    @Query(value = "select * from article where IF (:topicId is not null, topic_id = :topicId , 1 = 1) order by read_num desc limit :fromIndex,:num",nativeQuery = true)
+    @Query(value = "select * from article where IF (:topicId is not null, topic_id = :topicId , 1 = 1) order by create_time desc limit :fromIndex,:num",nativeQuery = true)
     List<Article> selectByTopicPage(@Param("topicId") Long topicId, @Param("fromIndex") int fromIndex, @Param("num") int num);
 
 }

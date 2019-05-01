@@ -214,6 +214,24 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/updatePNum", method = RequestMethod.POST)
+    public JSONResult updateUserPNum(@RequestParam("pNum") String pNum) {
+        logger.info("/user/updatePNum");
+        User user = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+            user.setPnum(user.getPnum() - Long.parseLong(pNum));
+            userManager.saveUser(user);
+            logger.info("finished /user/updatePNum");
+        } catch (Exception e) {
+            logger.info("Update updatePNum error:", e);
+            return JSONResult.failed("error", e.getMessage(), null);
+        }
+        return JSONResult.success("ok", "success", user.getHeadImgUrl());
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
     public JSONResult updateUserPwd(@RequestParam("newPwd") String newPwd,
                                     @RequestParam("phoneNumber") String phoneNumber) {

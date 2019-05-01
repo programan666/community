@@ -1,16 +1,16 @@
 
-function open_advertisement_list_page() {
-	loadTabMenu('html/m-advertisement.html', loadADvertisementList)
+function open_recommended_list_page() {
+	loadTabMenu('html/m-recommended.html', loadRecommendedList)
 }
 
-function loadADvertisementList() {
+function loadRecommendedList() {
 	$(function() {
-		var table = $("#advertisementdatatable").DataTable({
+		var table = $("#recommendeddatatable").DataTable({
 			"processing": true,
 			"serverSide": true,
 			'ajax': {
 				'contentType': 'application/json',
-				'url': callurl + "/advertisement/tableList",
+				'url': callurl + "/recommended/tableList",
 				'type': 'POST',
 				'data': function(d) {
 					return JSON.stringify(d);
@@ -30,7 +30,7 @@ function loadADvertisementList() {
 					"name": "id", // 指定的列
 					"data": "id",
 					"ordering": true, // 禁用排序
-					"swidth": "10%",
+					"swidth": "25%",
 					"render": function(data, type, full, meta) {
 						return '<div class="checker"> <label> <input type="checkbox" class="checkboxes" value="' + data + '"> <span class="text"></span> </label> </div>';
 					}
@@ -43,28 +43,18 @@ function loadADvertisementList() {
 					//                      return '<div class="checker"> <label> <input type="checkbox" class="checkboxes" value="' + data + '"> <span class="text"></span> </label> </div>';
 					//                  }
 				}, {
-					"name": "slideText", // 指定的列
-					"data": "slideText",
+					"name": "article.title", // 指定的列
+					"data": "article.title",
 					"ordering": false, // 禁用排序
 //					"searchable": false,
-					"width": "30%"
-				}, {
-					"name": "createDate", // 指定的列
-					"data": "createDate",
-					"ordering": false, // 禁用排序
-					"width": "20%"
-				}, {
-					"name": "order", // 指定的列
-					"data": "order",
-					"ordering": false, // 禁用排序
-					"width": "10%"
+					"width": "40%"
 				}, {
 					"name": "id",
 					"data": "id",
 					"ordering": false, // 禁用排序
-					"width": "20%",
+					"width": "25%",
 					"render": function(data, type, full, meta) { //render改变该列样式,4个参数，其中参数数量是可变的。
-						return '<button name="advertisementDetail" class="btn btn-danger btn-sm btn-row" data-id=' + data + '>编 辑</button>';
+						return '<button name="recommendedDetail" class="btn btn-danger btn-sm btn-row" data-id=' + data + '>编 辑</button>';
 					}
 				}
 				//data指该行获取到的该列数据
@@ -103,14 +93,14 @@ function loadADvertisementList() {
 		 */
 		function initComplete(data) {
 			initSelectedCheckbox();
-			$('button[name="advertisementDetail"]').on('click', function() {
+			$('button[name="recommendedDetail"]').on('click', function() {
 				var id = $(this).data("id");
-				open_advertisement_detail_page(id);
+				open_recommended_detail_page(id);
 			});
 		}
 	});
 
-	$('#purgeAdvertisementBtn').click(function() {
+	$('#purgeRecommendedBtn').click(function() {
 		if(window.confirm('你确定删除吗？')){
              //alert("确定");
             var checkedList = $("table tbody tr input[type=checkbox]:checked");
@@ -120,7 +110,7 @@ function loadADvertisementList() {
 				var ids = checkedList.map(function() {
 					return $(this)[0].value
 				}).get().join(",");
-				deleteAdvertisement(ids);
+				deleteRecommended(ids);
 			}
          }else{
              //alert("取消");
@@ -128,23 +118,23 @@ function loadADvertisementList() {
          }
 	});
 	
-	$('#addAdvertisementBtn').click(function(){
-		open_advertisement_detail_page();
+	$('#addRecommendedBtn').click(function(){
+		open_recommended_detail_page();
 	});
 
 }
 
-function deleteAdvertisement(delid) {
+function deleteRecommended(delid) {
 	$.ajax({
 		type: "post",
-		url: callurl + "/advertisement/delete/" + delid,
+		url: callurl + "/recommended/delete/" + delid,
 		async: true,
 		dataType: 'json',
 		contentType: 'application/json; charset=UTF-8',
 		success: function(data) {
 			handleAjaxResult(data, '删除成功');
 			setTimeout(function(){
-				open_advertisement_list_page();
+				open_recommended_list_page();
 			},500)
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -157,63 +147,58 @@ function deleteAdvertisement(delid) {
  * 打开详情页
  * @param name
  */
-function open_advertisement_detail_page(id) {
-    loadTabMenu('html/m-advertisement-detail.html', function() {
+function open_recommended_detail_page(id) {
+    loadTabMenu('html/m-recommended-detail.html', function() {
         if (id) {
-            getAdvertisementDetail(id);
+            getRecommendedDetail(id);
         }
         /**
          * 保存分类
          */
-        $("#saveAdvertisementBtnSubmit").on('click', function(){
-            saveAdvertisement();
+        $("#saveRecommendedBtnSubmit").on('click', function(){
+            saveRecommended();
         });
 
         /**
          * 取消保存
          */
-        $("#cancelAdvertisementBtnSubmit").on('click', function () {
-            open_advertisement_list_page();
+        $("#cancelRecommendedBtnSubmit").on('click', function () {
+            open_recommended_list_page();
         });
     })
 }
 
-function getAdvertisementDetail(id) {
+function getRecommendedDetail(id) {
 	$.ajax({
         type: "get",
-        url: callurl + "/advertisement/detail/" + id,
+        url: callurl + "/recommended/detail/" + id,
         async: true,
         dataType: 'json',
         contentType: 'application/json; charset=UTF-8',
         success: function(data) {
             var content = data.context;
             $('#id').val(content.id);
-            $('#imagePath').val(content.imagePath);
-            $('#adurl').val(content.url);
-            $('#slideText').val(content.slideText);
-            $('#createDate').val(content.createDate);
-            $('#orders').val(content.order);
+            $('#imgUrl').val(content.imgUrl);
+            $('#articleId').val(content.article.id);
         }
     });
 }
 
-function saveAdvertisement() {
-    var role = {
+function saveRecommended() {
+    var recommended = {
         id: $('#id').val(),
-        imagePath: $('#imagePath').val(),
-        url: $('#adurl').val(),
-        slideText: $('#slideText').val(),
-        orders: $('#orders').val()
+        imgUrl: $('#imgUrl').val(),
+        articleId: $('#articleId').val()
     };
     $.ajax({
         type: "post",
-        url: callurl + "/advertisement/save",
+        url: callurl + "/recommended/save",
         async: true,
-        data: role,
+        data: recommended,
         dataType: 'json',
         success: function(data) {
            if (handleAjaxResult(data, "保存成功")) {
-               open_advertisement_list_page();
+               open_recommended_list_page();
            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

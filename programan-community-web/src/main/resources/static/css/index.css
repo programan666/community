@@ -38,10 +38,18 @@ dt {
 
 .page-content {
 	min-width: 1396px;
+	/*width: 1396px;*/
+    /*margin: 0 auto;*/
+}
+
+.blog-body{
+	width: 1396px;
+	margin: 0 auto;
 }
 
 .page-nav {
 	height: 57px;
+	min-width: 1200px;
 }
 
 .dropdown-menu i {
@@ -436,7 +444,7 @@ dt {
 }
 
 .login-footer {
-	height: 200px;
+	height: 300px;
 	background-color: rgb(55,61,65);
 }
 
