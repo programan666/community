@@ -51,21 +51,23 @@ function del_article(delid) {
 }
 
 function reditArticle(id) {
-	$.ajax({
-        type: "get",
-        url: callurl + "/article/detail/" + id,
-        async: true,
-        dataType: 'json',
-        contentType: 'application/json; charset=UTF-8',
-        success: function(data) {
-            var content = data.context;
-            $('#articleId').val(content.id);
-            $('#articleTitle').val(content.title);
-            $('#createType').val(content.createType.id);
-            $('#topic').val(content.topic.id);
-		    editor.txt.html(content.body);
-        }
-    });
+	setTimeout(function(){
+		$.ajax({
+	        type: "get",
+	        url: callurl + "/article/detail/" + id,
+	        async: true,
+	        dataType: 'json',
+	        contentType: 'application/json; charset=UTF-8',
+	        success: function(data) {
+	            var content = data.context;
+	            $('#articleId').val(content.id);
+	            $('#articleTitle').val(content.title);
+	            $('#createType').val(content.createType.id);
+	            $('#topic').val(content.topic.id);
+			    editor.txt.html(content.body);
+	        }
+	    });
+	}, 700);
 }
 
 function savaArticleComment(){

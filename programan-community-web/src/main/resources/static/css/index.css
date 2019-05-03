@@ -1269,3 +1269,14 @@ dt {
 	text-align: center;
 	height: 30px;
 }
+
+.navbar .navbar-brand small img {
+    height: 40px;
+    width: 165px;
+}
+
+.w-e-panel-tab-content input {
+	float: none;
+	font-size: inherit;
+	margin-left: 0;
+}

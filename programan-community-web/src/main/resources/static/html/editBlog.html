@@ -16,3 +16,22 @@
 		</label>
 </div>
 <input id="saveArticleBtn" type="button" class="submit-input" value="发布博客"/>
+
+<div class="modal fade" id="uploadImg1" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color: rgba(0,0,0,0.5);z-index: 99999;">
+    	<div class="modal-dialog" style="top: 100px;">
+        	<div class="modal-content">
+        		<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	            	<h4 class="text-center">上传文件</h4>
+            </div>
+            	<div class="modal-body">
+            		<div class="head-img">
+            			<img src="" id="imgs">
+            		</div>
+	            文件：<input onchange="get_img(this)" type="file" name="fileUpload6" id="fileUpload6"/>
+	            <div class="progress-bar" id="progress-bar" style="float: none;"></div>
+	            <input class="model-btn" type="button" value="上传" onclick="mArticleUploadFile('editor .w-e-panel-tab-content input', 'articleImgDir', 'uploadImg1', 'fileUpload6')" style="margin-top: 10px;"/>
+            </div>
+        </div>
+    </div> 
+</div>

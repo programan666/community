@@ -213,7 +213,26 @@ function getArticleDetail(id) {
             $('#createType').val(content.createType.id);
             $('#articleAuth').val(content.user.roleName);
 		    editor.create();
-		    editor.txt.html(content.body);
+		    $('.w-e-menu').click(function(){
+				if($('.w-e-active').html().toString().indexOf('网络图片') == -1) {
+					return false;
+				} else {
+					setTimeout(function(){
+						if($('.w-e-button-container').html().toString().length < 200) {
+							var html = '<div style="width: 100%"><div class="head-img" style="width:100px;height:100px">';
+							html += '<img src="" id="imgs" style="width:100px;height:100px">';
+							html += '</div>';
+							html += '文件：<input onchange="get_img(this)" type="file" name="fileUpload6" id="fileUpload6"/>';
+							html += '<div class="progress-bar" id="progress-bar" style="float: none;"></div>';
+							html += '<input class="model-btn" type="button" value="上传" onclick="mArticleUploadFile(\'editor .w-e-panel-tab-content input\', \'articleImgDir\', \'fileUpload6\')" style="margin-top: 10px;"/></div>';
+							$('.w-e-button-container').append(html);
+						}
+					},1000);
+				}
+			});
+			setTimeout(function(){
+				editor.txt.html(content.body);
+			}, 500);
         }
     });
     $('#updateArticleBtn').click(function(){
