@@ -4,8 +4,8 @@ programan:
 
 spring:
     datasource:
-            url: jdbc:mysql://127.0.0.1:3306/hotel_manage?characterEncoding=utf8&autoReconnect=true&useSSL=false
-            username: root
+            url: jdbc:mysql://101.132.112.87:3306/community?characterEncoding=utf8&autoReconnect=true&useSSL=false
+            username: programan
             password: acm666666
             driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
@@ -16,3 +16,9 @@ spring:
         database: mysql
     thymeleaf:
         prefix: classpath:/static/
+    servlet:
+          multipart:
+              enabled: true
+              max-file-size: 400MB
+              max-request-size: 400MB
+              fileSizeThreshold: 10MB

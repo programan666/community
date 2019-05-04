@@ -5,12 +5,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.xdevapi.Collection;
 import com.mysql.cj.xdevapi.JsonArray;
+import com.programan.cm.common.Config;
+import com.programan.cm.common.utils.FileSizeUtil;
 import com.programan.cm.common.utils.HttpUtil;
 import com.programan.cm.common.utils.JSONResult;
 import com.programan.cm.db.model.*;
 import com.programan.cm.web.manager.*;
 import com.alibaba.fastjson.JSONObject;
 import com.programan.cm.web.model.LatestTrend;
+import com.programan.cm.web.util.StatisticsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -48,6 +54,13 @@ public class PageController {
     private IndustryManager industryManager;
 
     private CourseManager courseManager;
+
+    private Config config;
+
+    @Autowired
+    public void setConfig(Config config) {
+        this.config = config;
+    }
 
     @Autowired
     public void setCourseManager (CourseManager courseManager) {
@@ -313,15 +326,6 @@ public class PageController {
                     detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("resolution").toString(),
                     detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("browser").toString(),
                     info.getJSONArray(i).get(3).toString());
-//            Map<String, String> lineResult = new HashMap<>();
-//            lineResult.put("visitDate", info.getJSONArray(i).get(0).toString());
-//            lineResult.put("visitArea", info.getJSONArray(i).get(1).toString());
-//            lineResult.put("visitIP", info.getJSONArray(i).get(2).toString());
-//            lineResult.put("visitTime", info.getJSONArray(i).get(3).toString());
-//            lineResult.put("os", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("os").toString());
-//            lineResult.put("visitorType", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("visitorType").toString());
-//            lineResult.put("resolution", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("resolution").toString());
-//            lineResult.put("browser", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("browser").toString());
             list.add(latestTrend);
         }
         DataTablesOutput<LatestTrend> output = new DataTablesOutput();
@@ -329,9 +333,45 @@ public class PageController {
         output.setRecordsTotal(length);
         output.setRecordsFiltered(length);
         output.setData(list);
+
+        Map<String, Integer> dayVisit = StatisticsUtil.calculateDayTotal(list);
+        Map<String, Integer> hourVisit = StatisticsUtil.calculateHoursTotal(list);
         model.addAttribute("latestTrendList", list);
-//        result.put("data", list);
+        model.addAttribute("dayVisit", dayVisit);
+        model.addAttribute("hourVisit", hourVisit );
         return "html/m-latestTrend";
+    }
+
+    @RequestMapping(value = "/getStaticSize", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONResult<Map<String, Float>> etStaticSize() throws FileNotFoundException, IOException {
+        String filePath = config.getPath();
+        File file = new File(filePath);
+        float fileSize = FileSizeUtil.getSize(file.listFiles()) / 1024;
+        float freeSpace = file.getFreeSpace() / 1024 / 1024 / 1024;
+        float usableSpace = file.getUsableSpace() / 1024 / 1024 / 1024;
+        float totalSpace = file.getTotalSpace() / 1024 / 1024 / 1024;
+        Map<String, Float> map = new HashMap<>();
+        map.put("fileSize", fileSize);
+        map.put("freeSpace", freeSpace);
+        map.put("usableSpace", usableSpace);
+        map.put("totalSpace", totalSpace);
+
+        return JSONResult.success(map);
+    }
+
+    @RequestMapping(value = "/getSingleStaticSize", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONResult<Map<String, Float>> getSingleStaticSize() throws FileNotFoundException, IOException {
+        String filePath = config.getPath();
+        List<String> fileList = FileSizeUtil.readfile(filePath);
+        Map<String, Float> workMap = new HashMap<>();
+        for(String path: fileList){
+            String fileName = path.split("/")[path.split("/").length - 1];
+            File file = new File(path);
+            workMap.put(fileName, FileSizeUtil.getSize(file.listFiles()));
+        }
+        return JSONResult.success(workMap);
     }
 
 

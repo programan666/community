@@ -12,7 +12,88 @@ function open_latest_trend() {
 	});	
 }
 
+function loadLatestTrendTable(dayVisit, hourVisit){
+	console.info(dayVisit);
+	console.info(hourVisit);
+	var dayVisitData = dayVisit.replace('{','').replace('}','').replace(/\s/g,"").split(',');
+	var hourVisitData = hourVisit.replace('{','').replace('}','').replace(/\s/g,"").split(',');
+	var dayVisitDate = [];
+	var dayVisitNum = [];
+	var hourVisitTime = [];
+	var hourVisitNum = []
+	var l = dayVisitData.length;
+	for(var h=0; h < l; h++){
+		console.info(dayVisitData[h].split('=')[0]);
+		dayVisitDate.push(dayVisitData[h].split('=')[0]);
+		dayVisitNum.push(dayVisitData[h].split('=')[1]);
+	}
+	var ll = hourVisitData.length;
+	for(var i=0; i < ll; i++){
+		hourVisitTime.push(hourVisitData[i].split('=')[0]);
+		hourVisitNum.push(hourVisitData[i].split('=')[1]);
+	}
+//	console.info(dayVisitDate);
+//	console.info(dayVisitNum);
+//	console.info(hourVisitTime);
+//	console.info(hourVisitNum);
+	loadTable('dayLatestTrend', dayVisitDate, dayVisitNum, '近期访问量');
+	loadTable('hourLatestTrend', hourVisitTime, hourVisitNum, '当天访问情况');
+}
 
+function loadTable(elementId, xValue, yValue, ititle){
+	var dom = document.getElementById(elementId);
+	var myChart = echarts.init(dom);
+	var app = {};
+	option = null;
+	option = {
+		title: {
+	        text: ititle
+	    },
+		tooltip : {
+	        trigger: 'axis',
+	        axisPointer: {
+	            type: 'cross',
+	            label: {
+	                backgroundColor: '#6a7985'
+	            }
+	        }
+	    },
+	    xAxis: {
+	        type: 'category',
+	        boundaryGap: false,
+	        data: xValue
+	    },
+	    yAxis: {
+	        type: 'value',
+	        splitLine: {
+                show: false
+            }
+	    },
+	    series: [{
+	        data: yValue,
+	        type: 'line',
+	        label: {
+                normal: {
+                    show: false,
+                    position: 'top'
+                }
+            },
+            itemStyle : {  
+                normal : {  
+                    color:'rgba(57,136,251,0.5)',  //圈圈的颜色
+                    lineStyle:{  
+                        color:'rgba(57,136,251,0.5)'  //线的颜色
+                    }  
+                }  
+            },  
+	        areaStyle: {}
+	    }]
+	};
+	;
+	if (option && typeof option === "object") {
+	    myChart.setOption(option, true);
+	}
+}
 
 //function loadLatestTrend() {
 //		$('#latesttrendatatable').DataTable({

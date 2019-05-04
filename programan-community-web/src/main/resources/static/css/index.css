@@ -1280,3 +1280,15 @@ dt {
 	font-size: inherit;
 	margin-left: 0;
 }
+
+.system-total{
+	width: 48%;
+    float: left;
+    padding: 2%;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+}
+
+.system-total p {
+	line-height: 40px;
+}

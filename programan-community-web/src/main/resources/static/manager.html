@@ -35,6 +35,8 @@ Purchase: http://wrapbootstrap.com
 	<link rel="stylesheet" type="text/css" href="/css/index.css"/>
     <!--Page Related styles-->
     <link href="/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/index.css"/>
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script src="/assets/js/skins.min.js"></script>
@@ -107,7 +109,7 @@ Purchase: http://wrapbootstrap.com
                    
                    <li>
                         <a href="javascript:void(0)" onclick="open_latest_trend()">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-eye"></i>
                             <span class="menu-text"> 实时访客 </span>
                         </a>
                     </li>
@@ -236,8 +238,22 @@ Purchase: http://wrapbootstrap.com
                 </ul>
             </div>
             <div class="page-content" id="page-content">
-                
-                
+            		<div class="system-total">
+            			<div id="fileSizePie" style="min-height: 545px;"></div>
+            			<p id="fileSize"></p>
+	                <p id="freeSpace"></p>
+	                <p id="usableSpace"></p>
+	                <p id="totalSpace"></p>
+            		</div>
+            </div>
+            
+            <div class="page-content" id="page-content">
+            		<div class="system-total">
+            			<div id="fileSizePie1" style="min-height: 545px;"></div>
+            			<div id="single-size">
+            				
+            			</div>
+            		</div>
             </div>
             
         </div>
@@ -255,6 +271,7 @@ Purchase: http://wrapbootstrap.com
     <script src="/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/wangEditor.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/jquery.showLoading.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/callUrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-industry.js" type="text/javascript" charset="utf-8"></script>
@@ -283,6 +300,142 @@ Purchase: http://wrapbootstrap.com
 				document.getElementById("imgs").src = this.result;
 			}
 		}	
+		$(document).ready(function(){
+			$.ajax({
+				type: "get",
+				url: callurl + "/getStaticSize",
+				async: true,
+				dataType: 'json',
+				contentType: 'application/json; charset=UTF-8',
+				success: function(data) {
+					var content = data.context;
+					$('#fileSize').html("工作占用空间：" + content.fileSize + "G");
+					$('#freeSpace').html("磁盘剩余空间：" + content.freeSpace + "G");
+					$('#usableSpace').html("磁盘可用空间：" + content.usableSpace + "G");
+					$('#totalSpace').html("磁盘总空间：" + content.totalSpace + "G");
+					loadpie(content.fileSize, content.freeSpace, content.usableSpace, content.totalSpace);
+				}
+			});
+			
+			$.ajax({
+				type: "get",
+				url: callurl + "/getSingleStaticSize",
+				async: true,
+				dataType: 'json',
+				contentType: 'application/json; charset=UTF-8',
+				success: function(data) {
+					var content = data.context;
+					var keys = [];
+					var values = [];
+					var sizeEle = $('#single-size');
+					sizeEle.html('');
+					for(var key in content){
+//					    console.log(key);        //键名
+//					    console.log(content[key]);   //键值
+					  	keys.push(key);
+					  	var singleData = {
+					  		value: content[key],
+					  		name: key
+					  	}
+					  	values.push(singleData);
+					  	var html = '<p>' + key + ':' + content[key] + 'M</p>';
+					  	sizeEle.append(html);
+					}
+					loadpie1(keys, values);					
+				}
+			});
+		});
+		
+		function loadpie1(xValue, yValue){
+			var dom = document.getElementById("fileSizePie1");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+			    title : {
+			        text: '工作空间使用占比',
+			        subtext: 'work',
+			        x:'center'
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'vertical',
+			        left: 'left',
+			        data: xValue
+			    },
+			    series : [
+			        {
+			            name: '所占空间',
+			            type: 'pie',
+			            radius : '55%',
+			            center: ['50%', '60%'],
+			            data: yValue,
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			};
+			;
+			if (option && typeof option === "object") {
+			    myChart.setOption(option, true);
+			}
+		}
+		
+		
+		function loadpie(fileSize, freeSpace, usableSpace, totalSpace){
+			var dom = document.getElementById("fileSizePie");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+			    title : {
+			        text: '磁盘空间使用情况',
+			        subtext: 'total',
+			        x:'center'
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'vertical',
+			        left: 'left',
+			        data: ['工作已用空间','剩余空间','已用空间']
+			    },
+			    series : [
+			        {
+			            name: '所占空间',
+			            type: 'pie',
+			            radius : '55%',
+			            center: ['50%', '60%'],
+			            data:[
+			            		{value:fileSize, name:'工作已用空间'},
+			                {value:freeSpace, name:'剩余空间'},
+			                {value:(totalSpace - freeSpace - fileSize), name:'已用空间'}
+			            ],
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			};
+			;
+			if (option && typeof option === "object") {
+			    myChart.setOption(option, true);
+			}
+		}
     </script>
     
 </body>

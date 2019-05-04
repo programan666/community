@@ -22,6 +22,8 @@
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <div class="widget">
+            		<div id="dayLatestTrend" class="echarts-table" style="min-height: 250px"></div>
+                <div id="hourLatestTrend" class="echarts-table" style="min-height: 250px"></div>
                 <div class="widget-header ">
                     <span class="widget-caption">实时访客</span>
                     <div class="widget-buttons">
@@ -36,6 +38,7 @@
                         </a>
                     </div>
                 </div>
+                
                 <div class="widget-body">
                     <div class="table-toolbar">
                         <!--<a id="addRoleBtn" href="javascript:void(0);" class="btn btn-default">
@@ -109,11 +112,19 @@
                         </tbody>
                         
                     </table>
+                    <input type="hidden" id="dayVisit" th:value="${dayVisit}">
+                    <input type="hidden" id="hourVisit" th:value="${hourVisit}">
                 </div>
             </div>
         </div>
     </div>
-    
-    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var dayVisit = $('#dayVisit').val();
+            var hourVisit = $('#hourVisit').val();
+            loadLatestTrendTable(dayVisit, hourVisit);
+        });
+
+    </script>
 </div>
 </html>
