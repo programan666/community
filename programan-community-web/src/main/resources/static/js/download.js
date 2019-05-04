@@ -112,9 +112,7 @@ function downloadFile(id) {
 	        success: function(data) {
 	           var content = data.context;
 	           if(confirm('下载该资源会扣除 ' + content.price +' P豆，确定要下载？')) {
-					$('#downloadFile').modal('show');
-					$('#downloadFilePrice').val(content.price)
-					$('#downloadFileUrl').attr('href', content.url);
+					showDownloadModel(content.price, content.url);
 				}
 	        },
 	        error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -125,7 +123,7 @@ function downloadFile(id) {
 	}
 }
 
-function updatePNum() {
+function updatePNumd() {
 	$.ajax({
         type: "post",
         url: callurl + "/user/updatePNum",
@@ -134,10 +132,37 @@ function updatePNum() {
         dataType: 'json',
         success: function(data) {
            if (data.status == 'ok') {
+           	
+           } else {
+           		layer.msg(data.errorMsg);
            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             layer.msg("请求错误");
         }
     });
+}
+
+function showDownloadModel(dprice, durl){
+	$.ajax({
+        type: "get",
+        url: callurl + "/user/getNowPNum",
+        async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+           var content = data.context;
+           if(Number(content) > Number(dprice)) {
+           		$('#downloadFile').modal('show');
+				$('#downloadFilePrice').val(dprice)
+				$('#downloadFileUrl').attr('href', durl);
+           } else {
+           	    layer.msg('P豆余额不足，请充值');
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("请求错误");
+        }
+    });
+	
 }

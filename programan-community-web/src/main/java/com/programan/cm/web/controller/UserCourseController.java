@@ -123,6 +123,9 @@ public class UserCourseController {
             Course course = courseManager.selectById(courseId);
             UserCourse userCourse = new UserCourse(Long.parseLong(id), user, course);
             user.setPnum(user.getPnum() - course.getPrice());
+            if(user.getPnum() < 0) {
+                return JSONResult.failed("error", "P豆余额不足", null);
+            }
             userCourseManager.saveUserCourse(userCourse);
             userManager.saveUser(user);          //购买课程扣除相应P豆
             logger.info("finished /userCourse/save");

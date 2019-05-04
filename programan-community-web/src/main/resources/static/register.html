@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/layer/layer.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div class="register-page">
@@ -19,20 +20,23 @@
 				<div class="container">
 					<div class="register-box">
 						<h2>欢迎注册</h2>
-						<form class="form-horizontal" role="form" action="/register" method="post">
-			        		<input type="text" placeholder="输入用户名" name="username" id="username" class="form-control"> 
-			        		<input type="password" placeholder="输入密码" name="pwd" id="pwd" class="form-control">
-			        		<input type="password" placeholder="再次输入密码" name="pwd1" id="pwd1" class="form-control">
-			        		<input type="text" placeholder="请输入手机号" name="phone" id="phone" class="form-control">
-                        <select class="form-control" name="industry" id="industry" placeholder="请选择您从事的行业">
-                            <!--<option>所属分类</option>-->
-                            <option th:each="list:${industry}" th:value="${list.id}" th:text="${list.name }"></option>
-                        </select>
-			        		<input type="submit" class="submit-input" name="" id="" value="注册" />
+						<label th:if="${error ne null}" th:text="${error}" style="color: red"></label>
+						<form class="form-horizontal" role="form" action="/register" method="post" onsubmit="return judgeNull(['username', 'pwd', 'pwd1', 'phone']) && judgeEqual('pwd', 'pwd1', '两次密码不一致') && judgeLength(['username', 'pwd'], [6,6], [20,20], ['用户名长度不符','密码长度不符'])">
+				        		<input type="text" th:value="${username}" placeholder="输入用户名 6~20位" name="username" id="username" class="form-control">
+				        		<input type="password" th:value="${pwd}" placeholder="输入密码 6~20位" name="pwd" id="pwd" class="form-control">
+				        		<input type="password" th:value="${pwd}" placeholder="再次输入密码 6~20位" name="pwd1" id="pwd1" class="form-control">
+				        		<input type="text" th:value="${phone}" placeholder="请输入手机号" name="phone" id="phone" class="form-control">
+	                        <select class="form-control" name="industry" id="industry" placeholder="请选择您从事的行业" th:value="industryId">
+	                            <!--<option>所属分类</option>-->
+								<option th:each="list:${industry}" th:selected="${industryId eq list.id}" th:value="${list.id}" th:text="${list.name}"></option>
+	                        </select>
+				        		<input type="submit" class="submit-input" name="" id="" value="注册" />
 			            </form>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

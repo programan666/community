@@ -105,6 +105,13 @@ Purchase: http://wrapbootstrap.com
                 
                 <ul class="nav sidebar-menu">
                    
+                   <li>
+                        <a href="javascript:void(0)" onclick="open_latest_trend()">
+                            <i class="fa fa-users"></i>
+                            <span class="menu-text"> 实时访客 </span>
+                        </a>
+                    </li>
+                   
                     <li>
                         <a href="javascript:void(0)" onclick="open_user_list_page()">
                             <i class="fa fa-users"></i>
@@ -232,6 +239,7 @@ Purchase: http://wrapbootstrap.com
                 
                 
             </div>
+            
         </div>
 
     </div>
@@ -246,6 +254,7 @@ Purchase: http://wrapbootstrap.com
     <script src="/assets/js/datatable/datatables-init.js"></script>
     <script src="/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/wangEditor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.showLoading.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/callUrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-industry.js" type="text/javascript" charset="utf-8"></script>
@@ -264,6 +273,7 @@ Purchase: http://wrapbootstrap.com
     <script src="/js/m-recommended.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-advertisement.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/m-advertisement2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/m-latestTrend.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
 		function get_img(f) {
 			var rd = new FileReader(); //创建文件读取对象

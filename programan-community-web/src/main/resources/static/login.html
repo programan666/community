@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/layer/layer.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div class="login-page">
@@ -36,9 +37,9 @@
 				</div>
 				<div class="login-box">
 					<h3>登录</h3>
-					<form class="form-horizontal" action="/user/login" method="post">
-			        		<input type="text" name="username" placeholder="输入用户名" class="form-control" th:value="${username}">
-			        		<input type="password" name="password" placeholder="输入密码" class="form-control" th:value="${pwd}">
+					<form class="form-horizontal" action="/user/login" method="post" onsubmit="return judgeNull(['username', 'password'])">
+			        		<input type="text" name="username" id="username" placeholder="输入用户名" class="form-control" th:value="${username}">
+			        		<input type="password" name="password" id="password" placeholder="输入密码" class="form-control" th:value="${pwd}">
 			        		<!--<input name="remember-me" type="checkbox" class="remember-me">-->
 			        		<!--<span>记住我</span>-->
 			        		<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
@@ -48,7 +49,7 @@
 			        </form>
 			        <div class="login-box-footer">
 			        		<a href="/forgetPwdPage" target="_blank" onfocus="this.blur();">忘记密码</a>
-			        		<a href="/register" onfocus="this.blur();">免费注册</a>
+			        		<a href="/getRegister" onfocus="this.blur();">免费注册</a>
 			        </div>
 				</div>
 			</div>
@@ -59,5 +60,7 @@
 				</div>
 			</div>
 		</div>
+		
+		<script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

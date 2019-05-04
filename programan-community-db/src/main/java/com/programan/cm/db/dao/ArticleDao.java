@@ -23,7 +23,7 @@ public interface ArticleDao extends DataTablesRepository<Article, Long> {
     @Query(value = "select a from Article a where a.title like concat('%', ?1, '%')")
     List<Article> selectAllByTitle(String title);
 
-    @Query(value = "select a from Article a where a.user = ?1")
+    @Query(value = "select a from Article a where a.user = ?1 order by a.createTime desc")
     List<Article> selectAllByUser(User user);
 
     @Query(value = "select * from article where IF (:createType is not null, create_type_id=:createType , 1 = 1)  and IF (:topic is not null, topic_id=:topic , 1 = 1) and title like CONCAT('%',:title,'%') and auth_id = :userId", nativeQuery = true)

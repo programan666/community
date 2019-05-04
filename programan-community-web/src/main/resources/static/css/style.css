@@ -458,3 +458,7 @@ body {
 	width: 700px;
 	height: 310px;
 }
+
+.menu-dropdown .menu-text {
+	left: 60px!important;
+}

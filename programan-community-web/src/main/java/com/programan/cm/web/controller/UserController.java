@@ -113,6 +113,9 @@ public class UserController {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userManager.selectByUserName(userDetails.getUsername());
             user.setPnum(user.getPnum() + Long.parseLong(pNum));
+            if(user.getPnum() < 0) {
+                return JSONResult.failed("error", "P豆余额不足", null);
+            }
             userManager.saveUser(user);
             logger.info("finished /updatePNum");
         } catch (NumberFormatException e) {
@@ -151,9 +154,9 @@ public class UserController {
         try {
             Industry industry = industryManager.selectById(industryId);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date birthday = sdf.parse(sbirthday);
+            Date birthday = sbirthday.equals("") ?  null : sdf.parse(sbirthday);
             User user = new User(Long.parseLong(id),userName, pwd, roleName, realName, sex,
-                    new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
+                    birthday == null ? null : new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
                     headImgUrl.equals("") ? "/imgs/xiaohuangren.png" : headImgUrl, Long.parseLong(pNum));
             userManager.saveUser(user);
             logger.info("finished /user/list");
@@ -297,6 +300,21 @@ public class UserController {
             return JSONResult.failed("error", "用户不存在", null);
         }
         return JSONResult.success("ok", "success", null);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getNowPNum", method = RequestMethod.GET)
+    public JSONResult<Long> getNowPNum() {
+        logger.info("/getNowPNum");
+        Long pNum = 0L;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userManager.selectByUserName(userDetails.getUsername());
+            pNum = user.getPnum();
+        } catch (Exception e) {
+            return JSONResult.success(-1L);
+        }
+        return JSONResult.success(pNum);
     }
 
 

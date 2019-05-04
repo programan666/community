@@ -122,7 +122,6 @@ function clickUserInfo() {
 			$('#user-info-area').html('地区： ' + content.area);
 			$('#user-info-industry').html('行业： ' + content.industry.name);
 			$('#user-info-job').html('职位： ' + content.jobName);
-			//          $('#user-info-id').html('实名: ' + content.headImgUrl);
 			$('#user-info-pnum').html('P豆 ' + content.pnum);
 			$('#user-info-introduction').html('简介： ' + content.introduction);
 
@@ -209,6 +208,7 @@ function saveUpdateUserInfo() {
 		jobName: $('#jobName').val(),
 		introduction: $('#introduction').val()
 	};
+	judgeNull(['roleName', 'phone']);
 	$.ajax({
 		type: "post",
 		url: callurl + "/user/update",
@@ -333,6 +333,11 @@ function saveArticle(htmlText) {
 		topicId: $('#topic').val(),
 		username: $('#susername').html()
 	}
+	judgeNull(['articleTitle']);
+	if(htmlText.toString().length < 20) {
+		layer.msg("文章内容过少");
+		return false;
+	}
 	$.ajax({
 		type: "post",
 		url: callurl + "/article/save",
@@ -456,6 +461,10 @@ function loadMyCourse() {
 }
 
 function updatePNum() {
+	if(Number($('#updatePNum').val()) < 1) {
+		layer.msg('输入不合法');
+		return false;
+	}
 	$.ajax({
 		type: "get",
 		url: callurl + "/user/updatePNum/" + $('#updatePNum').val(),
@@ -476,6 +485,9 @@ function updatePNum() {
 
 function selectArticleByTitle() {
 	var titleKeyi = $('#selectIndexArticleInput').val();
+	if(titleKeyi.length < 1) {
+		return false;
+	}
 	$.ajax({
 		type: "get",
 		url: callurl + "/article/listByTitle/",

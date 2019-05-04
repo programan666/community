@@ -1,26 +1,29 @@
 package com.programan.cm.web.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.xdevapi.Collection;
+import com.mysql.cj.xdevapi.JsonArray;
+import com.programan.cm.common.utils.HttpUtil;
+import com.programan.cm.common.utils.JSONResult;
 import com.programan.cm.db.model.*;
 import com.programan.cm.web.manager.*;
+import com.alibaba.fastjson.JSONObject;
+import com.programan.cm.web.model.LatestTrend;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -91,7 +94,7 @@ public class PageController {
         this.articleManager = articleManager;
     }
 
-    @RequestMapping(value = "/register")
+    @RequestMapping(value = "/getRegister")
     public String getRegister(Model model) {
         List<Industry> industryList = industryManager.selectAll();
         model.addAttribute("industry", industryList);
@@ -157,8 +160,6 @@ public class PageController {
         List<Article> articleList = articleManager.selectAllByUser(userManager.selectByUserName(username));
         List<CreateType> createTypeList = createTypeManager.selectAll();
         List<Topic> topicList = topicManager.selectAll();
-//        createTypeList.add(new CreateType(0L,"所有"));
-//        topicList.add(new Topic(0L,"所有"));
         model.addAttribute("articleList", articleList);
         model.addAttribute("createTypeList", createTypeList);
         model.addAttribute("topicList", topicList);
@@ -224,12 +225,29 @@ public class PageController {
                               @RequestParam("phone") String phone,
                               @RequestParam("industry") String industryId,
                               Model model) {
-        logger.info("/user/register");
-        User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
-        userManager.saveUser(user);
-        model.addAttribute("username", username);
-        model.addAttribute("pwd", pwd);
-        logger.info("finished /user/register");
+        try {
+            logger.info("/user/register");
+            User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
+            userManager.saveUser(user);
+            model.addAttribute("username", username);
+            model.addAttribute("pwd", pwd);
+            logger.info("finished /user/register");
+        } catch (Exception e) {
+            if(e.toString().indexOf("user_name") > 0) {
+                model.addAttribute("error", "用户名已存在");
+            } else if(e.toString().indexOf("phone") > 0) {
+                model.addAttribute("error", "该手机号已经注册");
+            } else {
+                model.addAttribute("error", "未知错误");
+            }
+            model.addAttribute("username", username);
+            model.addAttribute("pwd", pwd);
+            model.addAttribute("phone", phone);
+            model.addAttribute("industryId", Long.parseLong(industryId));
+            List<Industry> industryList = industryManager.selectAll();
+            model.addAttribute("industry", industryList);
+            return "register";
+        }
         return "login";
     }
 
@@ -254,6 +272,66 @@ public class PageController {
             model.addAttribute("courseUrl", "");
         }
         return "html/video";
+    }
+
+    @RequestMapping(value = "/page/latest/trend", method = RequestMethod.POST)
+    public String getLatestTrend(Model model) {
+        Map<String, List<LatestTrend>> result = new HashMap<>();
+        List<LatestTrend> list = new ArrayList<>();
+        org.json.JSONObject jsonParam = new org.json.JSONObject();
+        JSONObject headerJsonParam = new JSONObject();
+        headerJsonParam.put("username", "ranhongsuiyue");
+        headerJsonParam.put("password", "IGAIA666666");
+        headerJsonParam.put("token", "5e5e02a4e3da0ef3607d8e78da589b9c");
+        headerJsonParam.put("account_type", "1");
+        jsonParam.put("header", headerJsonParam);
+        JSONObject bodyJsonParam = new JSONObject();
+        bodyJsonParam.put("site_id", "13260371");
+        bodyJsonParam.put("metrics", "area,ip,visit_time,start_time");
+        bodyJsonParam.put("method", "trend/latest/a");
+        bodyJsonParam.put("max_results", "100");
+        bodyJsonParam.put("area", "");
+        jsonParam.put("body", bodyJsonParam);
+        System.out.println(jsonParam);
+
+        String url="https://api.baidu.com/json/tongji/v1/ReportService/getData";
+        String data=HttpUtil.getJsonData(jsonParam,url);
+        //返回的是一个[{}]格式的字符串时:
+
+        JSONObject json = JSONObject.parseObject(data);
+        System.out.println(json);
+        JSONArray jsonArray = json.getJSONObject("body").getJSONArray("data").getJSONObject(0).getJSONObject("result").getJSONArray("items");
+        JSONArray detailInfo = jsonArray.getJSONArray(0);
+        JSONArray info = jsonArray.getJSONArray(1);
+        int length = info.size();
+        for(int i = 0; i < length; i++) {
+            LatestTrend latestTrend = new LatestTrend(info.getJSONArray(i).get(0).toString(),
+                    info.getJSONArray(i).get(1).toString(),
+            info.getJSONArray(i).get(2).toString(),
+                    detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("os").toString(),
+            detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("visitorType").toString(),
+                    detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("resolution").toString(),
+                    detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("browser").toString(),
+                    info.getJSONArray(i).get(3).toString());
+//            Map<String, String> lineResult = new HashMap<>();
+//            lineResult.put("visitDate", info.getJSONArray(i).get(0).toString());
+//            lineResult.put("visitArea", info.getJSONArray(i).get(1).toString());
+//            lineResult.put("visitIP", info.getJSONArray(i).get(2).toString());
+//            lineResult.put("visitTime", info.getJSONArray(i).get(3).toString());
+//            lineResult.put("os", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("os").toString());
+//            lineResult.put("visitorType", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("visitorType").toString());
+//            lineResult.put("resolution", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("resolution").toString());
+//            lineResult.put("browser", detailInfo.getJSONArray(i).getJSONObject(0).getJSONObject("detail").get("browser").toString());
+            list.add(latestTrend);
+        }
+        DataTablesOutput<LatestTrend> output = new DataTablesOutput();
+        output.setDraw(1);
+        output.setRecordsTotal(length);
+        output.setRecordsFiltered(length);
+        output.setData(list);
+        model.addAttribute("latestTrendList", list);
+//        result.put("data", list);
+        return "html/m-latestTrend";
     }
 
 

@@ -480,3 +480,33 @@ function mArticleUploadFile(showInputId, filePath, inputFile) {
         }
 	});
 }
+
+function judgeEqual(firstInputId, secondeInputId, msg) {
+	if($('#'+firstInputId).val() != $('#'+secondeInputId).val()) {
+		layer.msg(msg);
+		return false
+	}
+	return true;
+}
+
+function judgeNull(judgeID) {
+	for (var i = 0; i < judgeID.length; i++) {
+		var value = $('#' + judgeID[i]).val();
+		if(value.length < 1) {
+			layer.msg('数据不能为空');
+			return false;
+		}
+	}
+	return true;
+}
+
+function judgeLength(inputId, least, most, msg) {
+	for (var i = 0; i < inputId.length; i++) {
+		var value = $('#' + inputId[i]).val();
+		if(value.length < least[i] || value.length > most[i]) {
+			layer.msg(msg[i]);
+			return false;
+		}
+	}
+	return true;
+}

@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Page Breadcrumb -->
+<div class="page-breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">IT技术社区</a>
+        </li>
+        <li>
+            <a href="#">后台管理系统</a>
+        </li>
+        <li class="active">实时访客</li>
+    </ul>
+</div>
+<!-- /Page Breadcrumb -->
+<!-- Page Header -->
+
+<!-- /Page Header -->
+<!-- Page Body -->
+<div class="page-body">
+    
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="widget">
+                <div class="widget-header ">
+                    <span class="widget-caption">实时访客</span>
+                    <div class="widget-buttons">
+                        <a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="table-toolbar">
+                        <!--<a id="addRoleBtn" href="javascript:void(0);" class="btn btn-default">
+                            添加
+                        </a>-->
+                        <!--<button id="purgeRoleBtn" class="btn btn-danger"><i class="fa fa-times"></i> 删除</button>-->
+                        <div class="btn-group pull-right">
+                            <!--<a class="btn btn-default" href="javascript:void(0);">Tools</a>
+                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>-->
+                            <ul class="dropdown-menu dropdown-default">
+                                <li>
+                                    <a href="javascript:void(0);">Action</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">Another action</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">Something else here</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:void(0);">Separated link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover table-bordered" id="latesttrendatatable">
+                        <thead>
+                            <tr role="row">
+                            		
+                                <th>
+                                    访问时间
+                                </th>
+                                <th>
+                                    地域
+                                </th>
+                                <th>
+									访问IP
+                                </th>
+                                <th>
+									操作系统
+                                </th>
+                                <th>
+									访客类型
+                                </th>
+                                <th>
+									屏幕分辨率
+                                </th>
+                                <th>
+									浏览器
+                                </th>
+                                <th>
+									访问时长
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="alist: ${latestTrendList}">
+                            <td th:text="${alist.visitDate}"></td>
+                            <td th:text="${alist.visitArea}"></td>
+                            <td th:text="${alist.visitIP}"></td>
+                            <td th:text="${alist.os}"></td>
+                            <td th:text="${alist.visitorType}"></td>
+                            <td th:text="${alist.resolution}"></td>
+                            <td th:text="${alist.browser}"></td>
+                            <td th:text="${alist.visitTime}"></td>
+
+                        </tr>
+
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+</html>
