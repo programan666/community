@@ -1,10 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div class="article">
+<div class="article" id="article-box">
+	<a href="#article-comment" id="comment-btn" style="color: #FFFFFF;"></a>
 	<div class="article-left">
 		<div class="auth-info">
 			<div class="auth-info-top">
 				<span>
-					<a href="#" onfocus="this.blur();">
+					<a href="#" onfocus="this.blur();" th:onclick="'fill_other_user_info_page(0,' + ${user.id} + ')'">
 						<img th:src="${user.headImgUrl}"/>
 					</a>
 				</span>
@@ -31,7 +32,18 @@
 					<dd id="totalCommentNum" th:text="${totalCommentNum}"></dd>
 				</dl>
 			</div>
-			<div class="auth-info-bottom"></div>
+			<div class="auth-info-bottom" style="border: none;">
+				<p style="max-height: 130px;font-size: 1.1em;text-align: center;" th:text="${user.introduction}"></p>
+			</div>
+		</div>
+		<div class="auth-info">
+			<h2>近期文章</h2>
+			<ul class="resent-article">
+				<li th:each="article: ${resentArticle}">
+					<a href="#" th:text="${article.title}" th:onclick="'fill_article_page(' + ${article.id} + ')'"></a>
+					<p>阅读数：<span th:text="${article.readNum}"></span></p>
+				</li>
+			</ul>
 		</div>
 	</div>
 	<div class="article-right">
@@ -68,6 +80,7 @@
 			<textarea name="articleComment" id="articleComment" class="article-comment-text" placeholder="想对作者说点什么呢"></textarea>
 			<input type="button" class="submit-input" value="发表评论" id="savaArticleCommentBtn">
 		</div>
+		<a name="article-comment"></a>
 		<div class="article-comment" id="article-comment">
 			<!--<div class="article-comment-box">
 				<div class="top">

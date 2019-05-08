@@ -65,6 +65,18 @@ public class UserFollowController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getUserFollowCountById/{userId}", method = RequestMethod.GET)
+    public JSONResult<Map<String, Integer>> getUserFollowCountById(@PathVariable String userId){
+        User user = userManager.selectById(userId);
+        int focusNum = userFollowManager.selectCountByFans(user);
+        int fansNum = userFollowManager.selectCountByFocus(user);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("focusNum", focusNum);
+        result.put("fansNum", fansNum);
+        return JSONResult.success(result);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/listByFans/{userId}")
     public JSONResult<List<UserFollow>> getUserFollowListByFans(@PathVariable String userId){
         List<UserFollow> userFollowList;

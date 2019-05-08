@@ -34,9 +34,7 @@
 			</span>
 			<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
 			<div class="operation">
-				<a href="#/edit/blog" th:onclick="'reditArticle(' + ${alist.id} + ')'" style="border-right: 1px solid #B2B2B2;">编辑</a>
-				<a href="#" th:onclick="'fill_article_page(' + ${alist.id} + ')'" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>
-				<a href="#" th:onclick="'del_article(' + ${alist.id} + ')'" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>
+				<a href="#" th:onclick="'fill_article_page(' + ${alist.id} + ')'" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;border-right:none;">查看</a>
 			</div>
 		</div>
 	</div>

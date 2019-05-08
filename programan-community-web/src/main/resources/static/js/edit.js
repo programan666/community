@@ -17,6 +17,98 @@ function fill_user_info_page() {
 	loadPage('/page/userInfoEdit', loadEditUserInfo);
 }
 
+function fill_other_user_info_page(pageNum, userId) {
+	if(pageNum == 0){
+		loadPage('/page/userInfoShow', function(){
+			showUserInfo(pageNum);
+		});
+	} else {
+		showUserInfo(pageNum);
+	}
+	setTimeout(function(){
+		if(pageNum == 0) {
+			clickUserInfoById(userId);
+		}
+		if(pageNum == 1) {
+			loadUserFollow(userId);
+		}
+		if(pageNum == 2) {
+			loadUserFans(userId);
+		}
+		if(pageNum == 3) {
+			loadCreateTypeSelect(1);
+			loadTopicSelect(1);
+			selectUserArticle(userId);
+			$('#selectArticleBtn').click(function() {
+				selectUserArticle(userId);
+			});
+		}
+		if(pageNum == 4) {
+			loadUserCourse(userId);
+		}
+		
+	},500)
+}
+
+function clickUserInfoById(userId) {
+	$.ajax({
+		type: "get",
+		url: callurl + "/user/usdetailById/" + userId,
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#userShowInfoId').val(content.id);
+			$('#userHeaderImg').attr('src', content.headImgUrl);
+			$('#user-info-rolename').html('昵称： ' + content.roleName);
+			$('#user-info-realname').html('实名： ' + content.realName);
+			$('#user-info-sex').html('性别： ' + content.sex);
+			$('#user-info-birthday').html('生日： ' + content.birthday);
+			$('#user-info-area').html('地区： ' + content.area);
+			$('#user-info-industry').html('行业： ' + content.industry.name);
+			$('#user-info-job').html('职位： ' + content.jobName);
+			$('#user-info-introduction').html('简介： ' + content.introduction);
+			
+			$('#userShowInfoBtn').attr('onclick', 'fill_other_user_info_page(0,' + content.id + ')');
+			$('#userShowFollowBtn').attr('onclick', 'fill_other_user_info_page(1,' + content.id + ')');
+			$('#userShowFansBtn').attr('onclick', 'fill_other_user_info_page(2,' + content.id + ')');
+			$('#userShowBlogBtn').attr('onclick', 'fill_other_user_info_page(3,' + content.id + ')');
+			$('#userShowCourseBtn').attr('onclick', 'fill_other_user_info_page(4,' + content.id + ')');
+		}
+	});
+	
+	$.ajax({
+		type: "get",
+		url: callurl + "/user/userInfoFollow/" + userId,
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			if(content == 'no'){
+				$('#UserFollowSpan').html('<input type="button" class="submit-input user-info-follow-btn" id="followBtn" value="关注" onclick="UserInfoFollowUser(' + userId + ')"/>');
+			} else {
+				$('#UserFollowSpan').html('<input type="button" class="submit-input user-info-follow-btn" id="unFollowBtn" value="取消关注" onclick="unUserInfoFollowUser(' + userId + ')"/>');
+			}
+		}
+	});
+
+	$.ajax({
+		type: "get",
+		url: callurl + "/userFollow/getUserFollowCountById/" + userId,
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-focus-count').html('关注 ' + content.focusNum);
+			$('#my-fans-count').html(content.fansNum);
+		}
+	});
+
+}
+
 function loadEditBlogRight() {
 	$(document).ready(function() {
 		var pageContent = $('.edit-right');
@@ -72,7 +164,7 @@ function loadArticleManage() {
 			loadCreateTypeSelect(1);
 			loadTopicSelect(1);
 			$('#selectArticleBtn').click(function() {
-				selectArticle();
+				selectArticle(0);
 			});
 		});
 	});
@@ -90,6 +182,14 @@ function updateUserBaseInfo(index) {
 //控制userupdate的界面，修改不同信息
 function updateUserInfo(index) {
 	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv', 'userCourseDiv'];
+	$.each(all_update_page, function(index, page) {
+		$('#' + page).css('display', 'none');
+	});
+	$('#' + all_update_page[index]).css('display', 'block');
+}
+
+function showUserInfo(index) {
+	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv', 'userBlogDiv', 'userCourseDiv'];
 	$.each(all_update_page, function(index, page) {
 		$('#' + page).css('display', 'none');
 	});
@@ -346,7 +446,7 @@ function saveArticle(htmlText) {
 		dataType: 'json',
 		success: function(data) {
 			if(handleAjaxResult(data, "保存成功")) {
-
+				document.getElementById('article-manager-btn').click();
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -355,8 +455,9 @@ function saveArticle(htmlText) {
 	});
 }
 
-function selectArticle() {
+function selectArticle(userId) {
 	var articleCon = {
+		userId: userId,
 		createTypeId: $('#createType').val(),
 		topicId: $('#topic').val(),
 		articleTitle: $('#articleTitle').val(),
@@ -365,7 +466,23 @@ function selectArticle() {
 	pageContent.empty();
 	pageContent.load('/article/select', articleCon, function(responseTxt, statusTxt, xhr) {
 		$('#selectArticleBtn').click(function() {
-			selectArticle();
+			selectArticle(userId);
+		});
+	});
+}
+
+function selectUserArticle(userId) {
+	var articleCon = {
+		userId: userId,
+		createTypeId: $('#createType').val(),
+		topicId: $('#topic').val(),
+		articleTitle: $('#articleTitle').val(),
+	}
+	var pageContent = $('#my-blog');
+	pageContent.empty();
+	pageContent.load('/article/select', articleCon, function(responseTxt, statusTxt, xhr) {
+		$('#selectArticleBtn').click(function() {
+			selectUserArticle(userId);
 		});
 	});
 }
@@ -383,12 +500,12 @@ function loadMyFollow() {
 			$.each(content, function(index, userFollow) {
 				var html = '';
 				html += '<div class="follow-box">';
-				html += '<span>';
+				html += '<span><a href="#"  onclick="fill_other_user_info_page(0,' + userFollow.focusUser.id + ')">';
 				html += '<img src="' + userFollow.focusUser.headImgUrl +'"/>';
-				html += '</span>';
-				html += '<span>';
+				html += '</a></span>';
+				html += '<span><a href="#"  onclick="fill_other_user_info_page(0,' + userFollow.focusUser.id + ')">';
 				html += userFollow.focusUser.roleName;
-				html += '</span>';
+				html += '</a></span>';
 				html += '<span class="float-right">';
 				html += '<input type="button" class="follow" value="取消关注" onclick="unFollowUser(' + userFollow.focusUser.id + ',1)"/>';
 				html += '</span>';
@@ -413,12 +530,12 @@ function loadMyFans() {
 				var id = userFollow.fansUser.id;
 				var html = '';
 				html += '<div class="follow-box">';
-				html += '<span>';
-				html += '<img src="' + userFollow.fanUser.headImgUrl + '"/>';
-				html += '</span>';
-				html += '<span>';
+				html += '<span><a href="#"  onclick="fill_other_user_info_page(0,' + userFollow.fansUser.id + ')">';
+				html += '<img src="' + userFollow.fansUser.headImgUrl + '"/>';
+				html += '</a></span>';
+				html += '<span><a href="#"  onclick="fill_other_user_info_page(0,' + userFollow.fansUser.id + ')">';
 				html += userFollow.fansUser.roleName;
-				html += '</span>';
+				html += '</a></span>';
 				html += '<span class="float-right">';
 				//          		html += '<input type="button" class="follow" value="关注" onclick="followUser(' + id + ',1)"/>';
 				html += '</span>';
@@ -433,6 +550,98 @@ function loadMyCourse() {
 	$.ajax({
 		type: "get",
 		url: callurl + "/userCourse/listByUser/",
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-course').html('');
+			$.each(content, function(index, userCourse) {
+				var html = '';
+            		html += '<div class="course-box">';
+            		html += '<div class="course-img">';
+            		html += '<a href="javascript:void(0);" onclick="learnCourse(' + userCourse.course.id + ')"><img src="' + userCourse.course.imgUrl +'" alt="" /></a>';
+            		html += '</div>';
+            		html += '<div class="course-info">';
+            		html += '<a href="javascript:void(0);" onclick="learnCourse(' + userCourse.course.id + ')" onfocus="this.blur();">' + userCourse.course.title + '</a>';
+            		html += '<p>' + userCourse.course.teacherName + '·' + userCourse.course.teacherJob + '</p>';
+            		html += '<div class="skill">';
+            		html += userCourse.course.introduction;
+            		html += '</div></div>';
+            		html += '<div class="course-footer">';
+            		html += '<h3>' + userCourse.course.price + 'P豆</h3>';
+            		html += '</div></div>';
+				$('#my-course').append(html);
+			});
+		}
+	});
+}
+
+function loadUserFollow(userId) {
+	$.ajax({
+		type: "get",
+		url: callurl + "/userFollow/listByFans/" + userId,
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-follow').html('');
+			$.each(content, function(index, userFollow) {
+				var html = '';
+				html += '<div class="follow-box">';
+				html += '<span>';
+				html += '<a href="#" onclick="fill_other_user_info_page(0,' + userFollow.focusUser.id + ')">';
+				html += '<img src="' + userFollow.focusUser.headImgUrl +'"/>';
+				html += '</a>';
+				html += '</span>';
+				html += '<span>';
+				html += '<a href="#" onclick="fill_other_user_info_page(0,' + userFollow.focusUser.id + ')">';
+				html += userFollow.focusUser.roleName;
+				html += '</a>';
+				html += '</span>';
+				html += '</div>';
+				$('#my-follow').append(html);
+			});
+		}
+	});
+}
+
+function loadUserFans(userId) {
+	$.ajax({
+		type: "get",
+		url: callurl + "/userFollow/listByFocus/" + userId,
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-fans').html('');
+			$.each(content, function(index, userFollow) {
+				var id = userFollow.fansUser.id;
+				var html = '';
+				html += '<div class="follow-box">';
+				html += '<span>';
+				html += '<a href="#" onclick="fill_other_user_info_page(0,' + id + ')">';
+				html += '<img src="' + userFollow.fansUser.headImgUrl + '"/>';
+				html += '</a>';
+				html += '</span>';
+				html += '<span>';
+				html += '<a href="#" onclick="fill_other_user_info_page(0,' + id + ')">';
+				html += userFollow.fansUser.roleName;
+				html += '</a>';
+				html += '</span>';
+				html += '</div>';
+				$('#my-fans').append(html);
+			});
+		}
+	});
+}
+
+function loadUserCourse(userId) {
+	$.ajax({
+		type: "get",
+		url: callurl + "/userCourse/listByUserId/" + userId,
 		async: true,
 		dataType: 'json',
 		contentType: 'application/json; charset=UTF-8',

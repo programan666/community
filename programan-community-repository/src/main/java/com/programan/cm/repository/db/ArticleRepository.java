@@ -64,7 +64,7 @@ public class ArticleRepository {
 
     public List<Article> selectAll(String createTypeId, String topicId, String title, String userId) {
         return articleDao.selectAll(createTypeId.equals("0") ? null : Long.parseLong(createTypeId),
-                topicId.equals("0") ? null : Long.parseLong(createTypeId), title == null ? "" : title, userId);
+                topicId.equals("0") ? null : Long.parseLong(topicId), title == null ? "" : title, userId);
     }
 
 }

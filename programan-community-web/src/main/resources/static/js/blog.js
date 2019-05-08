@@ -256,6 +256,8 @@ function loadArticles(topicId, increment) {
     		$('#article-main').html('');
     		fromIndex = 0;
     }
+	topic = topicId;
+//	console.info(topicId);
 	$.ajax({
         type: "get",
         url: callurl + "/article/listByTopic/" + topicId + '/' + fromIndex + '/' + pageNum,
@@ -285,12 +287,12 @@ function loadArticles(topicId, increment) {
 	            html += '</div>';
 	            html += '<dl class="article-box-foot">';
 	            html += '<dt>';
-	            html += '<a href="#">';
+	            html += '<a href="#" onclick="fill_other_user_info_page(0,' + article.user.id + ')">';
 	            html += '<img src="' + article.user.headImgUrl + '"/>';
 	            html += '</a>';
 	            html += '</dt>';
 	            html += '<dd>';
-	            html += '<a href="#">' + article.user.roleName +'</a>';
+	            html += '<a href="#" onclick="fill_other_user_info_page(0,' + article.user.id + ')">' + article.user.roleName +'</a>';
 	            html += '</dd>';
 	            html += '<div class="interval"></div>';
 	            html += '<dd>' + article.topic.name + '</dd>';
@@ -298,11 +300,11 @@ function loadArticles(topicId, increment) {
 	            html += '<dd>' + formatDateTime(article.createTime) + '</dd>';
 	            html += '<div class="article-box-foot-right">';
 	            html += '<dd>';
-	            html += '<span>阅读数&nbsp;</span><span style="color: rgb(116,238,91);">' + article.readNum + '</span>';
+	            html += '<span>阅读数&nbsp;</span><span style="color: rgb(54,128,243);">' + article.readNum + '</span>';
 	            html += '</dd>';
 	            html += '<div class="interval"></div>';
 	            html += '<dd>';
-	            html += '<a href="#">评论</a>';
+	            html += '<a href="#" onclick="fill_article_page(' + article.id + ', true)">评论</a>';
 	            html += '</dd></div></dl></div></li>';
 	            $('#article-main').append(html);
 				$('#loading-article').css('display', 'none'); 

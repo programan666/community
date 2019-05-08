@@ -79,6 +79,18 @@ public class UserCourseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/listByUserId/{userId}")
+    public JSONResult<List<UserCourse>> getMyUserCourseListById(@PathVariable String userId){
+        try {
+            User user = userManager.selectById(userId);
+            List<UserCourse> userCourseList = userCourseManager.selectByUser(user);
+            return JSONResult.success(userCourseList);
+        } catch (Exception e) {
+            return JSONResult.failed("error");
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/getByBoth/{courseId}", method = RequestMethod.GET)
     public JSONResult getUserCourseByBoth(@PathVariable String courseId){
         UserCourse userCourse = null;

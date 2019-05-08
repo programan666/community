@@ -163,6 +163,11 @@ public class PageController {
         return "html/userInfoEdit";
     }
 
+    @RequestMapping(value = "/page/userInfoShow")
+    public String getUserInfoShowt() {
+        return "html/userInfoShow";
+    }
+
     @RequestMapping(value = "/page/editBlog")
     public String getEditBlog() {
         return "html/editBlog";
@@ -194,6 +199,14 @@ public class PageController {
         UserFollow userFollow = userFollowManager.selectByBoth(user, loginUser);
         ArticleLike articleLike = articleLikeManager.selectByBoth(article, loginUser);
         List<Article> articleList = articleManager.selectAllByUser(user);
+        List<Article> resentArticle = new ArrayList<>();
+        try {
+            resentArticle.add(articleList.get(0));
+            resentArticle.add(articleList.get(1));
+            resentArticle.add(articleList.get(3));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("作者文章总数不足3篇");
+        }
         int likeNum = articleLikeManager.selectCountByArticle(article);
         int totalFansNum = userFollowManager.selectCountByFocus(user);
         int totalLikeNum = 0;
@@ -222,6 +235,7 @@ public class PageController {
         model.addAttribute("totalFansNum", totalFansNum);
         model.addAttribute("totalLikeNum", totalLikeNum);
         model.addAttribute("totalCommentNum", totalCommentNum);
+        model.addAttribute("resentArticle", resentArticle);
         model.addAttribute("edit", edit);
         return "html/article";
     }

@@ -2,10 +2,7 @@ package com.programan.cm.web.controller;
 
 
 import com.programan.cm.common.utils.JSONResult;
-import com.programan.cm.db.model.Article;
-import com.programan.cm.db.model.ArticleLike;
-import com.programan.cm.db.model.CreateType;
-import com.programan.cm.db.model.Topic;
+import com.programan.cm.db.model.*;
 import com.programan.cm.web.manager.ArticleManager;
 import com.programan.cm.web.manager.CreateTypeManager;
 import com.programan.cm.web.manager.TopicManager;
@@ -22,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -115,14 +113,19 @@ public class ArticleController {
         logger.info("/article/save");
 
         try {
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date birthday = sdf.format(date.getTime());
+            String time = sdf.format(date.getTime());
+            Date createDate = sdf.parse(time);
             Article articleOld = articleManager.selectById(id);
             Article article = null;
             if (articleOld != null) {
-                article = new Article(Long.parseLong(id), articleTitle, articleBody, articleOld.getReadNum(), new Date(),
+                article = new Article(Long.parseLong(id), articleTitle, articleBody, articleOld.getReadNum(), createDate,
                         topicManager.selectById(topicId), createTypeManager.selectById(createTypeId),
                         userManager.selectByUserName(username));
             } else {
-                article = new Article(Long.parseLong(id), articleTitle, articleBody, 0L, new Date(),
+                article = new Article(Long.parseLong(id), articleTitle, articleBody, 0L, createDate,
                         topicManager.selectById(topicId), createTypeManager.selectById(createTypeId),
                         userManager.selectByUserName(username));
             }
@@ -184,12 +187,19 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/select", method = RequestMethod.POST)
-    public String getSelectedArticleList(@RequestParam("createTypeId") String createTypeId,
+    public String getSelectedArticleList(@RequestParam("userId") String userId,
+                                         @RequestParam("createTypeId") String createTypeId,
                                          @RequestParam("topicId") String topicId,
                                          @RequestParam("articleTitle") String articleTitle, Model model) {
         logger.info("/article/select");
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Article> articleList = articleManager.selectAll(createTypeId, topicId, articleTitle, userManager.selectByUserName(userDetails.getUsername()).getId().toString());
+        User user;
+        if(userId.equals("0")) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userManager.selectByUserName(userDetails.getUsername());
+        } else {
+            user = userManager.selectById(userId);
+        }
+        List<Article> articleList = articleManager.selectAll(createTypeId, topicId, articleTitle, user.getId().toString());
         List<CreateType> createTypeList = createTypeManager.selectAll();
         List<Topic> topicList = topicManager.selectAll();
         model.addAttribute("articleList", articleList);
@@ -199,7 +209,11 @@ public class ArticleController {
         model.addAttribute("topicId", Long.parseLong(topicId));
         model.addAttribute("articleTitle", articleTitle);
         logger.info("finished /article/select");
-        return "html/articleManage";
+        if(userId.equals("0")) {
+            return "html/articleManage";
+        } else {
+            return "html/userArticleList";
+        }
     }
 
 }

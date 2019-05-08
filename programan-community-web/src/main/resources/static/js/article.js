@@ -12,7 +12,7 @@ function loadPage(module_page, call_back) {
     });
 }
 
-function fill_article_page(id) {
+function fill_article_page(id, gotocomment) {
     var pageContent = $('.page-content');
     pageContent.empty();
     $('#loading-article-page').css('display', 'block'); 
@@ -21,6 +21,9 @@ function fill_article_page(id) {
 	    		savaArticleComment();
 	    });
 	    loadComment();
+	    if(gotocomment) {
+	    		document.getElementById('comment-btn').click();
+	    }
 	    $('#loading-article-page').css('display', 'none'); 
    });
 }
@@ -175,6 +178,66 @@ function unFollowUser(focusIdi, reload) {
 	           		$('#unFollowBtn').val('关注');
 	           		$('#unFollowBtn').attr("onclick","followUser(" + focusIdi + ",0);");
 	           		$('#totalFansNum').html(Number($('#totalFansNum').html()) - 1);
+			    }
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("失败");
+        }
+    });
+    
+}
+
+function UserInfoFollowUser(focusIdi, reload){
+	var followData = {
+		id: '0',
+		focusId: focusIdi
+	}
+	$.ajax({
+        type: "post",
+        url: callurl + "/userFollow/save",
+        async: true,
+        data: followData,
+        dataType: 'json',
+        success: function(data) {
+           if (handleAjaxResult(data, "关注成功")) {
+           		if(reload == 1) {
+	        			loadMyFans();
+	        		} else {
+	        			$('#followBtn').val('取消关注');
+	           		$('#followBtn').attr("onclick","unUserInfoFollowUser(" + focusIdi + ",0);");
+	           		$('#unFollowBtn').val('取消关注');
+	           		$('#unFollowBtn').attr("onclick","unUserInfoFollowUser(" + focusIdi + ",0);");
+	           		$('#my-fans-count').html(Number($('#my-fans-count').html()) + 1);
+	        		}
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        		if(XMLHttpRequest.status == 200) {
+        			$('#login-btn').click();
+        		}
+            layer.msg("请先登录");
+        }
+    });
+}
+
+function unUserInfoFollowUser(focusIdi, reload) {
+	$.ajax({
+        type: "post",
+        url: callurl + "/userFollow/deleteByBoth/"+focusIdi,
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+           if (handleAjaxResult(data, "取消关注成功")) {
+	           	if(reload == 1) {
+			    		loadMyFollow();
+			    } else {
+			    		$('#followBtn').val('关注');
+	           		$('#followBtn').attr("onclick","UserInfoFollowUser(" + focusIdi + ",0);");
+	           		$('#unFollowBtn').val('关注');
+	           		$('#unFollowBtn').attr("onclick","UserInfoFollowUser(" + focusIdi + ",0);");
+	           		$('#my-fans-count').html(Number($('#my-fans-count').html()) - 1);
 			    }
            }
         },

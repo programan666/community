@@ -6,6 +6,7 @@ import com.programan.cm.db.dao.UserDao;
 import com.programan.cm.db.model.Industry;
 import com.programan.cm.db.model.User;
 //import com.programan.cm.repository.manager.UserManager;
+import com.programan.cm.db.model.UserFollow;
 import com.programan.cm.web.manager.IndustryManager;
 import com.programan.cm.web.manager.UserFollowManager;
 import com.programan.cm.web.manager.UserManager;
@@ -131,6 +132,31 @@ public class UserController {
         User user = userManager.selectByUserName(username);
         logger.info("finished /user/detail");
         return JSONResult.success(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/usdetailById/{userId}", method = RequestMethod.GET)
+    public JSONResult<User> getUserDetailByID(@PathVariable String userId) {
+        logger.info("/user/detailById");
+        User user = userManager.selectById(userId);
+        logger.info("finished /user/detailById");
+        return JSONResult.success(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/userInfoFollow/{userId}", method = RequestMethod.GET)
+    public JSONResult<String> getUserInfoFollowByID(@PathVariable String userId) {
+        logger.info("/user/userInfoFollow");
+        User user = userManager.selectById(userId);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loginUser = userManager.selectByUserName(userDetails.getUsername());
+        UserFollow userFollow = userFollowManager.selectByBoth(user, loginUser);
+        String alreadyFans = " ";
+        if(userFollow != null) {
+            alreadyFans = "yes";
+        }
+        logger.info("finished /user/userInfoFollow");
+        return JSONResult.success(alreadyFans);
     }
 
     @ResponseBody

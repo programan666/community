@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/gold.html", "/bootstrap/**","/css/**","/html/**","/img/**",
-                    "/js/**","/layer/**","/page/**","/index/**","/index").permitAll()
+                    "/js/**","/layer/**","/page/**","/index/**","/index", "/userFollow/getUserFollowCountById/**").permitAll()
             .antMatchers("/articleComment/**", "/articleLike/**", "/userFollow/**", "/userrole/**").authenticated()
 //            .antMatchers("/manager.html").hasRole("ADMIN")
 //            .antMatchers("/user/**").hasRole("USER")

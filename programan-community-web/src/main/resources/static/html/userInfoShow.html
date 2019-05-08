@@ -1,0 +1,115 @@
+<div class="edit-page">
+	<div class="container">
+		<input type="hidden" id="userShowInfoId"/>
+		<div class="edit-left">
+			<a href="#" id="userShowInfoBtn" onclick="" onfocus="this.blur();">TA的资料</a>
+			<a href="#" id="userShowFollowBtn" onfocus="this.blur();">TA的关注</a>
+			<a href="#" id="userShowFansBtn" onfocus="this.blur();">TA的粉丝</a>
+			<hr />
+			<a href="#"  id="userShowBlogBtn" onfocus="this.blur();">TA的博客</a>
+			<!--<a href="#" onfocus="this.blur();">我的下载</a>-->
+			<a href="#"  id="userShowCourseBtn" onfocus="this.blur();">TA的课程</a>
+		</div>
+		<div class="edit-right">
+			<div id="userInfoDiv" class="user-info-update" style="display: none;">
+				<h2>个人资料</h2>
+				<div class="info-body">
+					<div class="float-left user-img-f">
+						<img src="" class="user-info-img" id="userHeaderImg"/>
+					</div>
+					<div class="float-left user-info-top">
+						<div class="line-div">
+							<p id="user-info-id" style="display: none;"></p>
+							<!--<a class="float-right" href="#" onfocus="this.blur();" onclick="fill_article_manage_page();">个人主页></a>-->
+						</div>
+						<div class="line-div">
+							<span id="my-focus-count"></span>
+							粉丝<span id="my-fans-count"></span>
+							<!--<span style="font-weight: 500; color: rgba(0,0,0,0.2);">|</span>-->
+							<span id="UserFollowSpan"></span>
+						</div>
+					</div>
+					<div class="float-left user-info-bottom">
+						<div class="line-div">
+							<span id="user-info-rolename"></span>
+						</div>
+						<ul>
+							<li id="user-info-realname"></li>
+							<li id="user-info-sex"></li>
+							<li id="user-info-birthday"></li>
+							<li id="user-info-area"></li>
+							<li id="user-info-industry"></li>
+							<li id="user-info-job"></li>
+							<li id="user-info-introduction"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="userFollowDiv" class="user-info-update" style="display: none;">
+				<h2>TA的关注</h2>
+				<div class="info-body" id="my-follow">
+					
+				</div>
+			</div>
+			<div id="userFansDiv" class="user-info-update" style="display: none;">
+				<h2>TA的粉丝</h2>
+				<div class="info-body" id="my-fans">
+					
+				</div>
+			</div>
+			<div id="userBlogDiv" class="user-info-update" style="display: none;">
+				<h2>TA的文章</h2>
+				<div class="info-body" id="my-blog">
+					<div class="article-finder">
+						<label>
+							<span>文章类型：</span>
+							<select name="createType" id="createType" th:value="${createTypeId}">
+								<option value="0">所有</option>
+								<option th:each="list:${createTypeList}" th:if="${list.id eq createTypeId}" th:selected="selected" th:value="${list.id}" th:text="${list.name }"></option>
+								<option th:each="list:${createTypeList}" th:if="${list.id ne createTypeId}" th:value="${list.id}" th:text="${list.name }"></option>
+							</select>
+						</label>
+						<label>
+							<span>博客分类：</span>
+							<select name="topic" id="topic" th:value="${topicId}">
+								<option value="0">所有</option>
+								<option th:each="list:${topicList}" th:if="${list.id eq topicId}" th:selected="selected" th:value="${list.id}" th:text="${list.name }"></option>
+								<option th:each="list:${topicList}" th:if="${list.id ne topicId}" th:value="${list.id}" th:text="${list.name }"></option>
+							</select>
+						</label>
+						<label>
+							<input type="text" placeholder="输入标题关键字" class="form-control" id="articleTitle" th:value="${articleTitle}">
+							<input type="button" class="submit-input" value="搜索" id="selectArticleBtn"/>
+						</label>
+					</div>
+					<div class="article-list">
+						<div class="article-single" th:each="alist: ${articleList}">
+							<a class="title" href="#" onfocus="this.blur();" th:onclick="'fill_article_page(' + ${alist.id} + ')'" th:text="${alist.title}"></a>
+							<div class="article-single-data">
+								<span th:text="${alist.createType.name}"></span>
+								<span th:text="${alist.createTime}"></span>
+								<span>
+									<i class="fa fa-leanpub fa-fw"></i>
+									<span th:text="${alist.readNum}"></span>
+								</span>
+								<!--<span><i class="fa fa-commenting-o fa-fw"></i>2</span>-->
+								<div class="operation">
+									<a href="#/edit/blog" th:onclick="'reditArticle(' + ${alist.id} + ')'" style="border-right: 1px solid #B2B2B2;">编辑</a>
+									<a href="#" th:onclick="'fill_article_page(' + ${alist.id} + ')'" onfocus="this.blur();" style="border-right: 1px solid #B2B2B2;">查看</a>
+									<a href="#" th:onclick="'del_article(' + ${alist.id} + ')'" onfocus="this.blur();" style="color: rgb(199,34,45);">删除</a>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div id="userCourseDiv" class="user-info-update" style="display: none;">
+				<h2>TA的课程</h2>
+				<div class="info-body" id="my-course">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
