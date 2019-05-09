@@ -1,5 +1,82 @@
+var countdown = 60;
+function settime(obj, elementId) {
+	if(countdown == 60) {
+		sendSms(elementId);
+		obj.setAttribute("disabled", true);
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+	} else if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.value="免费获取验证码";
+        countdown = 60;
+        return;
+    } else {
+        obj.setAttribute("disabled", true);
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+    }
+setTimeout(function() {
+    settime(obj) }
+    ,1000)
+}
+function sendSms(elementId){
+	$.ajax({
+        type: "post",
+        url: callurl + "/user/getPhoneNum",
+        async: true,
+        data: {phoneNum: $('#' + elementId).val()},
+        dataType: 'json',
+        success: function(data) {
+           if (handleAjaxResult(data, "发送成功")) {
+               
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("失败");
+        }
+    });
+}
+
+function settime1(obj, elementId) {
+	if(countdown == 60) {
+		sendSms(elementId);
+		obj.setAttribute("disabled", true);
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+	} else if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.value="免费获取验证码";
+        countdown = 60;
+        return;
+    } else {
+        obj.setAttribute("disabled", true);
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+    }
+setTimeout(function() {
+    settime(obj) }
+    ,1000)
+}
+function sendSms1(elementId){
+	$.ajax({
+        type: "post",
+        url: callurl + "/user/getPhoneNum",
+        async: true,
+        data: {phoneNum: $('#' + elementId).val()},
+        dataType: 'json',
+        success: function(data) {
+           if (handleAjaxResult(data, "发送成功")) {
+               
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("失败");
+        }
+    });
+}
+
 function formatDateTime (date) {
-     var time = new Date(Date.parse(date));
+     var time = new Date(Date.parse(date.replace(/-/g, "/")));
      time.setTime(time.setHours(time.getHours() + 8));
      var Y = time.getFullYear() + '-';
      var  M = this.addZero(time.getMonth() + 1) + '-';

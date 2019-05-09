@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 public class UserManager {
 
     private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
+
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private UserRepository userRepository;
 
@@ -67,6 +70,7 @@ public class UserManager {
     public void saveUser(User user){
         if(userRepository.selectById(user.getId()) != null) {
             //修改
+            user.setPwd(user.getPwd().length() > 20 ? user.getPwd() : passwordEncoder.encode(user.getPwd().trim()));
             userRepository.saveUser(user);
         } else {
             //增加

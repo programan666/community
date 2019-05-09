@@ -156,6 +156,7 @@ function showDownloadModel(dprice, durl){
            		$('#downloadFile').modal('show');
 				$('#downloadFilePrice').val(dprice)
 				$('#downloadFileUrl').attr('href', durl);
+				$('#downloadFileUrl').attr('download', durl.split('/')[durl.split('/').length - 1]);
            } else {
            	    layer.msg('P豆余额不足，请充值');
            }

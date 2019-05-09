@@ -22,3 +22,16 @@ spring:
               max-file-size: 400MB
               max-request-size: 400MB
               fileSizeThreshold: 10MB
+    redis:
+        database: 1
+        host: 101.132.112.87
+        port: 6379
+        password: acm666666
+        jedis:
+            pool:
+                max-active: 8
+                min-idle: 0
+                max-idle: 8
+                max-wait: -1ms
+        timeout: 2000ms
+

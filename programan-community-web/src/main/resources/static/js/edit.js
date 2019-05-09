@@ -328,11 +328,8 @@ function saveUpdateUserInfo() {
 }
 
 function updateUserHeadImg() {
-	var formData = new FormData();
-	formData.append("file", $("#fileUpload")[0].files[0]);
-	formData.append("path", "imgs");
 	$.ajax({
-		url: callurl + '/file/upload',
+		url: callurl + '/user/getPhoneNum',
 		data: formData, //将表单数据序列化，格式为name=value
 		type: 'POST',
 		cache: false,
@@ -758,13 +755,15 @@ function updatePwd() {
 	var newPwd = $('#newPwd').val();
 	var rnewPwd = $('#rnewPwd').val();
 	var phoneNumber = $('#phoneNumber').val();
+	var smsCode = $('#smsCode').val();
 	if(newPwd != rnewPwd){
 		layer.msg("两次密码输入不一致");
 		return false;
 	}
 	var updateData = {
 		newPwd: newPwd,
-		phoneNumber: phoneNumber
+		phoneNumber: phoneNumber,
+		smsCode:smsCode
 	};
 	$.ajax({
 		type: "post",
@@ -784,11 +783,10 @@ function updatePwd() {
 }
 
 function updatePhoneNumberBtn() {
-	var oldPhoneNumber = $('#oldPhoneNumber').val();
 	var newPhoneNumber = $('#newPhoneNumber').val();
 	var updateData = {
-		oldPhoneNumber: oldPhoneNumber,
-		newPhoneNumber: newPhoneNumber
+		newPhoneNumber: newPhoneNumber,
+		smsCode: $('#smsCode1').val()
 	};
 	$.ajax({
 		type: "post",
@@ -812,6 +810,7 @@ function forgetPwd() {
 	var newPwd = $('#newPwd').val();
 	var rnewPwd = $('#rnewPwd').val();
 	var phoneNumber = $('#phoneNumber').val();
+	var smsCode = $('#smsCode').val();
 	if(newPwd != rnewPwd) {
 		layer.msg("两次输入的密码不一致");
 		return false;
@@ -819,7 +818,8 @@ function forgetPwd() {
 	var forgetData = {
 		username: username,
 		newPwd: newPwd,
-		phoneNumber: phoneNumber
+		phoneNumber: phoneNumber,
+		smsCode:smsCode
 	};
 	$.ajax({
 		type: "post",

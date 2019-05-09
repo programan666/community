@@ -75,7 +75,7 @@ function loadAdvertisement(elementId, adData, changeTime) {
 	});
 
 	$.each(sliderJSON, function(index, element) {
-		sliderList.append("<li><a href='"+ element.url +"'><img src='" + element.imagePath + "' alt=''></a>" +
+		sliderList.append("<li><a href='"+ element.url +"' target='_blank'><img src='" + element.imagePath + "' alt=''></a>" +
 			"<div class='content'>"+ element.slideText +"</div></li>");
 		bulletList.append("<li id='bullet_"+ (index + 1) +"'></li>");
 	});

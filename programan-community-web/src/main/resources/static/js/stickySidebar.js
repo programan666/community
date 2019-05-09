@@ -32,7 +32,7 @@
 
                 if (scroll_top < breakingPoint1) {
 
-                    sidebarSelector.removeClass('sticky');
+//                  sidebarSelector.removeClass('sticky');
 
                 } else if ((scroll_top >= breakingPoint1) && (scroll_top < breakingPoint2)) {
 

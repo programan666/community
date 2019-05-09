@@ -11,16 +11,25 @@
 				<div class="update-body">
 					<input type="password" placeholder="输入新密码" class="form-control" id="newPwd">
 					<input type="password" placeholder="确认新密码" class="form-control" id="rnewPwd">
-					<input type="text" placeholder="输入手机号码" class="form-control" id="phoneNumber">
+					<div class="send-sms">
+		        			<input type="text" id="phoneNumber" placeholder="输入手机号" class="form-control phone-input">
+		        			<input type="button" id="btn" class="sms-btn" value="免费获取验证码" onclick="settime(this, 'phoneNumber')" />
+		        		</div>
+			        	<input type="text" placeholder="请输入验证码" name="smsCode" id="smsCode" class="form-control">
 					<input type="submit" value="修改" class="btn btn-info" onclick="updatePwd()">
 				</div>
 			</div>
 			<div id="updateUserPhoneDiv" class="user-info-update" style="display: none;">
 				<h2>修改手机</h2>
 				<div class="update-body">
-					<input type="text" placeholder="输入旧手机号码" class="form-control" id="oldPhoneNumber">
-					<input type="text" placeholder="输入新手机号码" class="form-control" id="newPhoneNumber">
-					<input type="submit" value="修改" class="btn btn-info" onclick="updatePhoneNumberBtn()">
+					<div id="update-phont-box" style="width: 100%;">
+						<div class="send-sms">
+			        			<input type="text" id="newPhoneNumber" placeholder="输入新手机号" class="form-control phone-input">
+			        			<input type="button" id="btn" class="sms-btn" value="免费获取验证码" onclick="settime(this, 'newPhoneNumber')" />
+			        		</div>
+			        		<input type="text" placeholder="请输入验证码" name="smsCode1" id="smsCode1" class="form-control">
+						<input type="submit" value="修改" class="btn btn-info" onclick="updatePhoneNumberBtn()">
+					</div>
 				</div>
 			</div>
 			<!--<div id="updateUserEmailDiv" class="user-info-update" style="display: none;">

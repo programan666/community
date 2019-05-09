@@ -117,7 +117,7 @@ public class UserFollowController {
             logger.info("finished /userFollow/save");
         } catch (Exception e) {
             logger.info("Insert userFollow error:", e);
-            return JSONResult.failed("error", e.getMessage(), null);
+            return JSONResult.failed("error", "请先登录", null);
         }
         return JSONResult.success("ok", "success", null);
     }

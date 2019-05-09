@@ -50,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/gold.html", "/bootstrap/**","/css/**","/html/**","/img/**",
-                    "/js/**","/layer/**","/page/**","/index/**","/index", "/userFollow/getUserFollowCountById/**").permitAll()
-            .antMatchers("/articleComment/**", "/articleLike/**", "/userFollow/**", "/userrole/**").authenticated()
+                    "/js/**","/layer/**","/page/**","/index/**","/index", "/userFollow/getUserFollowCountById/**", "/articleComment/**").permitAll()
+            .antMatchers( "/articleLike/**", "/userrole/**").authenticated()
 //            .antMatchers("/manager.html").hasRole("ADMIN")
 //            .antMatchers("/user/**").hasRole("USER")
 //            .regexMatchers("/admin1/.*").access("hasRole('ADMIN') or hasRole('ADMIN1')")

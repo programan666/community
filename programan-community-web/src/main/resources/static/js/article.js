@@ -17,10 +17,10 @@ function fill_article_page(id, gotocomment) {
     pageContent.empty();
     $('#loading-article-page').css('display', 'block'); 
 	pageContent.load('page/article', {articleId:id}, function(responseTxt,statusTxt,xhr) {
+		loadComment();
 		$('#savaArticleCommentBtn').click(function(){
 	    		savaArticleComment();
 	    });
-	    loadComment();
 	    if(gotocomment) {
 	    		document.getElementById('comment-btn').click();
 	    }

@@ -25,7 +25,11 @@
 				        		<input type="text" th:value="${username}" placeholder="输入用户名 6~20位" name="username" id="username" class="form-control">
 				        		<input type="password" th:value="${pwd}" placeholder="输入密码 6~20位" name="pwd" id="pwd" class="form-control">
 				        		<input type="password" th:value="${pwd}" placeholder="再次输入密码 6~20位" name="pwd1" id="pwd1" class="form-control">
-				        		<input type="text" th:value="${phone}" placeholder="请输入手机号" name="phone" id="phone" class="form-control">
+				        		<div class="send-sms">
+				        			<input type="text" th:value="${phone}" placeholder="请输入手机号" name="phone" id="phone" class="form-control phone-input">
+				        			<input type="button" id="btn" class="sms-btn" value="免费获取验证码" onclick="settime(this, 'phone')" />
+				        		</div>
+				        		<input type="text" th:value="${smsCode}" placeholder="请输入验证码" name="smsCode" id="smsCode" class="form-control">
 	                        <select class="form-control" name="industry" id="industry" placeholder="请选择您从事的行业" th:value="industryId">
 	                            <!--<option>所属分类</option>-->
 								<option th:each="list:${industry}" th:selected="${industryId eq list.id}" th:value="${list.id}" th:text="${list.name}"></option>
@@ -37,6 +41,10 @@
 			</div>
 		</div>
 		
+		<script src="/js/callUrl.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/m-user.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+		</script>
 	</body>
 </html>

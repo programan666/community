@@ -1,7 +1,12 @@
 package com.programan.cm.web.controller;
 
 //import com.programan.cm.common.utils.JSONResult;
+import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.programan.cm.common.utils.JSONResult;
+import com.programan.cm.common.utils.RedisUtil;
+import com.programan.cm.common.utils.SmsUtil.SmsUtil;
 import com.programan.cm.db.dao.UserDao;
 import com.programan.cm.db.model.Industry;
 import com.programan.cm.db.model.User;
@@ -29,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/user")
@@ -45,6 +51,9 @@ public class UserController {
     private CmUserDetailService cmUserDetailService;
 
     private UserFollowManager userFollowManager;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     public void setUserFollowManager(UserFollowManager userFollowManager) {
@@ -263,15 +272,21 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
     public JSONResult updateUserPwd(@RequestParam("newPwd") String newPwd,
-                                    @RequestParam("phoneNumber") String phoneNumber) {
+                                    @RequestParam("phoneNumber") String phoneNumber,
+                                    @RequestParam("smsCode") String inputSmsCode) {
         logger.info("/user/update");
         User user = null;
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userManager.selectByUserName(userDetails.getUsername());
             if(phoneNumber.equals(user.getPhone())) {
-                user.setPwd(passwordEncoder.encode(newPwd.trim()));
-                userManager.saveUser(user);
+                String smsCode =  redisUtil.get("TEL" + phoneNumber) == null ? null : redisUtil.get("TEL" + phoneNumber).toString();
+                if(smsCode != null && smsCode.equals(inputSmsCode)){
+                    user.setPwd(passwordEncoder.encode(newPwd.trim()));
+                    userManager.saveUser(user);
+                } else {
+                    return JSONResult.failed("error", "验证码不正确", null);
+                }
             } else {
                 return JSONResult.failed("error", "手机号码不正确", null);
             }
@@ -285,19 +300,22 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/updatePhoneNumber", method = RequestMethod.POST)
-    public JSONResult updateUserPhoneNumber(@RequestParam("oldPhoneNumber") String oldPhoneNumber,
-                                    @RequestParam("newPhoneNumber") String newPhoneNumber) {
+    public JSONResult updateUserPhoneNumber(@RequestParam("newPhoneNumber") String newPhoneNumber,
+                                            @RequestParam("smsCode") String inputSmsCode) {
         logger.info("/user/update");
         User user = null;
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userManager.selectByUserName(userDetails.getUsername());
-            if(oldPhoneNumber.equals(user.getPhone())) {
+
+            String smsCode =  redisUtil.get("TEL" + newPhoneNumber) == null ? null : redisUtil.get("TEL" + newPhoneNumber).toString();
+            if(smsCode != null && smsCode.equals(inputSmsCode)){
                 user.setPhone(newPhoneNumber);
                 userManager.saveUser(user);
             } else {
-                return JSONResult.failed("error", "原手机号码不正确", null);
+                return JSONResult.failed("error", "验证码不正确", null);
             }
+
             logger.info("finished /user/update");
         } catch (Exception e) {
             logger.info("Update user error:", e);
@@ -310,13 +328,19 @@ public class UserController {
     @RequestMapping(value = "/forgetPwd", method = RequestMethod.POST)
     public JSONResult forgetPwd(@RequestParam("username") String username,
                                 @RequestParam("newPwd") String newPwd,
-                                @RequestParam("phoneNumber") String phoneNumber) {
+                                @RequestParam("phoneNumber") String phoneNumber,
+                                @RequestParam("smsCode") String inputSmsCode) {
         logger.info("/user/update");
         try {
             User user = userManager.selectByUserName(username);
             if(user.getPhone().equals(phoneNumber)) {
-                user.setPwd(passwordEncoder.encode(newPwd.trim()));
-                userManager.saveUser(user);
+                String smsCode =  redisUtil.get("TEL" + phoneNumber) == null ? null : redisUtil.get("TEL" + phoneNumber).toString();
+                if(smsCode != null && smsCode.equals(inputSmsCode)){
+                    user.setPwd(passwordEncoder.encode(newPwd.trim()));
+                    userManager.saveUser(user);
+                } else {
+                    return JSONResult.failed("error", "验证码不正确", null);
+                }
             } else {
                 return JSONResult.failed("error", "手机号码不正确", null);
             }
@@ -341,6 +365,33 @@ public class UserController {
             return JSONResult.success(-1L);
         }
         return JSONResult.success(pNum);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPhoneNum", method = RequestMethod.POST)
+    public JSONResult getPhoneNum(@RequestParam("phoneNum") String phoneNum) {
+        logger.info("/getPhoneNum");
+        Random creator = new Random();
+        String random="";
+        for (int i=0;i<6;i++)
+        {
+            random += creator.nextInt(10);
+        }
+        System.out.println(random);
+        try {
+            SendSmsResponse response = SmsUtil.sendSms(phoneNum, random);
+            QuerySendDetailsResponse querySendDetailsResponse = SmsUtil.querySendDetails(response.getBizId(), phoneNum);
+            if(!querySendDetailsResponse.getCode().equals("OK")){
+                return JSONResult.failed("error", "oh my god, something is wrong！", null);
+            } else {
+                redisUtil.set("TEL" + phoneNum, random, 300);
+                return JSONResult.success("ok", "success", null);
+            }
+        } catch (ClientException e) {
+            e.printStackTrace();
+            return JSONResult.failed("error", "oh my god, something is wrong！", null);
+        }
+
     }
 
 

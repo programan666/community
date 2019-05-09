@@ -84,7 +84,7 @@ public class ArticleCommentController {
             logger.info("finished /articleComment/save");
         } catch (Exception e) {
             logger.info("Insert ArticleComment error:", e);
-            return JSONResult.failed("error", e.getMessage(), null);
+            return JSONResult.failed("error", "请先登录", null);
         }
         return JSONResult.success("ok", "success", null);
     }

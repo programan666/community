@@ -9,6 +9,7 @@ import com.programan.cm.common.Config;
 import com.programan.cm.common.utils.FileSizeUtil;
 import com.programan.cm.common.utils.HttpUtil;
 import com.programan.cm.common.utils.JSONResult;
+import com.programan.cm.common.utils.RedisUtil;
 import com.programan.cm.db.model.*;
 import com.programan.cm.web.manager.*;
 import com.alibaba.fastjson.JSONObject;
@@ -56,6 +57,9 @@ public class PageController {
     private CourseManager courseManager;
 
     private Config config;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     public void setConfig(Config config) {
@@ -251,14 +255,27 @@ public class PageController {
                               @RequestParam("pwd") String pwd,
                               @RequestParam("phone") String phone,
                               @RequestParam("industry") String industryId,
+                              @RequestParam("smsCode") String inputSmsCode,
                               Model model) {
         try {
             logger.info("/user/register");
-            User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
-            userManager.saveUser(user);
-            model.addAttribute("username", username);
-            model.addAttribute("pwd", pwd);
-            logger.info("finished /user/register");
+            String smsCode =  redisUtil.get("TEL" + phone) == null ? null : redisUtil.get("TEL" + phone).toString();
+            if(smsCode != null && smsCode.equals(inputSmsCode)) {
+                User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
+                userManager.saveUser(user);
+                model.addAttribute("username", username);
+                model.addAttribute("pwd", pwd);
+                logger.info("finished /user/register");
+            } else {
+                model.addAttribute("error", "验证码不对");
+                model.addAttribute("username", username);
+                model.addAttribute("pwd", pwd);
+                model.addAttribute("phone", phone);
+                model.addAttribute("industryId", Long.parseLong(industryId));
+                List<Industry> industryList = industryManager.selectAll();
+                model.addAttribute("industry", industryList);
+                return "register";
+            }
         } catch (Exception e) {
             if(e.toString().indexOf("user_name") > 0) {
                 model.addAttribute("error", "用户名已存在");
@@ -285,6 +302,7 @@ public class PageController {
 
     @RequestMapping(value = "/forgetPwdPage", method = RequestMethod.GET)
     public String getForgetPwd() {
+
         return "forgetPassword";
     }
 
@@ -319,14 +337,14 @@ public class PageController {
         bodyJsonParam.put("max_results", "100");
         bodyJsonParam.put("area", "");
         jsonParam.put("body", bodyJsonParam);
-        System.out.println(jsonParam);
+//        System.out.println(jsonParam);
 
         String url="https://api.baidu.com/json/tongji/v1/ReportService/getData";
         String data=HttpUtil.getJsonData(jsonParam,url);
         //返回的是一个[{}]格式的字符串时:
 
         JSONObject json = JSONObject.parseObject(data);
-        System.out.println(json);
+//        System.out.println(json);
         JSONArray jsonArray = json.getJSONObject("body").getJSONArray("data").getJSONObject(0).getJSONObject("result").getJSONArray("items");
         JSONArray detailInfo = jsonArray.getJSONArray(0);
         JSONArray info = jsonArray.getJSONArray(1);
