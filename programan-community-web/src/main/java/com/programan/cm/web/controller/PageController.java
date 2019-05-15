@@ -27,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -261,7 +262,7 @@ public class PageController {
             logger.info("/user/register");
             String smsCode =  redisUtil.get("TEL" + phone) == null ? null : redisUtil.get("TEL" + phone).toString();
             if(smsCode != null && smsCode.equals(inputSmsCode)) {
-                User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L);
+                User user = new User(0L, username, pwd, username, "", "", null, phone, "", industryManager.selectById(industryId), "", "", "/imgs/xiaohuangren.png", 0L, null);
                 userManager.saveUser(user);
                 model.addAttribute("username", username);
                 model.addAttribute("pwd", pwd);
@@ -379,7 +380,8 @@ public class PageController {
     public JSONResult<Map<String, Float>> etStaticSize() throws FileNotFoundException, IOException {
         String filePath = config.getPath();
         File file = new File(filePath);
-        float fileSize = FileSizeUtil.getSize(file.listFiles()) / 1024;
+//        float fileSize = FileSizeUtil.getSize(0f, file.listFiles());
+        final float fileSize = FileSizeUtil.getTotalSizeOfFilesInDir(new File(filePath)) / 1024 / 1024 / 1024;
         float freeSpace = file.getFreeSpace() / 1024 / 1024 / 1024;
         float usableSpace = file.getUsableSpace() / 1024 / 1024 / 1024;
         float totalSpace = file.getTotalSpace() / 1024 / 1024 / 1024;
@@ -401,7 +403,7 @@ public class PageController {
         for(String path: fileList){
             String fileName = path.split("/")[path.split("/").length - 1];
             File file = new File(path);
-            workMap.put(fileName, FileSizeUtil.getSize(file.listFiles()));
+            workMap.put(fileName, FileSizeUtil.getTotalSizeOfFilesInDir(file) / 1024 / 1024);
         }
         return JSONResult.success(workMap);
     }

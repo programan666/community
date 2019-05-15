@@ -192,7 +192,7 @@ public class UserController {
             Date birthday = sbirthday.equals("") ?  null : sdf.parse(sbirthday);
             User user = new User(Long.parseLong(id),userName, pwd, roleName, realName, sex,
                     birthday == null ? null : new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
-                    headImgUrl.equals("") ? "/imgs/xiaohuangren.png" : headImgUrl, Long.parseLong(pNum));
+                    headImgUrl.equals("") ? "/imgs/xiaohuangren.png" : headImgUrl, Long.parseLong(pNum), null);
             userManager.saveUser(user);
             logger.info("finished /user/list");
         } catch (Exception e) {
@@ -223,7 +223,7 @@ public class UserController {
             User oldUser = userManager.selectByUserName(userName);
             User user = new User(oldUser.getId(),userName, oldUser.getPwd(), roleName, realName, sex,
                     new java.sql.Date(birthday.getTime()), phone, area, industry, jobName, introduction,
-                    oldUser.getHeadImgUrl(), oldUser.getPnum());
+                    oldUser.getHeadImgUrl(), oldUser.getPnum(), oldUser.getCreateDate());
             userManager.saveUser(user);
             logger.info("finished /user/update");
         } catch (Exception e) {

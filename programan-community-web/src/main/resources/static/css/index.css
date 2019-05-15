@@ -312,6 +312,9 @@ dt {
 	color: rgb(46,46,46);
 	font-size: 1.3em;
 	font-weight: 500;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .download-body dd a:hover{
@@ -394,10 +397,16 @@ dt {
     line-height: 30px;
     font-size: 1.4em;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .course-info p {
 	text-align: center;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .skill {

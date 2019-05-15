@@ -114,8 +114,8 @@ function loadComment() {
             		var html = '';
             		html += '<div class="article-comment-box">';
             		html += '<div class="top">';
-            		html += '<a href="#"><img src="' + articleComment.user.headImgUrl + '"/></a>';
-            		html += '<a href="#">' + articleComment.user.roleName + ':</a>';
+            		html += '<a href="#" onclick="fill_other_user_info_page(0, ' + articleComment.user.id + ')"><img src="' + articleComment.user.headImgUrl + '"/></a>';
+            		html += '<a href="#" onclick="fill_other_user_info_page(0, ' + articleComment.user.id + ')">' + articleComment.user.roleName + ':</a>';
             		html += '<span>' + articleComment.info + '</span>';
             		html += '</div>';
             		html += '<div class="bot">';

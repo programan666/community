@@ -398,6 +398,7 @@ function getUserDetail(id) {
             $('#headImgUrl').val(content.headImgUrl);
             $('#pNum').val(content.pnum);
             $('#introduction').val(content.introduction);
+            $('#createDate').val(content.createDate);
         }
     });
 }

@@ -311,6 +311,7 @@ Purchase: http://wrapbootstrap.com
 				contentType: 'application/json; charset=UTF-8',
 				success: function(data) {
 					var content = data.context;
+//					console.info(content.fileSize);
 					$('#fileSize').html("工作占用空间：" + content.fileSize + "G");
 					$('#freeSpace').html("磁盘剩余空间：" + content.freeSpace + "G");
 					$('#usableSpace').html("磁盘可用空间：" + content.usableSpace + "G");

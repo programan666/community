@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.stream.Collectors;
 
 @Component
@@ -71,9 +72,11 @@ public class UserManager {
         if(userRepository.selectById(user.getId()) != null) {
             //修改
             user.setPwd(user.getPwd().length() > 20 ? user.getPwd() : passwordEncoder.encode(user.getPwd().trim()));
+            user.setCreateDate(userRepository.selectById(user.getId()).getCreateDate());
             userRepository.saveUser(user);
         } else {
             //增加
+            user.setCreateDate(new Date(System.currentTimeMillis()));
             User flushUser = userRepository.insertUser(user);
             UserRole userRole = new UserRole(0L, flushUser, roleRepository.selectByName("USER"));
             userRoleRepository.saveUserRole(userRole);

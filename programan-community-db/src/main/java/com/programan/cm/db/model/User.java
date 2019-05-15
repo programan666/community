@@ -61,4 +61,7 @@ public class User {
     @Column(name="p_num")
     private Long pnum;
 
+    @Column(name="create_date")
+    private Date createDate;
+
 }

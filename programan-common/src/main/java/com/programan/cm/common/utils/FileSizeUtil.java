@@ -8,8 +8,7 @@ import java.util.List;
 
 public class FileSizeUtil {
 
-    public static float getSize(File[] fileArr) {
-        float size = 0;
+    public static float getSize(float size, File[] fileArr) {
         if (null == fileArr || fileArr.length <= 0)//部分文件夹 无权限访问，返回null
         {
             return 0;
@@ -18,14 +17,26 @@ public class FileSizeUtil {
         {
             if (file.isFile())
             {
+                System.out.println(file.getName() + " : " + file.length());
                 size += file.length();
             }
             if (file.isDirectory())
             {
-                getSize(file.listFiles());
+                getSize(size, file.listFiles());
             }
         }
-        return size/1024/1024;
+        return size;
+    }
+
+    public static float getTotalSizeOfFilesInDir(final File file) {
+        if (file.isFile())
+            return file.length();
+        final File[] children = file.listFiles();
+        float total = 0;
+        if (children != null)
+            for (final File child : children)
+                total += getTotalSizeOfFilesInDir(child);
+        return total;
     }
 
     public static List<String> readfile(String filepath) throws FileNotFoundException, IOException {

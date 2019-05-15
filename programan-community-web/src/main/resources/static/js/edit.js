@@ -68,6 +68,7 @@ function clickUserInfoById(userId) {
 			$('#user-info-area').html('地区： ' + content.area);
 			$('#user-info-industry').html('行业： ' + content.industry.name);
 			$('#user-info-job').html('职位： ' + content.jobName);
+			$('#user-info-createDate').html('注册日期： ' + content.createDate);
 			$('#user-info-introduction').html('简介： ' + content.introduction);
 			
 			$('#userShowInfoBtn').attr('onclick', 'fill_other_user_info_page(0,' + content.id + ')');
@@ -223,7 +224,9 @@ function clickUserInfo() {
 			$('#user-info-industry').html('行业： ' + content.industry.name);
 			$('#user-info-job').html('职位： ' + content.jobName);
 			$('#user-info-pnum').html('P豆 ' + content.pnum);
+			$('#user-info-createDate').html('注册日期： ' + content.createDate);
 			$('#user-info-introduction').html('简介： ' + content.introduction);
+			
 
 			$('#roleName').val(content.roleName);
 			$('#realName').val(content.realName);
@@ -690,6 +693,11 @@ function updatePNum() {
 }
 
 function selectArticleByTitle() {
+	loadPage('/page/blog',function(){
+		getAdvertisement();
+		loadBlogMenu(1);
+		loadRecommended();
+	});
 	var titleKeyi = $('#selectIndexArticleInput').val();
 	if(titleKeyi.length < 1) {
 		return false;
@@ -737,7 +745,7 @@ function selectArticleByTitle() {
 				html += '<dd>' + formatDateTime(article.createTime) + '</dd>';
 				html += '<div class="article-box-foot-right">';
 				html += '<dd>';
-				html += '<span>阅读数&nbsp;</span><span style="color: rgb(116,238,91);">' + article.readNum + '</span>';
+				html += '<span>阅读数&nbsp;</span><span style="color: rgb(54,128,243);">' + article.readNum + '</span>';
 				html += '</dd>';
 				html += '<div class="interval"></div>';
 				html += '<dd>';
