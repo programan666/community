@@ -8,12 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="programan-common" />
         <module name="programan-community-db" />
-        <module name="programan-community-repository" />
         <module name="programan-community-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="maven-archiver" target="1.5" />
+      <module name="programan-community-repository" target="1.8" />
+      <module name="programan-community-repository (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

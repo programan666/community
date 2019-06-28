@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="article" id="course-box">
+	<a href="#article-comment" id="comment-btn" style="color: #FFFFFF;"></a>
+	<div class="article-left">
+		<div class="auth-info">
+			<div class="auth-info-top">
+				<span>
+					<a href="#" onfocus="this.blur();" th:onclick="'fill_other_user_info_page(0,' + ${user.id} + ')'">
+						<img th:src="${user.headImgUrl}"/>
+					</a>
+				</span>
+				<input type="hidden" name="authId" id="authId" th:value="${user.id}" />
+				<span th:text="${user.roleName}">
+
+				</span>
+				<span>
+					<input type="button" th:if="${follow eq 'yes' && edit ne 'yes'}" class="submit-input" id="unFollowBtn" value="取消关注" th:onclick="'unFollowUser(' + ${user.id} + ')'"/>
+					<input type="button" th:if="${follow eq 'no' && edit ne 'yes'}" class="submit-input" id="followBtn" value="关注" th:onclick="'followUser(' + ${user.id} + ')'"/>
+				</span>
+			</div>
+			<div class="auth-info-middle">
+				<dl>
+					<dt>粉丝</dt>
+					<dd id="totalFansNum" th:text="${totalFansNum}"></dd>
+				</dl>
+				<dl>
+					<dt>喜欢</dt>
+					<dd id="totalLikeNum" th:text="${totalLikeNum}"></dd>
+				</dl>
+				<dl>
+					<dt>评论</dt>
+					<dd id="totalCommentNum" th:text="${totalCommentNum}"></dd>
+				</dl>
+			</div>
+			<div class="auth-info-bottom" style="border: none;">
+				<p style="max-height: 130px;font-size: 1.1em;text-align: center;" th:text="${user.introduction}"></p>
+			</div>
+		</div>
+		<div class="auth-info">
+			<h2>近期文章</h2>
+			<ul class="resent-article">
+				<li th:each="article: ${resentArticle}">
+					<a href="#" th:text="${article.title}" th:onclick="'fill_article_page(' + ${article.id} + ')'"></a>
+					<p>阅读数：<span th:text="${article.readNum}"></span></p>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="article-right">
+		<div class="title">
+			<input type="hidden" name="articleId" id="articleId" th:value="${article.id}" />
+			<div class="artitle-type" id="articleCreateType" th:text="${article.createType.name}">
+
+			</div>
+			<h2 id="artitleTitle" th:text="${article.title}">
+
+			</h2>
+			<div>
+				<span id="articleCreateTime" th:text="${article.createTime}">
+
+				</span>
+				<span id="articleAuth" th:text="${user.roleName}">
+
+				</span>
+				<span style="margin: 0">阅读数：</span>
+				<span id="articleReadNum" th:text="${article.readNum}" style="margin-left: 0">
+
+				</span>
+				<span class="float-right">
+					<a href="#/edit/blog" th:if="${edit eq 'yes'}" th:onclick="'reditArticle(' + ${article.id} + ')'">编辑</a>
+				</span>
+			</div>
+		</div>
+		<div class="article-body" id="articleBody" th:utext="${article.body}"></div>
+		<div class="article-comment">
+			<button th:if="${like eq 'no' && edit ne 'yes'}" id="article-like-btn" class="article-like-btn" th:onclick="'likeThisArticle(' + ${article.id} + ')'"><i id="thumds" class="fa fa-thumbs-up"></i><span id="likeNum" th:text="${likeNum}"></span></button>
+			<button th:if="${like eq 'yes' && edit ne 'yes'}" id="article-like-btn" class="article-unlike-btn" th:onclick="'unLikeThisArticle(' + ${article.id} + ')'"><i id="thumds" class="fa fa-thumbs-o-up"></i><span id="likeNum" th:text="${likeNum}"></span></a>
+		</div>
+		<div class="article-comment">
+			<textarea name="articleComment" id="articleComment" class="article-comment-text" placeholder="想对作者说点什么呢"></textarea>
+			<input type="button" class="submit-input" value="发表评论" id="savaArticleCommentBtn">
+		</div>
+		<a name="article-comment"></a>
+		<div class="article-comment" id="article-comment">
+			
+		</div>
+	</div>
+</div>
+</html>
