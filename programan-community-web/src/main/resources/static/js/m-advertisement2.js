@@ -198,6 +198,7 @@ function getAdvertisement2Detail(id) {
             $('#textP').val(content.textP);
             $('#createDate').val(content.createDate);
             $('#location').val(content.location);
+            $('#url').val(content.url);
         }
     });
 }
@@ -208,7 +209,8 @@ function saveAdvertisement2() {
         imgUrl: $('#imgUrl').val(),
         textH: $('#textH').val(),
         textP: $('#textP').val(),
-        location: $('#location').val()
+        location: $('#location').val(),
+        url: $('#url').val()
     };
     $.ajax({
         type: "post",

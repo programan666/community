@@ -94,7 +94,11 @@ function loadCourseByTopic(topicId) {
             		html += course.introduction;
             		html += '</div></div>';
             		html += '<div class="course-footer">';
-            		html += '<h3>' + course.price + 'P豆</h3>';
+            		if(course.price < 0) {
+            			html += '<h3>已购买</h3>';
+            		} else {
+            			html += '<h3>' + course.price + 'P豆</h3>';
+            		}
             		html += '</div></div>';
             		$('#course-body').append(html);
             });

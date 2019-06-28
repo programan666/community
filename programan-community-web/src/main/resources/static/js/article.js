@@ -89,6 +89,7 @@ function savaArticleComment(){
            if (handleAjaxResult(data, "保存成功")) {
            		loadComment();
            		$('#totalCommentNum').html(Number($('#totalCommentNum').html()) + 1);
+           		$('#articleComment').val('');
            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -117,6 +118,9 @@ function loadComment() {
             		html += '<a href="#" onclick="fill_other_user_info_page(0, ' + articleComment.user.id + ')"><img src="' + articleComment.user.headImgUrl + '"/></a>';
             		html += '<a href="#" onclick="fill_other_user_info_page(0, ' + articleComment.user.id + ')">' + articleComment.user.roleName + ':</a>';
             		html += '<span>' + articleComment.info + '</span>';
+            		if(articleComment.user.userName == $('#susername').html()) {
+            			html += '<a href="javascript:void(0)" style="float:right;" onclick="delLoginUserComment(' + articleComment.id + ')">删除</a>';
+            		}
             		html += '</div>';
             		html += '<div class="bot">';
             		html += formatDateTime(articleComment.createTime);
@@ -124,6 +128,24 @@ function loadComment() {
             		html += '</div>';
             		$('#article-comment').append(html);
             });
+        }
+    });
+}
+
+function delLoginUserComment(commentId){
+	$.ajax({
+        type: "post",
+        url: callurl + "/articleComment/delete/"+commentId,
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+           if (handleAjaxResult(data, "成功")) {
+	           	loadComment();
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("失败");
         }
     });
 }

@@ -45,4 +45,18 @@ public class Course {
     @JoinColumn(name="topic_id")
     private Topic topic;
 
+    @Override
+    public boolean equals(Object obj){
+        Course course = (Course)obj;
+        if(this.id == course.getId() && this.teacherName.equals(course.getTeacherName())
+                && this.teacherJob.equals(course.getTeacherJob())
+                && this.introduction.equals(course.getIntroduction())
+                && this.price == course.getPrice()
+                && this.imgUrl.equals(course.getImgUrl())
+                && this.videoUrl.equals(course.getVideoUrl())){
+            return true;
+        }
+        return false;
+    }
+
 }

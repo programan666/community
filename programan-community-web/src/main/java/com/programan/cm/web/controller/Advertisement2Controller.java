@@ -68,12 +68,13 @@ public class Advertisement2Controller {
                                            @RequestParam("imgUrl") String imgUrl,
                                            @RequestParam("textH") String textH,
                                            @RequestParam("textP") String textP,
-                                           @RequestParam("location") String location) {
+                                           @RequestParam("location") String location,
+                                           @RequestParam("url") String url) {
         logger.info("/advertisement2/save");
 
         try {
             Advertisement2 advertisement2 = new Advertisement2(Long.parseLong(id), imgUrl, textH, textP,
-                    new Date(System.currentTimeMillis()), location);
+                    new Date(System.currentTimeMillis()), location, url);
             advertisement2Manager.saveAdvertisement2(advertisement2);
             logger.info("finished /advertisement2/save");
         } catch (Exception e) {

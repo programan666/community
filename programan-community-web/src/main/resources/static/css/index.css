@@ -411,6 +411,9 @@ dt {
 
 .skill {
 	text-align: center;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .skill-tag {
@@ -1389,4 +1392,10 @@ dt {
 	height: 40px;
 	float: right;
 	margin: 0;
+}
+
+.my-comment {
+	margin: 20px 0;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	padding: 10px;
 }

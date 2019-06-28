@@ -58,7 +58,7 @@ function loadArticleList() {
 					"name": "createTime", // 指定的列
 					"data": "createTime",
 					"ordering": false, // 禁用排序
-					"width": "20%"
+					"width": "17%"
 				},  {
 					"name": "topic.name", // 指定的列
 					"data": "topic.name",
@@ -78,9 +78,11 @@ function loadArticleList() {
 					"name": "id",
 					"data": "id",
 					"ordering": false, // 禁用排序
-					"width": "10%",
+					"width": "13%",
 					"render": function(data, type, full, meta) { //render改变该列样式,4个参数，其中参数数量是可变的。
-						return '<button name="articleDetail" class="btn btn-danger btn-sm btn-row" data-id=' + data + '>编 辑</button>';
+						var btnHtml = '<button name="articleDetail" class="btn btn-danger btn-sm btn-row" data-id=' + data + '>编 辑</button>';
+						btnHtml += '<button name="addRecommendedArticle" class="btn btn-info btn-sm btn-row" data-id=' + data + ' style="margin-left:5px">推 荐</button>';
+						return btnHtml;
 					}
 				}
 				//data指该行获取到的该列数据
@@ -122,6 +124,10 @@ function loadArticleList() {
 			$('button[name="articleDetail"]').on('click', function() {
 				var id = $(this).data("id");
 				open_article_detail_page(id);
+			});
+			$('button[name="addRecommendedArticle"]').on('click', function() {
+				var id = $(this).data("id");
+				open_add_recommended_detail_page(id);
 			});
 		}
 	});
@@ -167,6 +173,26 @@ function deleteArticle(delid) {
 			layer.msg("失败");
 		}
 	});
+}
+
+function open_add_recommended_detail_page(id) {
+    loadTabMenu('html/m-recommended-detail.html', function() {
+        $('#articleId').val(id);
+        $('#articleId').attr('readonly', 'true');
+        /**
+         * 保存分类
+         */
+        $("#saveRecommendedBtnSubmit").on('click', function(){
+            saveRecommended();
+        });
+
+        /**
+         * 取消保存
+         */
+        $("#cancelRecommendedBtnSubmit").on('click', function () {
+            open_article_list_page();
+        });
+    })
 }
 
 /**

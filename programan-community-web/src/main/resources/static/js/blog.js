@@ -206,6 +206,7 @@ function loadAdvertisement2(elementId, adData) {
 			html += '<div class="slide-text slide_style_center">';
 			html += '<h3 data-animation="animated ' + hcss[index%hcss.length] + '">' + advertisement2.textH + '</h3>';
 			html += '<p data-animation="animated ' + pcss[index%pcss.length] +'">' + advertisement2.textP + '</p>';
+			html += '<a href="' + advertisement2.url + '" target="_blank"  class="btn btn-primary" data-animation="animated fadeInDown">了解更多</a>';
 			html += '</div></div>';
 			liele.append('<li data-target="#bootstrap-touch-slider" data-slide-to="' + index +'" class="active"></li>');
 			bodyele.append(html);
@@ -217,6 +218,7 @@ function loadAdvertisement2(elementId, adData) {
 			html += '<div class="slide-text slide_style_center">';
 			html += '<h3 data-animation="animated ' + hcss[index%hcss.length] + '">' + advertisement2.textH + '</h3>';
 			html += '<p data-animation="animated ' + pcss[index%pcss.length] +'">' + advertisement2.textP + '</p>';
+			html += '<a href="' + advertisement2.url + '" target="_blank"  class="btn btn-primary" data-animation="animated fadeInDown">了解更多</a>';
 			html += '</div></div>';
 			liele.append('<li data-target="#bootstrap-touch-slider" data-slide-to="' + index +'"></li>');
 			bodyele.append(html);
@@ -241,7 +243,7 @@ function loadBlogMenu(index){
             var content = data.context;
             $('#blogMenu').html("");
             if(index  == 1) {
-            		$('#blogMenu').append('<a class="left-nav" href="#/articleTopic" onfocus="this.blur();" onclick="loadArticles(0,0)">推荐</a>');
+            		$('#blogMenu').append('<a class="left-nav" href="#/articleTopic" onfocus="this.blur();" onclick="loadArticles(0,0)">最新</a>');
             }
             $.each(content, function(index, topic) {
             		$('#blogMenu').append('<a class="left-nav" href="#/articleTopic" onfocus="this.blur();" onclick="loadArticles(' + topic.id + ',0)">' + topic.name + '</a>');

@@ -4,6 +4,7 @@ import com.programan.cm.db.dao.ArticleCommentDao;
 import com.programan.cm.db.model.Article;
 import com.programan.cm.db.model.ArticleComment;
 import com.programan.cm.db.model.Role;
+import com.programan.cm.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
@@ -24,6 +25,10 @@ public class ArticleCommentRepository {
 
     public List<ArticleComment> selectByArticle(Article article) {
         return articleCommentDao.selectByArticle(article);
+    }
+
+    public List<ArticleComment> selectByUser(User user) {
+        return articleCommentDao.selectByUser(user);
     }
 
     public Integer selectCountByArticle(Article article) {

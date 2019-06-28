@@ -4,6 +4,7 @@ package com.programan.cm.web.manager;
 import com.programan.cm.db.model.Article;
 import com.programan.cm.db.model.ArticleComment;
 import com.programan.cm.db.model.Role;
+import com.programan.cm.db.model.User;
 import com.programan.cm.repository.db.ArticleCommentRepository;
 import com.programan.cm.repository.db.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class ArticleCommentManager {
 
     public List<ArticleComment> selectByArticle(Article article) {
         return articleCommentRepository.selectByArticle(article);
+    }
+
+    public List<ArticleComment> selectByUser(User user) {
+        return articleCommentRepository.selectByUser(user);
     }
 
     public Integer selectCountByArticle(Article article) {

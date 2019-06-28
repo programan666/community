@@ -3,14 +3,16 @@ package com.programan.cm.web.controller;
 import com.programan.cm.common.utils.JSONResult;
 import com.programan.cm.db.model.Course;
 import com.programan.cm.db.model.Role;
-import com.programan.cm.web.manager.CourseManager;
-import com.programan.cm.web.manager.RoleManager;
-import com.programan.cm.web.manager.TopicManager;
+import com.programan.cm.db.model.User;
+import com.programan.cm.db.model.UserCourse;
+import com.programan.cm.web.manager.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,12 @@ public class CourseController {
     private CourseManager courseManager;
 
     private TopicManager topicManager;
+
+    @Autowired
+    private UserCourseManager userCourseManager;
+
+    @Autowired
+    private UserManager userManager;
 
     @Autowired
     public void setTopicManager(TopicManager topicManager) {
@@ -50,6 +58,23 @@ public class CourseController {
     @RequestMapping(value = "/list")
     public JSONResult<List<Course>> getCourseList(){
         List<Course> courseList = courseManager.selectAll();
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userManager.selectByUserName(userDetails.getUsername());
+            List<UserCourse> userCourseList = userCourseManager.selectByUser(user);
+            if(userCourseList != null) {
+                for(UserCourse userCourse : userCourseList) {
+                    Course course = courseManager.selectById(userCourse.getCourse().getId().toString());
+                    if(courseList.contains(course)) {
+                        courseList.remove(courseList.indexOf(course));
+                        course.setPrice(-1L);
+                        courseList.add(course);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return JSONResult.success(courseList);
     }
 

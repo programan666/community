@@ -36,4 +36,7 @@ public class Advertisement2 {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "url")
+    private String url;
+
 }

@@ -189,6 +189,11 @@ public class PageController {
         return "html/articleManage";
     }
 
+    @RequestMapping(value = "/page/courseDetail")
+    public String getCourseDetail() {
+        return "html/editBlog";
+    }
+
     @RequestMapping(value = "/page/article")
     public String getArticle(@RequestParam("articleId") String articleId, Model model) {
 
@@ -338,14 +343,12 @@ public class PageController {
         bodyJsonParam.put("max_results", "100");
         bodyJsonParam.put("area", "");
         jsonParam.put("body", bodyJsonParam);
-//        System.out.println(jsonParam);
 
         String url="https://api.baidu.com/json/tongji/v1/ReportService/getData";
         String data=HttpUtil.getJsonData(jsonParam,url);
         //返回的是一个[{}]格式的字符串时:
 
         JSONObject json = JSONObject.parseObject(data);
-//        System.out.println(json);
         JSONArray jsonArray = json.getJSONObject("body").getJSONArray("data").getJSONObject(0).getJSONObject("result").getJSONArray("items");
         JSONArray detailInfo = jsonArray.getJSONArray(0);
         JSONArray info = jsonArray.getJSONArray(1);

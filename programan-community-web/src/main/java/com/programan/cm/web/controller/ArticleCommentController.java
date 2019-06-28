@@ -96,4 +96,18 @@ public class ArticleCommentController {
         return JSONResult.success(articleCommentList);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/listByLoginUser", method = RequestMethod.GET)
+    public JSONResult<List<ArticleComment>> getArticleCommentListByLoginUser(){
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<ArticleComment> articleCommentList = articleCommentManager.selectByUser(userManager.selectByUserName(userDetails.getUsername()));
+            logger.info("finished /listByLoginUser/save");
+            return JSONResult.success(articleCommentList);
+        } catch (Exception e) {
+            logger.info("listByLoginUser error:", e);
+            return null;
+        }
+    }
+
 }

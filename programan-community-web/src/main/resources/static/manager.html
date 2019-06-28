@@ -110,131 +110,176 @@ Purchase: http://wrapbootstrap.com
                    <li>
                         <a href="javascript:void(0)" onclick="open_latest_trend()">
                             <i class="fa fa-eye"></i>
-                            <span class="menu-text"> 实时访客 </span>
+                            <span class="menu-text" style="margin-left: 28px;"> 实时访客 </span>
                         </a>
                     </li>
                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_user_list_page()">
-                            <i class="fa fa-users"></i>
-                            <span class="menu-text"> 用户管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_industry_list_page()">
-                            <i class="fa fa-graduation-cap"></i>
-                            <span class="menu-text"> 行业管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_role_list_page()">
-                            <i class="fa fa-key"></i>
-                            <span class="menu-text"> 权限管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_user_role_list_page()">
-                            <i class="fa fa-lock"></i>
-                            <span class="menu-text"> 用户权限管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
+                   <li>
                         <a href="javascript:void(0)" onclick="open_topic_list_page()">
                             <i class="fa fa-comments"></i>
-                            <span class="menu-text"> 话题管理 </span>
+                            <span class="menu-text" style="margin-left: 28px;"> 话题管理 </span>
                         </a>
+                    </li>
+                   
+                   <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="fa fa-users"></i>
+                            <span class="menu-text"> 用户管理 </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_user_list_page()">
+		                            <!--<i class="fa fa-users"></i>-->
+		                            <span class="menu-text"> 用户信息 </span>
+		                        </a>
+		                    </li>
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_industry_list_page()">
+		                            <!--<i class="fa fa-graduation-cap"></i>-->
+		                            <span class="menu-text"> 行业管理 </span>
+		                        </a>
+		                    </li>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_role_list_page()">
+		                            <!--<i class="fa fa-key"></i>-->
+		                            <span class="menu-text"> 权限管理 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_user_role_list_page()">
+		                            <!--<i class="fa fa-lock"></i>-->
+		                            <span class="menu-text"> 用户权限管理 </span>
+		                        </a>
+		                    </li>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_user_follow_list_page()">
+		                            <!--<i class="fa fa-heart"></i>-->
+		                            <span class="menu-text"> 关注管理 </span>
+		                        </a>
+		                    </li>
+                        </ul>
                     </li>
                     
                     <li>
-                        <a href="javascript:void(0)" onclick="open_create_type_list_page()">
-                            <i class="fa fa-magic"></i>
-                            <span class="menu-text"> 文章创建类型管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_article_list_page()">
+                        <a href="#" class="menu-dropdown">
                             <i class="fa fa-book"></i>
                             <span class="menu-text"> 文章管理 </span>
+                            <i class="menu-expand"></i>
                         </a>
+
+                        <ul class="submenu">
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_create_type_list_page()">
+		                            <!--<i class="fa fa-magic"></i>-->
+		                            <span class="menu-text"> 文章创建类型管理 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_article_list_page()">
+		                            <!--<i class="fa fa-book"></i>-->
+		                            <span class="menu-text"> 文章信息 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_article_comment_list_page()">
+		                            <!--<i class="fa fa-hand-paper-o"></i>-->
+		                            <span class="menu-text"> 评论管理 </span>
+		                        </a>
+		                    </li>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_article_like_list_page()">
+		                            <!--<i class="fa fa-thumbs-up"></i>-->
+		                            <span class="menu-text"> 文章点赞管理 </span>
+		                        </a>
+		                    </li>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_recommended_list_page()">
+		                            <!--<i class="fa fa-hand-o-right"></i>-->
+		                            <span class="menu-text"> 今日推荐管理 </span>
+		                        </a>
+		                    </li>
+                        </ul>
                     </li>
                     
                     <li>
-                        <a href="javascript:void(0)" onclick="open_article_comment_list_page()">
-                            <i class="fa fa-hand-paper-o"></i>
-                            <span class="menu-text"> 评论管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_user_follow_list_page()">
-                            <i class="fa fa-heart"></i>
-                            <span class="menu-text"> 关注管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_article_like_list_page()">
-                            <i class="fa fa-thumbs-up"></i>
-                            <span class="menu-text"> 文章点赞管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_course_list_page()">
+                        <a href="#" class="menu-dropdown">
                             <i class="fa fa-youtube-play"></i>
                             <span class="menu-text"> 课程管理 </span>
+
+                            <i class="menu-expand"></i>
                         </a>
+
+                        <ul class="submenu">
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_course_list_page()">
+		                            <!--<i class="fa fa-youtube-play"></i>-->
+		                            <span class="menu-text"> 课程信息 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_user_course_list_page()">
+		                            <!--<i class="fa fa-cart-plus"></i>-->
+		                            <span class="menu-text"> 课程购买管理 </span>
+		                        </a>
+		                    </li>
+                        </ul>
                     </li>
                     
                     <li>
-                        <a href="javascript:void(0)" onclick="open_user_course_list_page()">
-                            <i class="fa fa-cart-plus"></i>
-                            <span class="menu-text"> 课程购买管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_file_type_list_page()">
-                            <i class="fa fa-cubes"></i>
-                            <span class="menu-text"> 资源类型管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_file_download_list_page()">
+                        <a href="#" class="menu-dropdown">
                             <i class="fa fa-arrow-circle-o-down"></i>
-                            <span class="menu-text"> 资源下载管理 </span>
+                            <span class="menu-text"> 资源管理 </span>
+                            <i class="menu-expand"></i>
                         </a>
+
+                        <ul class="submenu">
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_file_type_list_page()">
+		                            <!--<i class="fa fa-cubes"></i>-->
+		                            <span class="menu-text"> 资源类型管理 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_file_download_list_page()">
+		                            <!--<i class="fa fa-arrow-circle-o-down"></i>-->
+		                            <span class="menu-text"> 资源下载管理 </span>
+		                        </a>
+		                    </li>
+                        </ul>
                     </li>
                     
                     <li>
-                        <a href="javascript:void(0)" onclick="open_recommended_list_page()">
-                            <i class="fa fa-hand-o-right"></i>
-                            <span class="menu-text"> 今日推荐管理 </span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_advertisement_list_page()">
+                        <a href="#" class="menu-dropdown">
                             <i class="fa fa-object-group"></i>
-                            <span class="menu-text"> 广告_1管理 </span>
+                            <span class="menu-text"> 广告管理 </span>
+
+                            <i class="menu-expand"></i>
                         </a>
+
+                        <ul class="submenu">
+                            <li>
+		                        <a href="javascript:void(0)" onclick="open_advertisement_list_page()">
+		                            <!--<i class="fa fa-object-group"></i>-->
+		                            <span class="menu-text"> 广告_1管理 </span>
+		                        </a>
+		                    </li>
+		                    
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="open_advertisement2_list_page()">
+		                            <!--<i class="fa fa-object-group"></i>-->
+		                            <span class="menu-text"> 广告_2管理 </span>
+		                        </a>
+		                    </li>
+                        </ul>
                     </li>
-                    
-                    <li>
-                        <a href="javascript:void(0)" onclick="open_advertisement2_list_page()">
-                            <i class="fa fa-object-group"></i>
-                            <span class="menu-text"> 广告_2管理 </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
                 </ul>
             </div>
             <div class="page-content">

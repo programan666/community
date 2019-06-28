@@ -182,7 +182,7 @@ function updateUserBaseInfo(index) {
 
 //控制userupdate的界面，修改不同信息
 function updateUserInfo(index) {
-	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv', 'userCourseDiv'];
+	var all_update_page = ['userInfoDiv', 'userFollowDiv', 'userFansDiv', 'userCourseDiv', 'userCommentDiv'];
 	$.each(all_update_page, function(index, page) {
 		$('#' + page).css('display', 'none');
 	});
@@ -277,6 +277,13 @@ $.History.bind('/user/course', function(state) {
 	},500)
 });
 
+$.History.bind('/user/comments', function(state) {
+	updateUserInfo(4);
+	setTimeout(function() {
+		loadMyComments();
+	},500)
+});
+
 $.History.bind('/article/manage', function(state) {
 	fill_article_manage_page();
 });
@@ -297,6 +304,48 @@ $.History.bind('/user/info', function(state) {
 		clickUserInfo();
 	},500);
 });
+
+function loadMyComments() {
+	$.ajax({
+		type: "get",
+		url: callurl + "/articleComment/listByLoginUser",
+		async: true,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		success: function(data) {
+			var content = data.context;
+			$('#my-comment').html("");
+			$.each(content, function(index, comment) {
+				var html = '';
+				html += '<div class="my-comment">';
+				html += '<p>' + comment.info + '</p>';
+				html += '<p style="width: 200px;float: left;">' + comment.createTime + '</p>';
+				html += '<a href="javascript:void(0);" onclick="fill_article_page(' + comment.article.id + ')">' + comment.article.title + '</a>';
+				html += '<a href="javascript:void(0);" onclick="delEidtLoginUserComment(' + comment.id + ')" style="float: right;">删除</a>';
+				html += '</div>';
+				$('#my-comment').append(html)
+			});
+		}
+	});
+}
+
+function delEidtLoginUserComment(commentId){
+	$.ajax({
+        type: "post",
+        url: callurl + "/articleComment/delete/"+commentId,
+        async: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function(data) {
+           if (handleAjaxResult(data, "成功")) {
+	           	loadMyComments();
+           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("失败");
+        }
+    });
+}
 
 function saveUpdateUserInfo() {
 	var user = {
