@@ -50,7 +50,7 @@
         <guava.version>23.0</guava.version>
         <rest.assured.version>2.3.1</rest.assured.version>
         <joda.time.version>2.3</joda.time.version>
-        <checkstyle.version>6.11.1</checkstyle.version>
+        <checkstyle.version>8.29</checkstyle.version>
         <commons.lang.version>2.2</commons.lang.version>
         <commons.math3.version>3.6.1</commons.math3.version>
         <jackson.datatype.joda.version>2.7.4</jackson.datatype.joda.version>
